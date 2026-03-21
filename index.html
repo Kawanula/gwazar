@@ -87,10 +87,8 @@
 
         .link-item:hover { transform: translateY(-3px); background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        /* Highlighted Project Button */
         .project-btn { background: #0f172a; color: white; border: 1px solid #38bdf8; }
 
-        /* Contact Form Styling */
         .contact-section { 
             margin-top: 30px; 
             border-top: 1px solid rgba(255,255,255,0.2); 
@@ -151,17 +149,12 @@
         <div class="contact-section">
             <p>Direct Message</p>
             <form action="https://formspree.io/f/mjgazqva" method="POST">
+                <input type="hidden" name="_next" value="https://gwazar.vercel.app/projects.html">
+                
                 <input type="email" name="_replyto" placeholder="Your Email Address" required>
                 <textarea name="message" rows="3" placeholder="Write your message here..." required></textarea>
                 <button type="submit" class="submit-btn">Send Message</button>
-            <form action="https://formspree.io/f/mjgazqva" method="POST">
-    <input type="hidden" name="_next" value="https://gwazar.vercel.app/projects.html">
-    
-    <input type="email" name="_replyto" placeholder="Your Email Address" required>
-    <textarea name="message" rows="3" placeholder="Write your message here..." required></textarea>
-    <button type="submit" class="submit-btn">Send Message</button>
-</form>
-
+            </form>
         </div>
 
         <div class="visitor-counter">
