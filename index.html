@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gwazar | Premium</title>
+    <title>gwazar | Hub</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            /* Animated Gradient Background */
+            font-family: 'Inter', system-ui, sans-serif;
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
@@ -25,63 +24,68 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* The Glass Card */
         .glass-card {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 3rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
             border-radius: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             text-align: center;
             color: white;
-            width: 85%;
-            max-width: 450px;
+            width: 90%;
+            max-width: 400px;
         }
 
-        h1 {
-            font-size: 3rem;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            letter-spacing: -1px;
+        h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 2rem; }
+
+        /* Link Container */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin: 1.5rem 0;
-            line-height: 1.6;
-        }
-
-        .btn {
-            background: white;
-            color: #e73c7e;
-            padding: 1rem 2rem;
-            border-radius: 50px;
+        .link-item {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1e293b;
+            padding: 14px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-            background: #f8fafc;
+        .link-item:hover {
+            transform: scale(1.03);
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
+
+        /* Specialized Button Styles */
+        .primary-link { background: #1e293b; color: white; }
+        .primary-link:hover { background: #000; color: white; }
+
     </style>
 </head>
 <body>
 
     <div class="glass-card">
         <h1>gwazar</h1>
-        <p>Experience the next level of educational web design. Fully responsive and beautifully crafted.</p>
-        <a href="https://github.com/Kawanula" class="btn">Explore Work</a>
+        <p>My Educational & Project Hub</p>
+        
+        <div class="links">
+            <a href="https://github.com/Kawanula" class="link-item primary-link">📂 My GitHub Projects</a>
+            <a href="#" class="link-item">📝 Class Assignments</a>
+            <a href="#" class="link-item">📖 Research Notes</a>
+            <a href="mailto:your-email@example.com" class="link-item">✉️ Contact Me</a>
+        </div>
     </div>
 
 </body>
