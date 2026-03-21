@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gwazar | Hub</title>
+    <title>gwazar | Kawanula Hub</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
@@ -29,19 +29,18 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 2rem;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             text-align: center;
             color: white;
-            width: 90%;
+            width: 85%;
             max-width: 400px;
         }
 
-        h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-        p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 2rem; }
+        h1 { font-size: 2.2rem; margin: 0 0 0.5rem 0; letter-spacing: -1px; }
+        p { font-size: 0.9rem; opacity: 0.9; margin-bottom: 2rem; font-weight: 300; }
 
-        /* Link Container */
         .links {
             display: flex;
             flex-direction: column;
@@ -60,17 +59,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
         .link-item:hover {
-            transform: scale(1.03);
+            transform: translateY(-3px);
             background: #ffffff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* Specialized Button Styles */
-        .primary-link { background: #1e293b; color: white; }
-        .primary-link:hover { background: #000; color: white; }
+        /* Highlight the GitHub button */
+        .github-btn { background: #0f172a; color: white; }
+        .github-btn:hover { background: #000; }
 
     </style>
 </head>
@@ -78,13 +78,20 @@
 
     <div class="glass-card">
         <h1>gwazar</h1>
-        <p>My Educational & Project Hub</p>
+        <p>Official Education & Social Hub</p>
         
         <div class="links">
-            <a href="https://github.com/Kawanula" class="link-item primary-link">📂 My GitHub Projects</a>
-            <a href="#" class="link-item">📝 Class Assignments</a>
-            <a href="#" class="link-item">📖 Research Notes</a>
-            <a href="mailto:your-email@example.com" class="link-item">✉️ Contact Me</a>
+            <a href="https://www.youtube.com" target="_blank" class="link-item">📺 My YouTube Channel</a>
+            
+            <a href="https://www.facebook.com/profile.php?id=61571492189302" target="_blank" class="link-item">👤 Facebook Profile</a>
+            
+            <a href="https://wa.me/265993965546" target="_blank" class="link-item">💬 WhatsApp Me</a>
+            
+            <a href="tel:+265883854012" class="link-item">📞 Call Support</a>
+            
+            <a href="mailto:kawanularedson@gmail.com" class="link-item">✉️ Email Me</a>
+
+            <a href="https://github.com/Kawanula" target="_blank" class="link-item github-btn">📂 View GitHub Code</a>
         </div>
     </div>
 
