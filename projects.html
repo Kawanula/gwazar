@@ -3,63 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects | Kawanula Hub</title>
+    <title>My Projects | gwazar</title>
     <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #0f172a;
-            color: white;
-            padding: 20px;
-            line-height: 1.6;
-        }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #0f172a; color: white; padding: 20px; }
         .container { max-width: 500px; margin: 0 auto; }
-        .back-btn {
-            display: inline-block;
-            color: #38bdf8;
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        h1 { font-size: 2rem; color: #38bdf8; margin-bottom: 10px; }
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .project-tag {
-            background: #38bdf8;
-            color: #0f172a;
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        h2 { margin: 10px 0; font-size: 1.3rem; }
-        p { opacity: 0.8; font-size: 0.95rem; }
+        .back-btn { color: #38bdf8; text-decoration: none; font-weight: bold; display: block; margin-bottom: 20px; }
+        .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px; }
+        .project-img { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333; }
+        h1 { color: #38bdf8; }
+        h2 { margin-top: 0; font-size: 1.2rem; }
+        p { opacity: 0.8; font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Hub</a>
         <h1>My Projects</h1>
-        <p>A collection of my educational and technical work.</p>
-
-        <div class="project-card">
-            <span class="project-tag">Web Dev</span>
-            <h2>gwazar Hub</h2>
-            <p>My official personal website. Built with HTML5, CSS3 animations, and integrated with GitHub/Vercel for automated deployment.</p>
+        
+        <div class="card">
+            <img src="https://github.com/Kawanula.png" class="project-img" alt="Project 1">
+            <h2>Educational Hub</h2>
+            <p>My first official web project using HTML, CSS, and Vercel automation.</p>
         </div>
 
-        <div class="project-card">
-            <span class="project-tag">Education</span>
-            <h2>Malawi Tech Research</h2>
-            <p>Exploring how mobile technology can improve access to educational resources in local communities.</p>
+        <div class="card">
+            <h2>School Research</h2>
+            <p>A collection of my academic work and community research in Malawi.</p>
         </div>
-
     </div>
 </body>
 </html>
