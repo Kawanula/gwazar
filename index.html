@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gwazar | Kawanula Hub</title>
     
-    <meta name="description" content="Kawanula's Official Educational and Social Hub. Connect with me here.">
+    <meta name="description" content="Kawanula's Official Educational and Social Hub. Find my YouTube, Facebook, and contact info here.">
     <meta name="keywords" content="Kawanula, Education, Malawi, Web Development, gwazar">
     <meta name="author" content="Kawanula">
     <meta property="og:title" content="gwazar | Kawanula Hub">
@@ -22,12 +22,11 @@
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-y: auto; /* Changed to allow scrolling for the QR code */
-            padding: 20px 0;
+            padding: 40px 0;
         }
 
         @keyframes gradient {
@@ -41,67 +40,79 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 2rem;
-            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            border-radius: 2.5rem;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             text-align: center;
             color: white;
             width: 85%;
-            max-width: 380px;
+            max-width: 400px;
         }
 
         .profile-img {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            border: 3px solid white;
+            border: 4px solid white;
             margin-bottom: 1rem;
             object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        h1 { font-size: 2rem; margin: 0 0 0.2rem 0; }
-        p { font-size: 0.9rem; opacity: 0.9; margin-bottom: 1.5rem; }
+        h1 { font-size: 2.2rem; margin: 0 0 0.5rem 0; letter-spacing: -1px; }
+        
+        /* New Bio Section Style */
+        .bio-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 300;
+        }
 
-        .links { display: flex; flex-direction: column; gap: 10px; }
+        .links { display: flex; flex-direction: column; gap: 12px; }
 
         .link-item {
             background: rgba(255, 255, 255, 0.95);
             color: #1e293b;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 14px;
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .link-item:hover { transform: translateY(-2px); background: #fff; }
+        .link-item:hover { transform: translateY(-3px); background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
         .github-btn { background: #0f172a; color: white; }
         
         .share-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.4);
             color: white;
             margin-top: 10px;
         }
 
+        /* Fixed Visitor Counter Style */
         .visitor-counter {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            opacity: 0.7;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            opacity: 0.9;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 5px;
+            gap: 8px;
         }
 
         .qr-section {
             margin-top: 25px;
             border-top: 1px solid rgba(255,255,255,0.2);
-            padding-top: 20px;
+            padding-top: 25px;
         }
     </style>
 </head>
@@ -110,7 +121,11 @@
     <div class="glass-card">
         <img src="https://github.com/Kawanula.png" alt="Kawanula" class="profile-img">
         <h1>gwazar</h1>
-        <p>Official Education & Social Hub</p>
+        
+        <div class="bio-text">
+            👋 <strong>Hi, I'm Kawanula!</strong><br>
+            I am a student and aspiring developer from Malawi. This is my official hub for education and social projects.
+        </div>
         
         <div class="links">
             <a href="https://www.youtube.com" target="_blank" class="link-item">📺 My YouTube Channel</a>
@@ -123,15 +138,15 @@
         </div>
 
         <div class="visitor-counter">
-            <span>Visits:</span>
-            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgwazar.vercel.app&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" alt="Hits"/>
+            <span>Total Hub Visits:</span>
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgwazar.vercel.app&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" alt="Visitor Count">
         </div>
 
         <div class="qr-section">
-            <p style="font-size: 0.8rem; margin-bottom: 10px;">Scan to share my Hub</p>
+            <p style="font-size: 0.8rem; margin-bottom: 12px; opacity: 0.8;">Scan to share my Hub</p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://gwazar.vercel.app" 
                  alt="QR Code" 
-                 style="border-radius: 10px; border: 5px solid white; background: white; width: 100px; height: 100px;">
+                 style="border-radius: 12px; border: 6px solid white; background: white; width: 110px; height: 110px;">
         </div>
     </div>
 
@@ -142,7 +157,7 @@
         if (navigator.share) {
           navigator.share({
             title: 'gwazar | Kawanula Hub',
-            text: 'Check out my official educational hub!',
+            text: 'Check out Kawanula\'s official hub!',
             url: window.location.href
           }).catch(console.error);
         } else {
