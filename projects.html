@@ -5,30 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Projects | gwazar</title>
     <style>
-        body { margin: 0; font-family: 'Inter', sans-serif; background: #0f172a; color: white; padding: 20px; }
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: #0f172a; 
+            color: white; 
+            padding: 20px; 
+        }
         .container { max-width: 500px; margin: 0 auto; }
-        .back-btn { color: #38bdf8; text-decoration: none; font-weight: bold; display: block; margin-bottom: 20px; }
-        .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .project-img { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333; }
-        h1 { color: #38bdf8; }
-        h2 { margin-top: 0; font-size: 1.2rem; }
-        p { opacity: 0.8; font-size: 0.9rem; }
+        
+        .back-btn { 
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: #38bdf8; 
+            text-decoration: none; 
+            font-weight: bold; 
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            padding: 20px; 
+            border-radius: 20px; 
+            margin-bottom: 20px; 
+        }
+        
+        .project-img { 
+            width: 100%; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #333; 
+        }
+        
+        h1 { color: #38bdf8; font-size: 2.2rem; margin-bottom: 5px; }
+        p.subtitle { opacity: 0.6; margin-bottom: 30px; }
+        h2 { margin-top: 0; font-size: 1.3rem; }
+        p { opacity: 0.8; font-size: 0.95rem; line-height: 1.6; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Hub</a>
+        
         <h1>My Projects</h1>
+        <p class="subtitle">Showcasing my journey in tech and education.</p>
         
         <div class="card">
             <img src="https://github.com/Kawanula.png" class="project-img" alt="Project 1">
-            <h2>Educational Hub</h2>
-            <p>My first official web project using HTML, CSS, and Vercel automation.</p>
+            <h2>Kawanula Hub</h2>
+            <p>A professional landing page with SEO optimization, glassmorphism design, and a real-time visitor counter.</p>
         </div>
 
         <div class="card">
-            <h2>School Research</h2>
-            <p>A collection of my academic work and community research in Malawi.</p>
+            <h2>Academic Portfolio</h2>
+            <p>Future space for my school research and community projects in Malawi.</p>
         </div>
     </div>
 </body>
