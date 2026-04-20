@@ -35,6 +35,30 @@
         .submit-btn { background: #0f172a; color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .submit-btn:hover { background: #000; }
         .qr-section { margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; }
+        /* Dark Mode Styles */
+body.dark-mode { 
+    background: #0f172a; /* Dark background */
+    animation: none; /* Stops the moving gradient */
+}
+.dark-mode .glass-card { 
+    background: rgba(0, 0, 0, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+}
+.dark-mode .link-item { 
+    background: rgba(255, 255, 255, 0.05); 
+    color: white; 
+}
+.dark-mode .link-item:hover { 
+    background: rgba(255, 255, 255, 0.15); 
+}
+.dark-mode input, .dark-mode textarea { 
+    background: rgba(255, 255, 255, 0.05); 
+    color: white; 
+}
+.dark-mode input::placeholder, .dark-mode textarea::placeholder { 
+    color: #cbd5e1; 
+}
+
     </style>
 </head>
 <body>
