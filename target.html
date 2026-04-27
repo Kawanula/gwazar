@@ -37,7 +37,6 @@
         .like-btn { background: none; border: none; cursor: pointer; font-size: 0.9rem; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
         .like-btn:hover { transform: scale(1.05); }
         .delete-btn { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 0.85rem; font-weight: bold; padding: 5px; border-radius: 5px; }
-        .delete-btn:hover { background: rgba(239, 68, 68, 0.2); }
 
         .market-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #10b981; }
         .file-upload { background: rgba(255,255,255,0.1); border: 2px dashed rgba(16, 185, 129, 0.5); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;}
@@ -50,16 +49,16 @@
         .market-details .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .market-details h4 { margin: 0; color: #10b981; font-size: 1.1rem; }
         .market-details .price { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.9rem;}
+        .dm-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; margin-top: 10px; width: 100%; transition: 0.2s; }
+        .dm-btn:hover { background: #059669; }
         
         .vault-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #3b82f6; }
         .submit-vault-btn { background: #3b82f6; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .vault-post { background: rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
-        .vault-post .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .vault-post h4 { margin: 0; color: #3b82f6; font-size: 1.1rem; }
-        .vault-tag { background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;}
-        .download-btn { display: inline-block; margin-top: 10px; background: #3b82f6; color: white; padding: 8px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
-
+        
+        /* CHAT & INBOX STYLES */
         .chat-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #ec4899; }
+        .inbox-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #a855f7; }
         .chat-display { height: 350px; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; margin-bottom: 15px; }
         .chat-message-wrapper { margin-bottom: 12px; display: flex; flex-direction: column; }
         .chat-message-wrapper.me { align-items: flex-end; }
@@ -67,6 +66,7 @@
         .chat-sender { font-size: 0.75rem; color: #94a3b8; margin-bottom: 3px; }
         .chat-bubble { padding: 10px 14px; border-radius: 15px; font-size: 0.95rem; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
         .chat-message-wrapper.me .chat-bubble { background: #ec4899; color: white; border-bottom-right-radius: 2px; }
+        .inbox-section .chat-message-wrapper.me .chat-bubble { background: #a855f7; }
         .chat-message-wrapper.other .chat-bubble { background: rgba(255,255,255,0.1); color: #f1f5f9; border-bottom-left-radius: 2px; }
         .chat-input-area { display: flex; gap: 10px; }
         .chat-input-area input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; }
@@ -74,19 +74,19 @@
 
         /* NAVIGATION */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 1000; }
-        .nav-item { background: none; border: none; color: #64748b; font-size: 0.75rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: inherit; padding: 0; }
-        .nav-item span { font-size: 1.3rem; transition: 0.3s; }
+        .nav-item { background: none; border: none; color: #64748b; font-size: 0.7rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: inherit; padding: 0; }
+        .nav-item span { font-size: 1.2rem; transition: 0.3s; }
         .nav-item.active { font-weight: bold; }
         .nav-item.active span { transform: scale(1.2); }
         .nav-item.active[data-target="view-ideas"] { color: #eab308; }
         .nav-item.active[data-target="view-market"] { color: #10b981; }
         .nav-item.active[data-target="view-vault"] { color: #3b82f6; }
         .nav-item.active[data-target="view-chat"] { color: #ec4899; }
+        .nav-item.active[data-target="view-inbox"] { color: #a855f7; }
 
         /* LOGIN SCREEN STYLES */
         #login-screen { margin-top: 10vh; display: flex; flex-direction: column; align-items: center; }
         .google-btn { background: white; color: #1e1b4b; border: none; padding: 15px 25px; border-radius: 25px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; }
-        .google-btn:hover { background: #f1f5f9; transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -94,11 +94,7 @@
     <div id="login-screen" class="glass-container">
         <h1 style="font-size: 3.5rem; margin-bottom: 10px;">🔐</h1>
         <h2 style="margin-top: 0;">Access Target Hub</h2>
-        <p style="color: #cbd5e1; margin-bottom: 30px; font-size: 0.95rem;">Sign in to securely post ideas, trade items, chat, and access the media vault.</p>
-        <button id="loginBtn" class="google-btn">
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="24" alt="Google">
-            Continue with Google
-        </button>
+        <button id="loginBtn" class="google-btn"><img src="https://www.svgrepo.com/show/475656/google-color.svg" width="24" alt="Google"> Continue with Google</button>
     </div>
 
     <div id="main-app" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -110,53 +106,58 @@
 
         <div class="glass-container">
             <h1>🎯 Target Hub</h1>
-            <p style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 20px;">Welcome back, <span id="userGreeting" style="color: #38bdf8; font-weight: bold;">User</span>!</p>
+            <p style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 20px;">Welcome, <span id="userGreeting" style="color: #38bdf8; font-weight: bold;">User</span>!</p>
 
             <div id="view-ideas" class="ideas-section app-view active">
                 <h2 style="color: #eab308; margin-top: 0; text-align: center;">💡 Ideas Board</h2>
-                <div class="form-group"><input type="text" id="pitcherName" disabled title="Auto-filled from Profile"></div>
-                <div class="form-group"><input type="text" id="pitcherContact" placeholder="Contact Info (Email/Phone)" required></div>
-                <div class="form-group"><textarea id="pitchIdea" rows="3" placeholder="Describe your business idea..." required></textarea></div>
+                <div class="form-group"><input type="text" id="pitcherName" disabled></div>
+                <div class="form-group"><input type="text" id="pitcherContact" placeholder="Contact Info" required></div>
+                <div class="form-group"><textarea id="pitchIdea" rows="3" placeholder="Describe your idea..." required></textarea></div>
                 <button id="submitIdeaBtn" class="submit-idea-btn">🚀 Broadcast Idea</button>
-                <div id="ideas-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading data...</p></div>
+                <div id="ideas-display" class="data-display"></div>
             </div>
 
             <div id="view-market" class="market-section app-view">
                 <h2 style="color: #10b981; margin-top: 0; text-align: center;">🛒 Marketplace</h2>
                 <div class="form-group"><input type="text" id="itemName" placeholder="Item Name" required></div>
-                <div class="form-group"><input type="text" id="itemPrice" placeholder="Price (e.g., MWK 50,000)" required></div>
-                <div class="form-group"><input type="text" id="sellerContact" placeholder="Your Contact Info (Phone/WhatsApp)" required></div>
-                <div class="file-upload"><p style="color: #34d399; margin: 0 0 10px 0; font-size: 0.9rem; font-weight: bold;">🖼️ Add an Item Photo</p><input type="file" id="itemPhoto" accept="image/*"></div>
-                <div class="form-group"><textarea id="itemDesc" rows="3" placeholder="Brief description..." required></textarea></div>
+                <div class="form-group"><input type="text" id="itemPrice" placeholder="Price" required></div>
+                <div class="form-group"><input type="text" id="sellerContact" placeholder="Contact Info" required></div>
+                <div class="file-upload"><p style="color: #34d399; margin: 0 0 10px 0;">🖼️ Add Photo</p><input type="file" id="itemPhoto" accept="image/*"></div>
+                <div class="form-group"><textarea id="itemDesc" rows="3" placeholder="Description..." required></textarea></div>
                 <button id="submitMarketBtn" class="submit-market-btn">🏷️ Post to Marketplace</button>
-                <div id="market-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading listings...</p></div>
+                <div id="market-display" class="data-display"></div>
             </div>
 
             <div id="view-vault" class="vault-section app-view">
                 <h2 style="color: #3b82f6; margin-top: 0; text-align: center;">☁️ Media Vault</h2>
-                <div class="form-group">
-                    <select id="vaultCategory">
-                        <option value="📚 Book / PDF">📚 Book / PDF</option>
-                        <option value="🎵 Music / Audio">🎵 Music / Audio</option>
-                        <option value="🎬 Video / Movie">🎬 Video / Movie</option>
-                        <option value="📦 Software">📦 Software</option>
-                    </select>
-                </div>
-                <div class="form-group"><input type="text" id="vaultTitle" placeholder="Title of the Resource" required></div>
-                <div class="form-group"><input type="url" id="vaultLink" placeholder="Paste Download Link" required></div>
-                <div class="form-group"><input type="text" id="vaultUploader" disabled title="Auto-filled from Profile"></div>
+                <div class="form-group"><select id="vaultCategory"><option>📚 Book / PDF</option><option>🎵 Music</option><option>🎬 Video</option><option>📦 Software</option></select></div>
+                <div class="form-group"><input type="text" id="vaultTitle" placeholder="Title" required></div>
+                <div class="form-group"><input type="url" id="vaultLink" placeholder="Link" required></div>
+                <div class="form-group"><input type="text" id="vaultUploader" disabled></div>
                 <button id="submitVaultBtn" class="submit-vault-btn">📤 Add to Vault</button>
-                <div id="vault-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading resources...</p></div>
+                <div id="vault-display" class="data-display"></div>
             </div>
 
             <div id="view-chat" class="chat-section app-view">
                 <h2 style="color: #ec4899; margin-top: 0; text-align: center;">💬 Global Chat</h2>
-                <div id="chat-display" class="chat-display">
-                    <p style="color: #94a3b8; text-align: center;">Connecting to chat...</p>
+                <div id="chat-display" class="chat-display"></div>
+                <div class="chat-input-area"><input type="text" id="chatInput" placeholder="Message everyone..."><button id="sendChatBtn">Send</button></div>
+            </div>
+
+            <div id="view-inbox" class="inbox-section app-view">
+                <h2 style="color: #a855f7; margin-top: 0; text-align: center;">📥 Private Inbox</h2>
+                
+                <div id="inbox-placeholder" style="text-align:center; color:#94a3b8; padding: 20px;">
+                    Find an item on the Marketplace and click "💬 Message Seller" to start a secure private chat!
                 </div>
-                <div class="chat-input-area">
-                    <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off">
-                    <button id="sendChatBtn">Send</button>
+
+                <div id="private-chat-container" style="display:none;">
+                    <h3 id="private-chat-header" style="color: #d8b4fe; margin: 0 0 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; font-size: 1rem;">Chatting with...</h3>
+                    <div id="private-chat-display" class="chat-display" style="height: 280px;"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="privateChatInput" placeholder="Send a secure message...">
+                        <button id="sendPrivateChatBtn" style="background:#a855f7;">Send</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,13 +166,13 @@
             <button class="nav-item active" data-target="view-ideas"><span>💡</span>Ideas</button>
             <button class="nav-item" data-target="view-market"><span>🛒</span>Market</button>
             <button class="nav-item" data-target="view-vault"><span>☁️</span>Vault</button>
-            <button class="nav-item" data-target="view-chat"><span>💬</span>Chat</button>
+            <button class="nav-item" data-target="view-chat"><span>💬</span>Global</button>
+            <button class="nav-item" data-target="view-inbox"><span>📥</span>Inbox</button>
         </nav>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        // IMPORT ADDED 'set', 'get', 'remove' for advanced database actions
         import { getDatabase, ref, push, onValue, set, get, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
@@ -180,9 +181,7 @@
             authDomain: "gwazar-super-app.firebaseapp.com",
             databaseURL: "https://gwazar-super-app-default-rtdb.firebaseio.com",
             projectId: "gwazar-super-app",
-            storageBucket: "gwazar-super-app.firebasestorage.app",
-            messagingSenderId: "917031021586",
-            appId: "1:917031021586:web:1f906f1ede6f42956dfccb"
+            storageBucket: "gwazar-super-app.firebasestorage.app"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -190,35 +189,30 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        const loginScreen = document.getElementById('login-screen');
-        const mainApp = document.getElementById('main-app');
         let currentUserData = null;
+        let activePrivateChatId = null;
+        let privateChatUnsubscribe = null;
 
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            signInWithPopup(auth, provider).catch((error) => alert("Login Failed: " + error.message));
-        });
-
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            signOut(auth).then(() => { window.location.reload(); });
-        });
+        // AUTH
+        document.getElementById('loginBtn').addEventListener('click', () => signInWithPopup(auth, provider));
+        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth).then(() => window.location.reload()));
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                loginScreen.style.display = 'none';
-                mainApp.style.display = 'flex';
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'flex';
                 currentUserData = user;
-                
                 document.getElementById('userGreeting').innerText = user.displayName.split(" ")[0];
                 document.getElementById('pitcherName').value = user.displayName;
                 document.getElementById('vaultUploader').value = user.displayName;
-                if(!document.getElementById('pitcherContact').value) { document.getElementById('pitcherContact').value = user.email; }
             } else {
-                loginScreen.style.display = 'flex';
-                mainApp.style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('main-app').style.display = 'none';
                 currentUserData = null;
             }
         });
 
+        // NAVIGATION
         const navItems = document.querySelectorAll('.nav-item');
         const appViews = document.querySelectorAll('.app-view');
         navItems.forEach(item => {
@@ -227,191 +221,138 @@
                 appViews.forEach(view => view.classList.remove('active'));
                 item.classList.add('active');
                 document.getElementById(item.getAttribute('data-target')).classList.add('active');
-                
-                if(item.getAttribute('data-target') === 'view-chat') {
-                    const chatDisplay = document.getElementById('chat-display');
-                    chatDisplay.scrollTop = chatDisplay.scrollHeight;
-                }
             });
         });
 
-        // IDEAS LOGIC (NOW WITH LIKES AND UID TRACKING)
-        const submitIdeaBtn = document.getElementById('submitIdeaBtn');
-        const displayBoard = document.getElementById('ideas-display');
-        
-        submitIdeaBtn.addEventListener('click', () => {
-            const nameText = document.getElementById('pitcherName').value;
-            const contactText = document.getElementById('pitcherContact').value.trim();
-            const ideaText = document.getElementById('pitchIdea').value.trim();
-            if(ideaText && contactText && currentUserData) {
-                submitIdeaBtn.innerText = "Transmitting...";
+        // IDEAS
+        document.getElementById('submitIdeaBtn').addEventListener('click', () => {
+            if(currentUserData) {
                 push(ref(db, 'target_ideas_board'), { 
-                    name: nameText, 
-                    contact: contactText, 
-                    idea: ideaText, 
-                    uid: currentUserData.uid, // Save user ID so we know who owns it
-                    timestamp: new Date().toLocaleString() 
-                })
-                .then(() => { document.getElementById('pitchIdea').value = ''; submitIdeaBtn.innerText = "🚀 Broadcast Idea"; });
-            } else { alert("Please fill out your idea and contact info!"); }
+                    name: currentUserData.displayName, contact: document.getElementById('pitcherContact').value, 
+                    idea: document.getElementById('pitchIdea').value, uid: currentUserData.uid, timestamp: new Date().toLocaleString() 
+                });
+            }
         });
-
         onValue(ref(db, 'target_ideas_board'), (snapshot) => {
-            displayBoard.innerHTML = ''; 
-            if (!snapshot.exists()) { displayBoard.innerHTML = '<p style="color: #94a3b8; text-align: center;">No ideas posted yet.</p>'; return; }
-            
-            let ideasArray = []; 
-            snapshot.forEach((child) => { 
-                ideasArray.push({ id: child.key, ...child.val() }); 
-            });
-
-            ideasArray.reverse().forEach((data) => {
-                // Calculate Likes
-                const likesObj = data.likes || {};
-                const likeCount = Object.keys(likesObj).length;
-                const iLikedIt = currentUserData && likesObj[currentUserData.uid];
-                const likeColor = iLikedIt ? '#eab308' : '#94a3b8';
-                
-                // Show delete button only if currently logged in user owns the post
-                let deleteHtml = '';
-                if (currentUserData && data.uid === currentUserData.uid) {
-                    deleteHtml = `<button class="delete-btn" data-id="${data.id}">🗑️ Delete</button>`;
-                }
-
-                displayBoard.innerHTML += `
-                    <div class="idea-post">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <h4>${data.name}</h4>
-                            ${deleteHtml}
-                        </div>
-                        <small class="post-meta">📞 ${data.contact} | 🕒 ${data.timestamp}</small>
-                        <p class="post-body">${data.idea}</p>
-                        
-                        <div class="interaction-bar">
-                            <button class="like-btn" data-id="${data.id}" style="color: ${likeColor}; font-weight: ${iLikedIt ? 'bold' : 'normal'};">
-                                ${iLikedIt ? '👍' : '👍'} ${likeCount} Likes
-                            </button>
-                        </div>
-                    </div>
-                `;
+            const board = document.getElementById('ideas-display'); board.innerHTML = ''; 
+            let arr = []; snapshot.forEach(c => arr.push({ id: c.key, ...c.val() }));
+            arr.reverse().forEach(data => {
+                const iLiked = currentUserData && (data.likes || {})[currentUserData.uid];
+                board.innerHTML += `<div class="idea-post"><h4>${data.name}</h4><p class="post-body">${data.idea}</p></div>`;
             });
         });
 
-        // Event Listener for Like & Delete buttons
-        displayBoard.addEventListener('click', (e) => {
-            const likeBtn = e.target.closest('.like-btn');
-            const deleteBtn = e.target.closest('.delete-btn');
-
-            if (likeBtn && currentUserData) {
-                const id = likeBtn.getAttribute('data-id');
-                const likeRef = ref(db, `target_ideas_board/${id}/likes/${currentUserData.uid}`);
-                get(likeRef).then((snap) => {
-                    if (snap.exists()) { remove(likeRef); } // Un-like
-                    else { set(likeRef, true); } // Like
-                });
-            }
-
-            if (deleteBtn && currentUserData) {
-                const id = deleteBtn.getAttribute('data-id');
-                if (confirm("Are you sure you want to delete this idea forever?")) {
-                    remove(ref(db, `target_ideas_board/${id}`));
-                }
-            }
-        });
-
-        // MARKETPLACE LOGIC
+        // MARKETPLACE (UPDATED FOR DMs)
         const IMGBB_API_KEY = "b359610224e1fccc15464eeca3025526"; 
-        const submitMarketBtn = document.getElementById('submitMarketBtn');
-        submitMarketBtn.addEventListener('click', async () => {
-            const itemText = document.getElementById('itemName').value.trim();
-            const priceText = document.getElementById('itemPrice').value.trim();
-            const contactText = document.getElementById('sellerContact').value.trim();
-            const descText = document.getElementById('itemDesc').value.trim();
-            const file = document.getElementById('itemPhoto').files[0];
-
-            if(itemText && priceText && contactText && descText) {
-                submitMarketBtn.innerText = "Posting... Please wait..."; submitMarketBtn.disabled = true; let imageUrl = ""; 
-                try {
-                    if(file) {
-                        const formData = new FormData(); formData.append('image', file);
-                        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-                        const imgData = await response.json(); if (imgData.success) { imageUrl = imgData.data.url; } 
-                    }
-                    await push(ref(db, 'target_marketplace_visual'), { item: itemText, price: priceText, contact: contactText, desc: descText, image: imageUrl, uploader: currentUserData.displayName, timestamp: new Date().toLocaleString() });
-                    document.getElementById('itemName').value = ''; document.getElementById('itemPrice').value = ''; document.getElementById('itemDesc').value = ''; document.getElementById('itemPhoto').value = ''; 
-                    alert("Successfully posted visual ad!");
-                } catch (error) { alert("Error: " + error.message); } finally { submitMarketBtn.innerText = "🏷️ Post to Marketplace"; submitMarketBtn.disabled = false; }
-            } else { alert("Please fill out all text fields!"); }
-        });
-        onValue(ref(db, 'target_marketplace_visual'), (snapshot) => {
-            const marketDisplay = document.getElementById('market-display'); marketDisplay.innerHTML = ''; 
-            if (!snapshot.exists()) { marketDisplay.innerHTML = '<p style="color: #94a3b8; text-align: center;">No visual items for sale yet.</p>'; return; }
-            let marketArray = []; snapshot.forEach((child) => { marketArray.push(child.val()); });
-            marketArray.reverse().forEach((data) => {
-                let imgHtml = data.image ? `<img src="${data.image}" class="market-img">` : `<span style="color:#4b5563; font-style:italic;">No photo</span>`;
-                marketDisplay.innerHTML += `<div class="market-post"><div class="market-img-container">${imgHtml}</div><div class="market-details"><div class="header"><h4>${data.item}</h4><span class="price">${data.price}</span></div><small class="post-meta">Seller: ${data.uploader} | 📞 ${data.contact}</small><p class="post-body">${data.desc}</p></div></div>`;
-            });
-        });
-
-        // MEDIA VAULT LOGIC
-        const submitVaultBtn = document.getElementById('submitVaultBtn');
-        submitVaultBtn.addEventListener('click', () => {
-            const category = document.getElementById('vaultCategory').value;
-            const title = document.getElementById('vaultTitle').value.trim();
-            const link = document.getElementById('vaultLink').value.trim();
-            const uploader = document.getElementById('vaultUploader').value;
-            if(title && link) {
-                submitVaultBtn.innerText = "Saving...";
-                push(ref(db, 'target_media_vault'), { category: category, title: title, link: link, uploader: uploader, timestamp: new Date().toLocaleString() })
-                .then(() => { document.getElementById('vaultTitle').value = ''; document.getElementById('vaultLink').value = ''; submitVaultBtn.innerText = "📤 Add to Vault"; });
-            } else { alert("Please provide a Title and Download Link!"); }
-        });
-        onValue(ref(db, 'target_media_vault'), (snapshot) => {
-            const vaultDisplay = document.getElementById('vault-display'); vaultDisplay.innerHTML = ''; 
-            if (!snapshot.exists()) { vaultDisplay.innerHTML = '<p style="color: #94a3b8; text-align: center;">Vault is currently empty.</p>'; return; }
-            let vaultArray = []; snapshot.forEach((child) => { vaultArray.push(child.val()); });
-            vaultArray.reverse().forEach((data) => {
-                vaultDisplay.innerHTML += `<div class="vault-post"><div class="header"><h4>${data.title}</h4><span class="vault-tag">${data.category}</span></div><small class="post-meta">Shared by: ${data.uploader} | 🕒 ${data.timestamp}</small><a href="${data.link}" target="_blank" class="download-btn">⬇️ Download</a></div>`;
-            });
-        });
-
-        // GLOBAL CHAT LOGIC
-        const chatInput = document.getElementById('chatInput');
-        const sendChatBtn = document.getElementById('sendChatBtn');
-        const chatDisplay = document.getElementById('chat-display');
-
-        const sendMessage = () => {
-            const text = chatInput.value.trim();
-            if(text && currentUserData) {
-                push(ref(db, 'target_global_chat'), { 
-                    sender: currentUserData.displayName, 
-                    text: text, 
-                    timestamp: Date.now() 
-                });
-                chatInput.value = '';
+        document.getElementById('submitMarketBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('submitMarketBtn'); btn.innerText = "Posting..."; btn.disabled = true;
+            let imageUrl = ""; const file = document.getElementById('itemPhoto').files[0];
+            if(file) {
+                const fd = new FormData(); fd.append('image', file);
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: fd });
+                const json = await res.json(); if(json.success) imageUrl = json.data.url;
             }
-        };
-
-        sendChatBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
-
-        onValue(ref(db, 'target_global_chat'), (snapshot) => {
-            chatDisplay.innerHTML = '';
-            if (!snapshot.exists()) { chatDisplay.innerHTML = '<p style="color: #94a3b8; text-align: center;">Be the first to say hello!</p>'; return; }
-            
-            snapshot.forEach((child) => {
-                const data = child.val();
-                const isMe = currentUserData && data.sender === currentUserData.displayName;
-                const wrapperClass = isMe ? 'me' : 'other';
-                
-                chatDisplay.innerHTML += `
-                    <div class="chat-message-wrapper ${wrapperClass}">
-                        <span class="chat-sender">${data.sender}</span>
-                        <div class="chat-bubble">${data.text}</div>
-                    </div>
-                `;
+            await push(ref(db, 'target_marketplace_visual'), { 
+                item: document.getElementById('itemName').value, price: document.getElementById('itemPrice').value, 
+                desc: document.getElementById('itemDesc').value, image: imageUrl, 
+                uploader: currentUserData.displayName, uid: currentUserData.uid, // SAVING UID FOR PRIVATE CHAT
+                timestamp: new Date().toLocaleString() 
             });
-            chatDisplay.scrollTop = chatDisplay.scrollHeight;
+            btn.innerText = "🏷️ Post to Marketplace"; btn.disabled = false;
+        });
+
+        onValue(ref(db, 'target_marketplace_visual'), (snapshot) => {
+            const mDisplay = document.getElementById('market-display'); mDisplay.innerHTML = ''; 
+            let arr = []; snapshot.forEach(c => arr.push(c.val()));
+            arr.reverse().forEach(data => {
+                let img = data.image ? `<img src="${data.image}" class="market-img">` : ``;
+                
+                // Show DM button ONLY if post has a uid AND it doesn't belong to the logged-in user
+                let dmBtnHtml = '';
+                if(currentUserData && data.uid && data.uid !== currentUserData.uid) {
+                    dmBtnHtml = `<button class="dm-btn" data-selleruid="${data.uid}" data-sellername="${data.uploader}">💬 Message Seller</button>`;
+                }
+
+                mDisplay.innerHTML += `<div class="market-post"><div class="market-img-container">${img}</div>
+                <div class="market-details"><h4>${data.item}</h4><span class="price">${data.price}</span><p class="post-body">${data.desc}</p>
+                ${dmBtnHtml}</div></div>`;
+            });
+        });
+
+        // OPEN PRIVATE CHAT LISTENER
+        document.getElementById('market-display').addEventListener('click', (e) => {
+            if(e.target.classList.contains('dm-btn')) {
+                const sellerUid = e.target.getAttribute('data-selleruid');
+                const sellerName = e.target.getAttribute('data-sellername');
+                
+                // Switch Tabs
+                navItems.forEach(n => n.classList.remove('active')); appViews.forEach(v => v.classList.remove('active'));
+                document.querySelector('[data-target="view-inbox"]').classList.add('active');
+                document.getElementById('view-inbox').classList.add('active');
+
+                // Setup Chat UI
+                document.getElementById('inbox-placeholder').style.display = 'none';
+                document.getElementById('private-chat-container').style.display = 'block';
+                document.getElementById('private-chat-header').innerText = `🔒 Secure Chat with ${sellerName}`;
+
+                // Create a unique Room ID by sorting both UIDs alphabetically
+                activePrivateChatId = [currentUserData.uid, sellerUid].sort().join('_');
+
+                if(privateChatUnsubscribe) privateChatUnsubscribe(); // Stop listening to old chat
+
+                // Load Private Messages
+                privateChatUnsubscribe = onValue(ref(db, 'target_private_messages/' + activePrivateChatId), (snap) => {
+                    const pDisplay = document.getElementById('private-chat-display'); pDisplay.innerHTML = '';
+                    if(!snap.exists()) { pDisplay.innerHTML = '<p style="color:#94a3b8; text-align:center;">Say hello to start negotiations!</p>'; return; }
+                    
+                    snap.forEach(child => {
+                        const msg = child.val();
+                        const isMe = msg.senderUid === currentUserData.uid;
+                        pDisplay.innerHTML += `<div class="chat-message-wrapper ${isMe ? 'me' : 'other'}">
+                            <span class="chat-sender">${msg.senderName}</span>
+                            <div class="chat-bubble">${msg.text}</div></div>`;
+                    });
+                    pDisplay.scrollTop = pDisplay.scrollHeight;
+                });
+            }
+        });
+
+        // SEND PRIVATE MESSAGE
+        document.getElementById('sendPrivateChatBtn').addEventListener('click', () => {
+            const txt = document.getElementById('privateChatInput').value.trim();
+            if(txt && activePrivateChatId && currentUserData) {
+                push(ref(db, 'target_private_messages/' + activePrivateChatId), {
+                    senderName: currentUserData.displayName, senderUid: currentUserData.uid, text: txt, timestamp: Date.now()
+                });
+                document.getElementById('privateChatInput').value = '';
+            }
+        });
+
+        // VAULT
+        document.getElementById('submitVaultBtn').addEventListener('click', () => {
+            push(ref(db, 'target_media_vault'), { 
+                category: document.getElementById('vaultCategory').value, title: document.getElementById('vaultTitle').value, 
+                link: document.getElementById('vaultLink').value, uploader: currentUserData.displayName 
+            });
+        });
+        onValue(ref(db, 'target_media_vault'), (snap) => {
+            const vDisplay = document.getElementById('vault-display'); vDisplay.innerHTML = ''; 
+            let arr = []; snap.forEach(c => arr.push(c.val()));
+            arr.reverse().forEach(d => vDisplay.innerHTML += `<div class="vault-post"><h4>${d.title}</h4><a href="${d.link}" target="_blank" class="download-btn">⬇️ Download</a></div>`);
+        });
+
+        // GLOBAL CHAT
+        document.getElementById('sendChatBtn').addEventListener('click', () => {
+            const txt = document.getElementById('chatInput').value.trim();
+            if(txt && currentUserData) { push(ref(db, 'target_global_chat'), { sender: currentUserData.displayName, text: txt }); document.getElementById('chatInput').value = ''; }
+        });
+        onValue(ref(db, 'target_global_chat'), (snap) => {
+            const cDisplay = document.getElementById('chat-display'); cDisplay.innerHTML = '';
+            snap.forEach(child => {
+                const d = child.val(); const isMe = currentUserData && d.sender === currentUserData.displayName;
+                cDisplay.innerHTML += `<div class="chat-message-wrapper ${isMe ? 'me' : 'other'}"><span class="chat-sender">${d.sender}</span><div class="chat-bubble">${d.text}</div></div>`;
+            });
+            cDisplay.scrollTop = cDisplay.scrollHeight;
         });
     </script>
 </body>
