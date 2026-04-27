@@ -12,15 +12,14 @@
         h1 { margin-top: 0; font-size: 2.2rem; color: #f43f5e; text-shadow: 0 2px 10px rgba(244, 63, 94, 0.5); margin-bottom: 5px; }
         
         .header-section { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 85%; max-width: 800px; }
-        .back-btn, .logout-btn { display: inline-block; background: rgba(0,0,0,0.5); color: white; padding: 8px 15px; border-radius: 12px; text-decoration: none; font-weight: bold; border: 1px solid #f43f5e; transition: 0.3s; font-size: 0.9rem; cursor: pointer; }
-        .back-btn:hover, .logout-btn:hover { background: #f43f5e; }
+        .back-btn, .top-btn { display: inline-block; background: rgba(0,0,0,0.5); color: white; padding: 8px 15px; border-radius: 12px; text-decoration: none; font-weight: bold; border: 1px solid #f43f5e; transition: 0.3s; font-size: 0.9rem; cursor: pointer; }
+        .back-btn:hover, .top-btn:hover { background: #f43f5e; }
 
         /* FORM & DATA STYLES */
         .form-group { margin-bottom: 15px; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; box-sizing: border-box; }
         .form-group input:disabled { background: rgba(255,255,255,0.5); color: #333; font-weight: bold; }
         .data-display { margin-top: 25px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
-        .post-meta { color: #94a3b8; font-size: 0.8rem; display: block; margin-bottom: 10px; }
         .post-body { margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; }
 
         /* APP VIEW TAB LOGIC */
@@ -31,7 +30,7 @@
         /* SECTIONS */
         .ideas-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #eab308; }
         .submit-idea-btn { background: #eab308; color: #1e1b4b; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
-        .idea-post { background: rgba(255,255,255,0.05); border-left: 4px solid #eab308; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; position: relative; }
+        .idea-post { background: rgba(255,255,255,0.05); border-left: 4px solid #eab308; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
         .idea-post h4 { margin: 0 0 5px 0; color: #eab308; }
         
         .market-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #10b981; }
@@ -67,12 +66,17 @@
         .chat-input-area input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; }
         .chat-input-area button { background: #ec4899; color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
 
-        /* INBOX LIST SPECIFIC */
         .conversation-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border-left: 4px solid #a855f7; transition: 0.2s; }
-        .conversation-item:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
         .conversation-item h4 { margin: 0 0 5px 0; color: #d8b4fe; font-size: 1.1rem; }
-        .conversation-item p { margin: 0; font-size: 0.85rem; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .back-to-inbox-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid #a855f7; padding: 5px 10px; border-radius: 6px; cursor: pointer; margin-bottom: 15px; font-size: 0.8rem; }
+
+        /* PROFILE STYLES */
+        .profile-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #f43f5e; }
+        .my-item-card { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+        .delete-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.2s;}
+        .delete-btn:hover { background: #dc2626; }
+        .logout-full-btn { background: transparent; color: #f87171; border: 2px solid #ef4444; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .logout-full-btn:hover { background: #ef4444; color: white; }
 
         /* NAVIGATION */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 1000; }
@@ -102,7 +106,7 @@
         
         <div class="header-section">
             <a href="index.html" class="back-btn">⬅️ Home</a>
-            <button id="logoutBtn" class="logout-btn">Logout 🚪</button>
+            <button id="headerProfileBtn" class="top-btn">👤 Profile</button>
         </div>
 
         <div class="glass-container">
@@ -147,13 +151,11 @@
 
             <div id="view-inbox" class="inbox-section app-view">
                 <h2 style="color: #a855f7; margin-top: 0; text-align: center;">📥 Inbox</h2>
-                
                 <div id="inbox-list-container">
                     <div id="inbox-display" class="data-display" style="margin-top: 10px;">
                         <p style="color:#94a3b8; text-align:center;">Loading messages...</p>
                     </div>
                 </div>
-
                 <div id="private-chat-container" style="display:none;">
                     <button id="backToInboxBtn" class="back-to-inbox-btn">⬅️ Back to List</button>
                     <h3 id="private-chat-header" style="color: #d8b4fe; margin: 0 0 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; font-size: 1rem;">Chatting with...</h3>
@@ -163,6 +165,26 @@
                         <button id="sendPrivateChatBtn" style="background:#a855f7;">Send</button>
                     </div>
                 </div>
+            </div>
+
+            <div id="view-profile" class="profile-section app-view">
+                <h2 style="color: #f43f5e; margin-top: 0; text-align: center;">👤 Dashboard</h2>
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="margin: 0 0 5px 0; color: #cbd5e1;">Logged in as:</p>
+                    <h3 id="profileNameDisplay" style="margin: 0; color: white;">User</h3>
+                    <p id="profileEmailDisplay" style="margin: 5px 0 0 0; color: #94a3b8; font-size: 0.85rem;">email@example.com</p>
+                </div>
+
+                <h3 style="color: #eab308; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">My Ideas</h3>
+                <div id="profile-ideas" style="margin-bottom: 15px;"></div>
+
+                <h3 style="color: #10b981; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">My Market Items</h3>
+                <div id="profile-market" style="margin-bottom: 15px;"></div>
+
+                <h3 style="color: #3b82f6; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">My Vault Uploads</h3>
+                <div id="profile-vault"></div>
+
+                <button id="logoutBtn" class="logout-full-btn">Logout 🚪</button>
             </div>
         </div>
 
@@ -210,7 +232,13 @@
                 document.getElementById('userGreeting').innerText = user.displayName.split(" ")[0];
                 document.getElementById('pitcherName').value = user.displayName;
                 document.getElementById('vaultUploader').value = user.displayName;
-                loadInboxList(); // Load inbox on login
+                
+                // Profile specifics
+                document.getElementById('profileNameDisplay').innerText = user.displayName;
+                document.getElementById('profileEmailDisplay').innerText = user.email;
+
+                loadInboxList();
+                loadMyProfile(); // Load profile data
             } else {
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('main-app').style.display = 'none';
@@ -218,23 +246,89 @@
             }
         });
 
-        // NAVIGATION
+        // NAVIGATION LOGIC
         const navItems = document.querySelectorAll('.nav-item');
         const appViews = document.querySelectorAll('.app-view');
+        
+        function switchTab(targetId) {
+            navItems.forEach(nav => nav.classList.remove('active'));
+            appViews.forEach(view => view.classList.remove('active'));
+            
+            const activeNav = document.querySelector(`.nav-item[data-target="${targetId}"]`);
+            if(activeNav) activeNav.classList.add('active');
+            
+            document.getElementById(targetId).classList.add('active');
+            
+            if(targetId === 'view-inbox') {
+                document.getElementById('inbox-list-container').style.display = 'block';
+                document.getElementById('private-chat-container').style.display = 'none';
+            }
+        }
+
         navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                navItems.forEach(nav => nav.classList.remove('active'));
-                appViews.forEach(view => view.classList.remove('active'));
-                item.classList.add('active');
-                document.getElementById(item.getAttribute('data-target')).classList.add('active');
-                
-                // If opening inbox tab, ensure list is showing and chat is hidden
-                if(item.getAttribute('data-target') === 'view-inbox') {
-                    document.getElementById('inbox-list-container').style.display = 'block';
-                    document.getElementById('private-chat-container').style.display = 'none';
-                }
-            });
+            item.addEventListener('click', () => switchTab(item.getAttribute('data-target')));
         });
+
+        // HEADER PROFILE BUTTON
+        document.getElementById('headerProfileBtn').addEventListener('click', () => {
+            switchTab('view-profile');
+        });
+
+        // ---------------- PROFILE DATA & DELETION ----------------
+        function loadMyProfile() {
+            if(!currentUserData) return;
+
+            // Load Ideas
+            onValue(ref(db, 'target_ideas_board'), (snap) => {
+                const box = document.getElementById('profile-ideas'); box.innerHTML = '';
+                let count = 0;
+                snap.forEach(c => {
+                    if(c.val().uid === currentUserData.uid) {
+                        count++;
+                        let preview = c.val().idea.length > 25 ? c.val().idea.substring(0,25) + "..." : c.val().idea;
+                        box.innerHTML += `<div class="my-item-card"><span>📝 ${preview}</span> <button class="delete-btn" data-path="target_ideas_board/${c.key}">Trash</button></div>`;
+                    }
+                });
+                if(count === 0) box.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No ideas pitched yet.</p>';
+            });
+
+            // Load Market
+            onValue(ref(db, 'target_marketplace_visual'), (snap) => {
+                const box = document.getElementById('profile-market'); box.innerHTML = '';
+                let count = 0;
+                snap.forEach(c => {
+                    if(c.val().uid === currentUserData.uid) {
+                        count++;
+                        box.innerHTML += `<div class="my-item-card"><span>🏷️ ${c.val().item}</span> <button class="delete-btn" data-path="target_marketplace_visual/${c.key}">Trash</button></div>`;
+                    }
+                });
+                if(count === 0) box.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No items for sale.</p>';
+            });
+
+            // Load Vault
+            onValue(ref(db, 'target_media_vault'), (snap) => {
+                const box = document.getElementById('profile-vault'); box.innerHTML = '';
+                let count = 0;
+                snap.forEach(c => {
+                    if(c.val().uid === currentUserData.uid) {
+                        count++;
+                        box.innerHTML += `<div class="my-item-card"><span>☁️ ${c.val().title}</span> <button class="delete-btn" data-path="target_media_vault/${c.key}">Trash</button></div>`;
+                    }
+                });
+                if(count === 0) box.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No files uploaded.</p>';
+            });
+        }
+
+        // Handle Delete Button Clicks globally inside the profile view
+        document.getElementById('view-profile').addEventListener('click', (e) => {
+            if(e.target.classList.contains('delete-btn')) {
+                const path = e.target.getAttribute('data-path');
+                if(path && confirm("Are you sure you want to permanently delete this?")) {
+                    remove(ref(db, path));
+                }
+            }
+        });
+
 
         // IDEAS
         document.getElementById('submitIdeaBtn').addEventListener('click', () => {
@@ -247,10 +341,8 @@
         });
         onValue(ref(db, 'target_ideas_board'), (snapshot) => {
             const board = document.getElementById('ideas-display'); board.innerHTML = ''; 
-            let arr = []; snapshot.forEach(c => arr.push({ id: c.key, ...c.val() }));
-            arr.reverse().forEach(data => {
-                board.innerHTML += `<div class="idea-post"><h4>${data.name}</h4><p class="post-body">${data.idea}</p></div>`;
-            });
+            let arr = []; snapshot.forEach(c => arr.push(c.val()));
+            arr.reverse().forEach(data => board.innerHTML += `<div class="idea-post"><h4>${data.name}</h4><p class="post-body">${data.idea}</p></div>`);
         });
 
         // MARKETPLACE 
@@ -286,61 +378,35 @@
             });
         });
 
-        // -----------------------------------------------------
-        // NEW INBOX & PRIVATE CHAT LOGIC
-        // -----------------------------------------------------
-
-        // 1. Function to Load the List of Conversations
+        // INBOX LIST
         function loadInboxList() {
             if(!currentUserData) return;
             onValue(ref(db, 'target_private_metadata'), (snapshot) => {
                 const inboxDisplay = document.getElementById('inbox-display');
-                inboxDisplay.innerHTML = '';
-                let hasChats = false;
-
+                inboxDisplay.innerHTML = ''; let hasChats = false;
                 snapshot.forEach(child => {
-                    const metadata = child.val();
-                    const roomId = child.key;
-                    
-                    // If my UID is in this room ID, it belongs to me
+                    const metadata = child.val(); const roomId = child.key;
                     if(roomId.includes(currentUserData.uid)) {
                         hasChats = true;
-                        // Figure out the other person's name
                         const otherName = (metadata.user1Uid === currentUserData.uid) ? metadata.user2Name : metadata.user1Name;
-                        
-                        inboxDisplay.innerHTML += `
-                            <div class="conversation-item" data-room="${roomId}" data-partner="${otherName}">
-                                <h4>👤 ${otherName}</h4>
-                                <p>Click to open chat...</p>
-                            </div>
-                        `;
+                        inboxDisplay.innerHTML += `<div class="conversation-item" data-room="${roomId}" data-partner="${otherName}"><h4>👤 ${otherName}</h4><p>Click to open chat...</p></div>`;
                     }
                 });
-
                 if(!hasChats) inboxDisplay.innerHTML = '<p style="color:#94a3b8; text-align:center;">No messages yet. Check out the Market!</p>';
             });
         }
 
-        // 2. Start Chat from Marketplace
         document.getElementById('market-display').addEventListener('click', (e) => {
             if(e.target.classList.contains('dm-btn')) {
                 const sellerUid = e.target.getAttribute('data-selleruid');
                 const sellerName = e.target.getAttribute('data-sellername');
-                
                 activePrivateChatId = [currentUserData.uid, sellerUid].sort().join('_');
                 activeChatPartnerName = sellerName;
-                
-                // Save Metadata so the Inbox List always knows the names!
-                set(ref(db, 'target_private_metadata/' + activePrivateChatId), {
-                    user1Uid: currentUserData.uid, user1Name: currentUserData.displayName,
-                    user2Uid: sellerUid, user2Name: sellerName
-                });
-
+                set(ref(db, 'target_private_metadata/' + activePrivateChatId), { user1Uid: currentUserData.uid, user1Name: currentUserData.displayName, user2Uid: sellerUid, user2Name: sellerName });
                 openPrivateChatRoom();
             }
         });
 
-        // 3. Open Chat from Inbox List
         document.getElementById('inbox-display').addEventListener('click', (e) => {
             const item = e.target.closest('.conversation-item');
             if(item) {
@@ -350,58 +416,43 @@
             }
         });
 
-        // 4. Function to render the actual chat window
         function openPrivateChatRoom() {
-            // Switch UI
-            navItems.forEach(n => n.classList.remove('active')); appViews.forEach(v => v.classList.remove('active'));
-            document.querySelector('[data-target="view-inbox"]').classList.add('active');
-            document.getElementById('view-inbox').classList.add('active');
+            switchTab('view-inbox');
             document.getElementById('inbox-list-container').style.display = 'none';
             document.getElementById('private-chat-container').style.display = 'block';
             document.getElementById('private-chat-header').innerText = `🔒 Chat with ${activeChatPartnerName}`;
-
             if(privateChatUnsubscribe) privateChatUnsubscribe();
-
-            // Load Messages
             privateChatUnsubscribe = onValue(ref(db, 'target_private_messages/' + activePrivateChatId), (snap) => {
                 const pDisplay = document.getElementById('private-chat-display'); pDisplay.innerHTML = '';
                 if(!snap.exists()) { pDisplay.innerHTML = '<p style="color:#94a3b8; text-align:center;">Say hello!</p>'; return; }
-                
                 snap.forEach(child => {
-                    const msg = child.val();
-                    const isMe = msg.senderUid === currentUserData.uid;
-                    pDisplay.innerHTML += `<div class="chat-message-wrapper ${isMe ? 'me' : 'other'}">
-                        <span class="chat-sender">${msg.senderName}</span>
-                        <div class="chat-bubble">${msg.text}</div></div>`;
+                    const msg = child.val(); const isMe = msg.senderUid === currentUserData.uid;
+                    pDisplay.innerHTML += `<div class="chat-message-wrapper ${isMe ? 'me' : 'other'}"><span class="chat-sender">${msg.senderName}</span><div class="chat-bubble">${msg.text}</div></div>`;
                 });
                 pDisplay.scrollTop = pDisplay.scrollHeight;
             });
         }
 
-        // 5. Back Button (Return to list)
         document.getElementById('backToInboxBtn').addEventListener('click', () => {
             document.getElementById('inbox-list-container').style.display = 'block';
             document.getElementById('private-chat-container').style.display = 'none';
             if(privateChatUnsubscribe) privateChatUnsubscribe();
         });
 
-        // 6. Send Private Message
         document.getElementById('sendPrivateChatBtn').addEventListener('click', () => {
             const txt = document.getElementById('privateChatInput').value.trim();
             if(txt && activePrivateChatId && currentUserData) {
-                push(ref(db, 'target_private_messages/' + activePrivateChatId), {
-                    senderName: currentUserData.displayName, senderUid: currentUserData.uid, text: txt, timestamp: Date.now()
-                });
+                push(ref(db, 'target_private_messages/' + activePrivateChatId), { senderName: currentUserData.displayName, senderUid: currentUserData.uid, text: txt, timestamp: Date.now() });
                 document.getElementById('privateChatInput').value = '';
             }
         });
 
-
-        // VAULT
+        // VAULT (UPDATED to include UID for profile deletion tracking)
         document.getElementById('submitVaultBtn').addEventListener('click', () => {
             push(ref(db, 'target_media_vault'), { 
                 category: document.getElementById('vaultCategory').value, title: document.getElementById('vaultTitle').value, 
-                link: document.getElementById('vaultLink').value, uploader: currentUserData.displayName 
+                link: document.getElementById('vaultLink').value, uploader: currentUserData.displayName,
+                uid: currentUserData.uid // <-- Added this to track ownership for deletion
             });
         });
         onValue(ref(db, 'target_media_vault'), (snap) => {
