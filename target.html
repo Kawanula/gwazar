@@ -20,38 +20,46 @@
         .back-btn { display: inline-block; background: rgba(0,0,0,0.5); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: bold; margin-bottom: 20px; border: 1px solid #f43f5e; transition: 0.3s; }
         .back-btn:hover { background: #f43f5e; }
 
+        /* FORM STYLES */
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; box-sizing: border-box; }
+        .data-display { margin-top: 30px; max-height: 350px; overflow-y: auto; padding-right: 10px; }
+        .post-meta { color: #94a3b8; font-size: 0.8rem; display: block; margin-bottom: 10px; }
+        .post-body { margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; }
+
         /* PHASE 1: IDEAS BOARD STYLES */
         .ideas-section { background: rgba(0, 0, 0, 0.6); padding: 25px; border-radius: 15px; border: 1px solid #eab308; margin-top: 40px; text-align: left; }
-        .form-group { margin-bottom: 15px; }
-        .form-group input, .form-group textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; box-sizing: border-box; }
         .submit-idea-btn { background: #eab308; color: #1e1b4b; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
         .submit-idea-btn:hover { background: #facc15; }
-        .data-display { margin-top: 30px; max-height: 350px; overflow-y: auto; padding-right: 10px; }
         .idea-post { background: rgba(255,255,255,0.05); border-left: 4px solid #eab308; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
         .idea-post h4 { margin: 0 0 5px 0; color: #eab308; }
 
-        /* PHASE 2: MARKETPLACE STYLES (VISUAL UPGRADE) */
+        /* PHASE 2: MARKETPLACE STYLES */
         .market-section { background: rgba(0, 0, 0, 0.6); padding: 25px; border-radius: 15px; border: 1px solid #10b981; margin-top: 30px; text-align: left; }
-        
         .file-upload { background: rgba(255,255,255,0.1); border: 2px dashed rgba(16, 185, 129, 0.5); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;}
         .file-upload input[type="file"] { color: #cbd5e1; font-size: 0.9rem;}
-
         .submit-market-btn { background: #10b981; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
         .submit-market-btn:hover { background: #059669; }
         .submit-market-btn:disabled { background: #6b7280; cursor: not-allowed; }
-
         .market-post { background: rgba(255,255,255,0.05); border-radius: 15px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); }
         .market-img-container { width: 100%; height: 200px; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .market-img { max-width: 100%; max-height: 100%; object-fit: cover; }
         .market-img-placeholder { color: #4b5563; font-size: 0.9rem; font-style: italic; }
-
         .market-details { padding: 15px; border-left: 4px solid #10b981; }
         .market-details .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .market-details h4 { margin: 0; color: #10b981; font-size: 1.1rem; }
         .market-details .price { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.9rem;}
         
-        .post-meta { color: #94a3b8; font-size: 0.8rem; display: block; margin-bottom: 10px; }
-        .post-body { margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; }
+        /* PHASE 3: MEDIA VAULT STYLES */
+        .vault-section { background: rgba(0, 0, 0, 0.6); padding: 25px; border-radius: 15px; border: 1px solid #3b82f6; margin-top: 30px; text-align: left; }
+        .submit-vault-btn { background: #3b82f6; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .submit-vault-btn:hover { background: #2563eb; }
+        .vault-post { background: rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
+        .vault-post .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .vault-post h4 { margin: 0; color: #3b82f6; font-size: 1.1rem; }
+        .vault-tag { background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;}
+        .download-btn { display: inline-block; margin-top: 10px; background: #3b82f6; color: white; padding: 8px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+        .download-btn:hover { background: #2563eb; }
     </style>
 </head>
 <body>
@@ -91,12 +99,27 @@
             <div id="market-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading listings...</p></div>
         </div>
 
-        <div class="module-grid">
-            <div class="module-card">
-                <h3>☁️ Media Vault</h3>
-                <p>Upload and download educational resources, books, music, and videos.</p>
-                <span class="status-tag">Locked - Phase 3</span>
+        <div class="vault-section">
+            <h2 style="color: #3b82f6; margin-top: 0;">☁️ Media Vault</h2>
+            <p style="color: #cbd5e1; font-size: 0.9rem;">Share and discover educational resources, books, music, and videos via secure links.</p>
+            
+            <div class="form-group">
+                <select id="vaultCategory">
+                    <option value="📚 Book / PDF">📚 Book / PDF</option>
+                    <option value="🎵 Music / Audio">🎵 Music / Audio</option>
+                    <option value="🎬 Video / Movie">🎬 Video / Movie</option>
+                    <option value="📦 Other Software">📦 Other Software</option>
+                </select>
             </div>
+            <div class="form-group"><input type="text" id="vaultTitle" placeholder="Title of the Resource" required></div>
+            <div class="form-group"><input type="url" id="vaultLink" placeholder="Paste Download Link (Google Drive, Dropbox, etc.)" required></div>
+            <div class="form-group"><input type="text" id="vaultUploader" placeholder="Shared by (Your Name)" required></div>
+            
+            <button id="submitVaultBtn" class="submit-vault-btn">📤 Add to Vault</button>
+            <div id="vault-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading resources...</p></div>
+        </div>
+
+        <div class="module-grid">
             <div class="module-card">
                 <h3>🎮 Entertainment</h3>
                 <p>Simple browser-based games to pass the time while connecting with others.</p>
@@ -122,7 +145,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         
-        // --- IDEAS BOARD LOGIC ---
+        // --- PHASE 1: IDEAS BOARD LOGIC ---
         const submitIdeaBtn = document.getElementById('submitIdeaBtn');
         const displayBoard = document.getElementById('ideas-display');
         submitIdeaBtn.addEventListener('click', () => {
@@ -150,9 +173,8 @@
             });
         });
 
-        // --- MARKETPLACE LOGIC (IMGBB API BYPASS) ---
+        // --- PHASE 2: MARKETPLACE LOGIC ---
         const IMGBB_API_KEY = "b359610224e1fccc15464eeca3025526"; 
-        
         const submitMarketBtn = document.getElementById('submitMarketBtn');
         const marketDisplay = document.getElementById('market-display');
         const photoInput = document.getElementById('itemPhoto');
@@ -165,43 +187,24 @@
             const file = photoInput.files[0];
 
             if(itemText && priceText && contactText && descText) {
-
                 submitMarketBtn.innerText = "Posting... Please wait...";
                 submitMarketBtn.disabled = true; 
-                
                 let imageUrl = ""; 
 
                 try {
                     if(file) {
                         submitMarketBtn.innerText = "🛰️ Sending Photo to Server...";
-                        
                         const formData = new FormData();
                         formData.append('image', file);
-
-                        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                            method: 'POST',
-                            body: formData
-                        });
-                        
+                        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
                         const imgData = await response.json();
-                        
-                        if (imgData.success) {
-                            imageUrl = imgData.data.url; 
-                        } else {
-                            throw new Error("ImgBB refused the image. Check your API key.");
-                        }
-                    } else {
-                        submitMarketBtn.innerText = "Warning: No photo added...";
+                        if (imgData.success) { imageUrl = imgData.data.url; } 
+                        else { throw new Error("ImgBB refused the image. Check your API key."); }
                     }
 
                     submitMarketBtn.innerText = "💾 Saving to Database...";
                     await push(ref(db, 'target_marketplace_visual'), { 
-                        item: itemText, 
-                        price: priceText, 
-                        contact: contactText, 
-                        desc: descText, 
-                        image: imageUrl, 
-                        timestamp: new Date().toLocaleString() 
+                        item: itemText, price: priceText, contact: contactText, desc: descText, image: imageUrl, timestamp: new Date().toLocaleString() 
                     });
 
                     document.getElementById('itemName').value = ''; 
@@ -227,27 +230,65 @@
             let marketArray = [];
             snapshot.forEach((child) => { marketArray.push(child.val()); });
             marketArray.reverse().forEach((data) => {
-                
                 let imgHtml = '';
-                if(data.image && data.image !== "") {
-                    imgHtml = `<img src="${data.image}" class="market-img" alt="${data.item}">`;
-                } else {
-                    imgHtml = `<span class="market-img-placeholder">No photo uploaded</span>`;
-                }
+                if(data.image && data.image !== "") { imgHtml = `<img src="${data.image}" class="market-img" alt="${data.item}">`; } 
+                else { imgHtml = `<span class="market-img-placeholder">No photo uploaded</span>`; }
 
                 marketDisplay.innerHTML += `
                 <div class="market-post">
-                    <div class="market-img-container">
-                        ${imgHtml}
-                    </div>
+                    <div class="market-img-container">${imgHtml}</div>
                     <div class="market-details">
-                        <div class="header">
-                            <h4>${data.item}</h4>
-                            <span class="price">${data.price}</span>
-                        </div>
+                        <div class="header"><h4>${data.item}</h4><span class="price">${data.price}</span></div>
                         <small class="post-meta">📞 Contact: ${data.contact} | 🕒 ${data.timestamp}</small>
                         <p class="post-body">${data.desc}</p>
                     </div>
+                </div>`;
+            });
+        });
+
+        // --- PHASE 3: MEDIA VAULT LOGIC ---
+        const submitVaultBtn = document.getElementById('submitVaultBtn');
+        const vaultDisplay = document.getElementById('vault-display');
+
+        submitVaultBtn.addEventListener('click', () => {
+            const category = document.getElementById('vaultCategory').value;
+            const title = document.getElementById('vaultTitle').value.trim();
+            const link = document.getElementById('vaultLink').value.trim();
+            const uploader = document.getElementById('vaultUploader').value.trim();
+
+            if(title && link && uploader) {
+                // Basic check to ensure it looks like a web link
+                if (!link.startsWith('http://') && !link.startsWith('https://')) {
+                    alert("Please make sure your link starts with http:// or https://");
+                    return;
+                }
+
+                submitVaultBtn.innerText = "Encrypting & Saving...";
+                push(ref(db, 'target_media_vault'), { 
+                    category: category, title: title, link: link, uploader: uploader, timestamp: new Date().toLocaleString() 
+                }).then(() => {
+                    document.getElementById('vaultTitle').value = ''; 
+                    document.getElementById('vaultLink').value = '';
+                    document.getElementById('vaultUploader').value = '';
+                    submitVaultBtn.innerText = "📤 Add to Vault";
+                });
+            } else { alert("Please fill out all fields!"); }
+        });
+
+        onValue(ref(db, 'target_media_vault'), (snapshot) => {
+            vaultDisplay.innerHTML = ''; 
+            if (!snapshot.exists()) { vaultDisplay.innerHTML = '<p style="color: #94a3b8; text-align: center;">Vault is currently empty.</p>'; return; }
+            let vaultArray = [];
+            snapshot.forEach((child) => { vaultArray.push(child.val()); });
+            vaultArray.reverse().forEach((data) => {
+                vaultDisplay.innerHTML += `
+                <div class="vault-post">
+                    <div class="header">
+                        <h4>${data.title}</h4>
+                        <span class="vault-tag">${data.category}</span>
+                    </div>
+                    <small class="post-meta">Shared by: ${data.uploader} | 🕒 ${data.timestamp}</small>
+                    <a href="${data.link}" target="_blank" class="download-btn">⬇️ Access / Download</a>
                 </div>`;
             });
         });
