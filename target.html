@@ -11,13 +11,14 @@
         .glass-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 2rem; border-radius: 2rem; text-align: center; width: 85%; max-width: 800px; box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3); }
         h1 { margin-top: 0; font-size: 2.2rem; color: #f43f5e; text-shadow: 0 2px 10px rgba(244, 63, 94, 0.5); margin-bottom: 5px; }
         
-        .header-section { margin-bottom: 20px; }
-        .back-btn { display: inline-block; background: rgba(0,0,0,0.5); color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: bold; border: 1px solid #f43f5e; transition: 0.3s; font-size: 0.9rem; margin-bottom: 15px;}
-        .back-btn:hover { background: #f43f5e; }
+        .header-section { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 85%; max-width: 800px; }
+        .back-btn, .logout-btn { display: inline-block; background: rgba(0,0,0,0.5); color: white; padding: 8px 15px; border-radius: 12px; text-decoration: none; font-weight: bold; border: 1px solid #f43f5e; transition: 0.3s; font-size: 0.9rem; cursor: pointer; }
+        .back-btn:hover, .logout-btn:hover { background: #f43f5e; }
 
         /* FORM & DATA STYLES */
         .form-group { margin-bottom: 15px; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; box-sizing: border-box; }
+        .form-group input:disabled { background: rgba(255,255,255,0.5); color: #333; font-weight: bold; }
         .data-display { margin-top: 25px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
         .post-meta { color: #94a3b8; font-size: 0.8rem; display: block; margin-bottom: 10px; }
         .post-body { margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; }
@@ -27,28 +28,24 @@
         .app-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* PHASE 1: IDEAS BOARD STYLES */
+        /* SECTIONS */
         .ideas-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #eab308; }
         .submit-idea-btn { background: #eab308; color: #1e1b4b; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
         .idea-post { background: rgba(255,255,255,0.05); border-left: 4px solid #eab308; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
         .idea-post h4 { margin: 0 0 5px 0; color: #eab308; }
 
-        /* PHASE 2: MARKETPLACE STYLES */
         .market-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #10b981; }
         .file-upload { background: rgba(255,255,255,0.1); border: 2px dashed rgba(16, 185, 129, 0.5); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;}
         .file-upload input[type="file"] { color: #cbd5e1; font-size: 0.9rem;}
         .submit-market-btn { background: #10b981; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .submit-market-btn:disabled { background: #6b7280; cursor: not-allowed; }
         .market-post { background: rgba(255,255,255,0.05); border-radius: 15px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); }
         .market-img-container { width: 100%; height: 200px; background: #0f172a; display: flex; align-items: center; justify-content: center; }
         .market-img { max-width: 100%; max-height: 100%; object-fit: cover; }
-        .market-img-placeholder { color: #4b5563; font-size: 0.9rem; font-style: italic; }
         .market-details { padding: 15px; border-left: 4px solid #10b981; }
         .market-details .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .market-details h4 { margin: 0; color: #10b981; font-size: 1.1rem; }
         .market-details .price { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.9rem;}
         
-        /* PHASE 3: MEDIA VAULT STYLES */
         .vault-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #3b82f6; }
         .submit-vault-btn { background: #3b82f6; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .vault-post { background: rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
@@ -57,22 +54,17 @@
         .vault-tag { background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;}
         .download-btn { display: inline-block; margin-top: 10px; background: #3b82f6; color: white; padding: 8px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
 
-        /* PHASE 4: ENTERTAINMENT STYLES */
         .games-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #a855f7; text-align: center; }
         .tic-tac-toe-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 280px; margin: 20px auto; }
-        .cell { background: rgba(255,255,255,0.1); border-radius: 8px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; cursor: pointer; transition: 0.2s; color: #f8fafc; }
-        .cell:hover { background: rgba(255,255,255,0.2); }
-        .cell.x { color: #f43f5e; } 
-        .cell.o { color: #3b82f6; } 
+        .cell { background: rgba(255,255,255,0.1); border-radius: 8px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; cursor: pointer; color: #f8fafc; }
+        .cell.x { color: #f43f5e; } .cell.o { color: #3b82f6; } 
         .game-status { margin-bottom: 15px; font-size: 1.2rem; font-weight: bold; color: #a855f7; }
         .reset-game-btn { background: #a855f7; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* BOTTOM APP NAVIGATION */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 1000; box-shadow: 0 -4px 20px rgba(0,0,0,0.5); }
-        .nav-item { background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: inherit; }
+        /* NAVIGATION */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 1000; }
+        .nav-item { background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: inherit; }
         .nav-item span { font-size: 1.4rem; transition: 0.3s; }
-        
-        /* Active Nav States */
         .nav-item.active { font-weight: bold; }
         .nav-item.active span { transform: scale(1.2); }
         .nav-item.active[data-target="view-ideas"] { color: #eab308; }
@@ -80,90 +72,97 @@
         .nav-item.active[data-target="view-vault"] { color: #3b82f6; }
         .nav-item.active[data-target="view-games"] { color: #a855f7; }
 
+        /* LOGIN SCREEN STYLES */
+        #login-screen { margin-top: 10vh; display: flex; flex-direction: column; align-items: center; }
+        .google-btn { background: white; color: #1e1b4b; border: none; padding: 15px 25px; border-radius: 25px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; }
+        .google-btn:hover { background: #f1f5f9; transform: translateY(-2px); }
     </style>
 </head>
 <body>
 
-    <div style="width: 85%; max-width: 800px; text-align: left;" class="header-section">
-        <a href="index.html" class="back-btn">⬅️ Back Home</a>
+    <div id="login-screen" class="glass-container">
+        <h1 style="font-size: 3.5rem; margin-bottom: 10px;">🔐</h1>
+        <h2 style="margin-top: 0;">Access Target Hub</h2>
+        <p style="color: #cbd5e1; margin-bottom: 30px; font-size: 0.95rem;">Sign in to securely post ideas, trade items, and access the media vault.</p>
+        <button id="loginBtn" class="google-btn">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="24" alt="Google">
+            Continue with Google
+        </button>
     </div>
 
-    <div class="glass-container">
-        <h1>🎯 Target Hub</h1>
-        <p style="opacity: 0.9; font-size: 1rem; margin-bottom: 25px;">The ultimate business and consultation network.</p>
-
-        <div id="view-ideas" class="ideas-section app-view active">
-            <h2 style="color: #eab308; margin-top: 0; text-align: center;">💡 Ideas Board</h2>
-            <div class="form-group"><input type="text" id="pitcherName" placeholder="Your Name or Company" required></div>
-            <div class="form-group"><input type="text" id="pitcherContact" placeholder="Contact Info (Email/Phone)" required></div>
-            <div class="form-group"><textarea id="pitchIdea" rows="3" placeholder="Describe your business idea..." required></textarea></div>
-            <button id="submitIdeaBtn" class="submit-idea-btn">🚀 Broadcast Idea</button>
-            <div id="ideas-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading market data...</p></div>
+    <div id="main-app" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+        
+        <div class="header-section">
+            <a href="index.html" class="back-btn">⬅️ Home</a>
+            <button id="logoutBtn" class="logout-btn">Logout 🚪</button>
         </div>
 
-        <div id="view-market" class="market-section app-view">
-            <h2 style="color: #10b981; margin-top: 0; text-align: center;">🛒 Marketplace</h2>
-            <div class="form-group"><input type="text" id="itemName" placeholder="Item Name" required></div>
-            <div class="form-group"><input type="text" id="itemPrice" placeholder="Price (e.g., MWK 50,000)" required></div>
-            <div class="form-group"><input type="text" id="sellerContact" placeholder="Your Contact Info" required></div>
-            <div class="file-upload">
-                <p style="color: #34d399; margin: 0 0 10px 0; font-size: 0.9rem; font-weight: bold;">🖼️ Add an Item Photo</p>
-                <input type="file" id="itemPhoto" accept="image/*">
+        <div class="glass-container">
+            <h1>🎯 Target Hub</h1>
+            <p style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 20px;">Welcome back, <span id="userGreeting" style="color: #38bdf8; font-weight: bold;">User</span>!</p>
+
+            <div id="view-ideas" class="ideas-section app-view active">
+                <h2 style="color: #eab308; margin-top: 0; text-align: center;">💡 Ideas Board</h2>
+                <div class="form-group"><input type="text" id="pitcherName" disabled title="Auto-filled from Profile"></div>
+                <div class="form-group"><input type="text" id="pitcherContact" placeholder="Contact Info (Email/Phone)" required></div>
+                <div class="form-group"><textarea id="pitchIdea" rows="3" placeholder="Describe your business idea..." required></textarea></div>
+                <button id="submitIdeaBtn" class="submit-idea-btn">🚀 Broadcast Idea</button>
+                <div id="ideas-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading data...</p></div>
             </div>
-            <div class="form-group"><textarea id="itemDesc" rows="3" placeholder="Brief description..." required></textarea></div>
-            <button id="submitMarketBtn" class="submit-market-btn">🏷️ Post to Marketplace</button>
-            <div id="market-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading listings...</p></div>
-        </div>
 
-        <div id="view-vault" class="vault-section app-view">
-            <h2 style="color: #3b82f6; margin-top: 0; text-align: center;">☁️ Media Vault</h2>
-            <div class="form-group">
-                <select id="vaultCategory">
-                    <option value="📚 Book / PDF">📚 Book / PDF</option>
-                    <option value="🎵 Music / Audio">🎵 Music / Audio</option>
-                    <option value="🎬 Video / Movie">🎬 Video / Movie</option>
-                    <option value="📦 Other Software">📦 Other Software</option>
-                </select>
+            <div id="view-market" class="market-section app-view">
+                <h2 style="color: #10b981; margin-top: 0; text-align: center;">🛒 Marketplace</h2>
+                <div class="form-group"><input type="text" id="itemName" placeholder="Item Name" required></div>
+                <div class="form-group"><input type="text" id="itemPrice" placeholder="Price (e.g., MWK 50,000)" required></div>
+                <div class="form-group"><input type="text" id="sellerContact" placeholder="Your Contact Info (Phone/WhatsApp)" required></div>
+                <div class="file-upload"><p style="color: #34d399; margin: 0 0 10px 0; font-size: 0.9rem; font-weight: bold;">🖼️ Add an Item Photo</p><input type="file" id="itemPhoto" accept="image/*"></div>
+                <div class="form-group"><textarea id="itemDesc" rows="3" placeholder="Brief description..." required></textarea></div>
+                <button id="submitMarketBtn" class="submit-market-btn">🏷️ Post to Marketplace</button>
+                <div id="market-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading listings...</p></div>
             </div>
-            <div class="form-group"><input type="text" id="vaultTitle" placeholder="Title of the Resource" required></div>
-            <div class="form-group"><input type="url" id="vaultLink" placeholder="Paste Download Link" required></div>
-            <div class="form-group"><input type="text" id="vaultUploader" placeholder="Shared by (Your Name)" required></div>
-            <button id="submitVaultBtn" class="submit-vault-btn">📤 Add to Vault</button>
-            <div id="vault-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading resources...</p></div>
-        </div>
 
-        <div id="view-games" class="games-section app-view">
-            <h2 style="color: #a855f7; margin-top: 0;">🎮 Game Zone</h2>
-            <p style="color: #cbd5e1; font-size: 0.9rem;">Play a quick game of Tic-Tac-Toe!</p>
-            <div class="game-status" id="gameStatus">Player X's Turn</div>
-            <div class="tic-tac-toe-board" id="board">
-                <div class="cell" data-index="0"></div><div class="cell" data-index="1"></div><div class="cell" data-index="2"></div>
-                <div class="cell" data-index="3"></div><div class="cell" data-index="4"></div><div class="cell" data-index="5"></div>
-                <div class="cell" data-index="6"></div><div class="cell" data-index="7"></div><div class="cell" data-index="8"></div>
+            <div id="view-vault" class="vault-section app-view">
+                <h2 style="color: #3b82f6; margin-top: 0; text-align: center;">☁️ Media Vault</h2>
+                <div class="form-group">
+                    <select id="vaultCategory">
+                        <option value="📚 Book / PDF">📚 Book / PDF</option>
+                        <option value="🎵 Music / Audio">🎵 Music / Audio</option>
+                        <option value="🎬 Video / Movie">🎬 Video / Movie</option>
+                        <option value="📦 Software">📦 Software</option>
+                    </select>
+                </div>
+                <div class="form-group"><input type="text" id="vaultTitle" placeholder="Title of the Resource" required></div>
+                <div class="form-group"><input type="url" id="vaultLink" placeholder="Paste Download Link" required></div>
+                <div class="form-group"><input type="text" id="vaultUploader" disabled title="Auto-filled from Profile"></div>
+                <button id="submitVaultBtn" class="submit-vault-btn">📤 Add to Vault</button>
+                <div id="vault-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading resources...</p></div>
             </div>
-            <button class="reset-game-btn" id="resetGameBtn">🔄 Restart Game</button>
+
+            <div id="view-games" class="games-section app-view">
+                <h2 style="color: #a855f7; margin-top: 0;">🎮 Game Zone</h2>
+                <p style="color: #cbd5e1; font-size: 0.9rem;">Play Tic-Tac-Toe!</p>
+                <div class="game-status" id="gameStatus">Player X's Turn</div>
+                <div class="tic-tac-toe-board" id="board">
+                    <div class="cell" data-index="0"></div><div class="cell" data-index="1"></div><div class="cell" data-index="2"></div>
+                    <div class="cell" data-index="3"></div><div class="cell" data-index="4"></div><div class="cell" data-index="5"></div>
+                    <div class="cell" data-index="6"></div><div class="cell" data-index="7"></div><div class="cell" data-index="8"></div>
+                </div>
+                <button class="reset-game-btn" id="resetGameBtn">🔄 Restart Game</button>
+            </div>
         </div>
 
+        <nav id="bottom-nav" class="bottom-nav">
+            <button class="nav-item active" data-target="view-ideas"><span>💡</span>Ideas</button>
+            <button class="nav-item" data-target="view-market"><span>🛒</span>Market</button>
+            <button class="nav-item" data-target="view-vault"><span>☁️</span>Vault</button>
+            <button class="nav-item" data-target="view-games"><span>🎮</span>Games</button>
+        </nav>
     </div>
-
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-target="view-ideas">
-            <span>💡</span>Ideas
-        </button>
-        <button class="nav-item" data-target="view-market">
-            <span>🛒</span>Market
-        </button>
-        <button class="nav-item" data-target="view-vault">
-            <span>☁️</span>Vault
-        </button>
-        <button class="nav-item" data-target="view-games">
-            <span>🎮</span>Games
-        </button>
-    </nav>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
         import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCP6hhb62phviKZGen1CZss24dJ9BerIJQ",
@@ -177,43 +176,74 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        
-        // --- APP NAVIGATION LOGIC (TABS) ---
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // --- AUTHENTICATION LOGIC ---
+        const loginScreen = document.getElementById('login-screen');
+        const mainApp = document.getElementById('main-app');
+        let currentUserData = null;
+
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch((error) => alert("Login Failed: " + error.message));
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => { window.location.reload(); });
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is logged in! Hide login screen, show app
+                loginScreen.style.display = 'none';
+                mainApp.style.display = 'flex';
+                currentUserData = user;
+                
+                // Auto-fill Name inputs and greet user
+                document.getElementById('userGreeting').innerText = user.displayName.split(" ")[0];
+                document.getElementById('pitcherName').value = user.displayName;
+                document.getElementById('vaultUploader').value = user.displayName;
+                
+                // If contact is empty, default to their email
+                if(!document.getElementById('pitcherContact').value) {
+                    document.getElementById('pitcherContact').value = user.email;
+                }
+            } else {
+                // User is signed out!
+                loginScreen.style.display = 'flex';
+                mainApp.style.display = 'none';
+            }
+        });
+
+        // --- APP NAVIGATION LOGIC ---
         const navItems = document.querySelectorAll('.nav-item');
         const appViews = document.querySelectorAll('.app-view');
-
         navItems.forEach(item => {
             item.addEventListener('click', () => {
-                // Remove active class everywhere
                 navItems.forEach(nav => nav.classList.remove('active'));
                 appViews.forEach(view => view.classList.remove('active'));
-
-                // Add active class to clicked button and target view
                 item.classList.add('active');
-                const targetId = item.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
+                document.getElementById(item.getAttribute('data-target')).classList.add('active');
             });
         });
 
         // --- PHASE 1: IDEAS BOARD LOGIC ---
         const submitIdeaBtn = document.getElementById('submitIdeaBtn');
-        const displayBoard = document.getElementById('ideas-display');
         submitIdeaBtn.addEventListener('click', () => {
-            const nameText = document.getElementById('pitcherName').value.trim();
+            const nameText = document.getElementById('pitcherName').value;
             const contactText = document.getElementById('pitcherContact').value.trim();
             const ideaText = document.getElementById('pitchIdea').value.trim();
-            if(nameText && contactText && ideaText) {
+            if(ideaText && contactText) {
                 submitIdeaBtn.innerText = "Transmitting...";
                 push(ref(db, 'target_ideas_board'), { name: nameText, contact: contactText, idea: ideaText, timestamp: new Date().toLocaleString() })
                 .then(() => {
-                    document.getElementById('pitcherName').value = ''; 
-                    document.getElementById('pitcherContact').value = '';
                     document.getElementById('pitchIdea').value = '';
                     submitIdeaBtn.innerText = "🚀 Broadcast Idea";
                 });
-            } else { alert("Please fill out all fields!"); }
+            } else { alert("Please fill out your idea and contact info!"); }
         });
         onValue(ref(db, 'target_ideas_board'), (snapshot) => {
+            const displayBoard = document.getElementById('ideas-display');
             displayBoard.innerHTML = ''; 
             if (!snapshot.exists()) { displayBoard.innerHTML = '<p style="color: #94a3b8; text-align: center;">No ideas posted yet.</p>'; return; }
             let ideasArray = [];
@@ -226,66 +256,51 @@
         // --- PHASE 2: MARKETPLACE LOGIC ---
         const IMGBB_API_KEY = "b359610224e1fccc15464eeca3025526"; 
         const submitMarketBtn = document.getElementById('submitMarketBtn');
-        const marketDisplay = document.getElementById('market-display');
-        const photoInput = document.getElementById('itemPhoto');
-
         submitMarketBtn.addEventListener('click', async () => {
             const itemText = document.getElementById('itemName').value.trim();
             const priceText = document.getElementById('itemPrice').value.trim();
             const contactText = document.getElementById('sellerContact').value.trim();
             const descText = document.getElementById('itemDesc').value.trim();
-            const file = photoInput.files[0];
+            const file = document.getElementById('itemPhoto').files[0];
 
             if(itemText && priceText && contactText && descText) {
                 submitMarketBtn.innerText = "Posting... Please wait...";
                 submitMarketBtn.disabled = true; 
                 let imageUrl = ""; 
-
                 try {
                     if(file) {
-                        submitMarketBtn.innerText = "🛰️ Uploading Photo...";
                         const formData = new FormData();
                         formData.append('image', file);
                         const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
                         const imgData = await response.json();
                         if (imgData.success) { imageUrl = imgData.data.url; } 
-                        else { throw new Error("Image upload failed."); }
                     }
-
-                    submitMarketBtn.innerText = "💾 Saving...";
                     await push(ref(db, 'target_marketplace_visual'), { 
-                        item: itemText, price: priceText, contact: contactText, desc: descText, image: imageUrl, timestamp: new Date().toLocaleString() 
+                        item: itemText, price: priceText, contact: contactText, desc: descText, image: imageUrl, uploader: currentUserData.displayName, timestamp: new Date().toLocaleString() 
                     });
-
                     document.getElementById('itemName').value = ''; 
                     document.getElementById('itemPrice').value = '';
-                    document.getElementById('sellerContact').value = '';
                     document.getElementById('itemDesc').value = '';
-                    photoInput.value = ''; 
+                    document.getElementById('itemPhoto').value = ''; 
                     alert("Successfully posted visual ad!");
-
-                } catch (error) {
-                    alert("Error: " + error.message);
-                } finally {
-                    submitMarketBtn.innerText = "🏷️ Post to Marketplace";
-                    submitMarketBtn.disabled = false;
-                }
+                } catch (error) { alert("Error: " + error.message); } 
+                finally { submitMarketBtn.innerText = "🏷️ Post to Marketplace"; submitMarketBtn.disabled = false; }
             } else { alert("Please fill out all text fields!"); }
         });
-
         onValue(ref(db, 'target_marketplace_visual'), (snapshot) => {
+            const marketDisplay = document.getElementById('market-display');
             marketDisplay.innerHTML = ''; 
             if (!snapshot.exists()) { marketDisplay.innerHTML = '<p style="color: #94a3b8; text-align: center;">No visual items for sale yet.</p>'; return; }
             let marketArray = [];
             snapshot.forEach((child) => { marketArray.push(child.val()); });
             marketArray.reverse().forEach((data) => {
-                let imgHtml = data.image ? `<img src="${data.image}" class="market-img" alt="${data.item}">` : `<span class="market-img-placeholder">No photo uploaded</span>`;
+                let imgHtml = data.image ? `<img src="${data.image}" class="market-img">` : `<span style="color:#4b5563; font-style:italic;">No photo</span>`;
                 marketDisplay.innerHTML += `
                 <div class="market-post">
                     <div class="market-img-container">${imgHtml}</div>
                     <div class="market-details">
                         <div class="header"><h4>${data.item}</h4><span class="price">${data.price}</span></div>
-                        <small class="post-meta">📞 ${data.contact} | 🕒 ${data.timestamp}</small>
+                        <small class="post-meta">Seller: ${data.uploader} | 📞 ${data.contact}</small>
                         <p class="post-body">${data.desc}</p>
                     </div>
                 </div>`;
@@ -294,27 +309,23 @@
 
         // --- PHASE 3: MEDIA VAULT LOGIC ---
         const submitVaultBtn = document.getElementById('submitVaultBtn');
-        const vaultDisplay = document.getElementById('vault-display');
-
         submitVaultBtn.addEventListener('click', () => {
             const category = document.getElementById('vaultCategory').value;
             const title = document.getElementById('vaultTitle').value.trim();
             const link = document.getElementById('vaultLink').value.trim();
-            const uploader = document.getElementById('vaultUploader').value.trim();
-
-            if(title && link && uploader) {
+            const uploader = document.getElementById('vaultUploader').value;
+            if(title && link) {
                 submitVaultBtn.innerText = "Saving...";
                 push(ref(db, 'target_media_vault'), { category: category, title: title, link: link, uploader: uploader, timestamp: new Date().toLocaleString() })
                 .then(() => {
                     document.getElementById('vaultTitle').value = ''; 
                     document.getElementById('vaultLink').value = '';
-                    document.getElementById('vaultUploader').value = '';
                     submitVaultBtn.innerText = "📤 Add to Vault";
                 });
-            } else { alert("Please fill out all fields!"); }
+            } else { alert("Please provide a Title and Download Link!"); }
         });
-
         onValue(ref(db, 'target_media_vault'), (snapshot) => {
+            const vaultDisplay = document.getElementById('vault-display');
             vaultDisplay.innerHTML = ''; 
             if (!snapshot.exists()) { vaultDisplay.innerHTML = '<p style="color: #94a3b8; text-align: center;">Vault is currently empty.</p>'; return; }
             let vaultArray = [];
@@ -333,55 +344,27 @@
     <script>
         const cells = document.querySelectorAll('.cell');
         const statusText = document.getElementById('gameStatus');
-        const restartBtn = document.getElementById('resetGameBtn');
-        const winConditions = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
-        ];
+        const winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
         let options = ["", "", "", "", "", "", "", "", ""];
-        let currentPlayer = "X";
-        let running = true;
-
-        cells.forEach(cell => cell.addEventListener('click', cellClicked));
-        restartBtn.addEventListener('click', restartGame);
-
-        function cellClicked() {
-            const cellIndex = this.getAttribute('data-index');
-            if(options[cellIndex] !== "" || !running) { return; }
-            updateCell(this, cellIndex);
-            checkWinner();
-        }
-
-        function updateCell(cell, index) {
-            options[index] = currentPlayer;
-            cell.innerText = currentPlayer;
-            cell.classList.add(currentPlayer.toLowerCase());
-        }
-
-        function changePlayer() {
-            currentPlayer = (currentPlayer === "X") ? "O" : "X";
-            statusText.innerText = `Player ${currentPlayer}'s Turn`;
-        }
-
-        function checkWinner() {
+        let currentPlayer = "X"; let running = true;
+        cells.forEach(cell => cell.addEventListener('click', function() {
+            const i = this.getAttribute('data-index');
+            if(options[i] !== "" || !running) return;
+            options[i] = currentPlayer; this.innerText = currentPlayer; this.classList.add(currentPlayer.toLowerCase());
             let roundWon = false;
-            for(let i = 0; i < winConditions.length; i++) {
-                const condition = winConditions[i];
-                if(options[condition[0]] === "" || options[condition[1]] === "" || options[condition[2]] === "") continue;
-                if(options[condition[0]] === options[condition[1]] && options[condition[1]] === options[condition[2]]) { roundWon = true; break; }
+            for(let j=0; j<winConditions.length; j++) {
+                const [a,b,c] = winConditions[j];
+                if(options[a] && options[a] === options[b] && options[a] === options[c]) { roundWon = true; break; }
             }
-
             if(roundWon) { statusText.innerText = `🏆 Player ${currentPlayer} Wins!`; running = false; } 
-            else if(!options.includes("")) { statusText.innerText = `🤝 It's a Draw!`; running = false; } 
-            else { changePlayer(); }
-        }
-
-        function restartGame() {
-            currentPlayer = "X";
-            options = ["", "", "", "", "", "", "", "", ""];
+            else if(!options.includes("")) { statusText.innerText = `🤝 Draw!`; running = false; } 
+            else { currentPlayer = currentPlayer === "X" ? "O" : "X"; statusText.innerText = `Player ${currentPlayer}'s Turn`; }
+        }));
+        document.getElementById('resetGameBtn').addEventListener('click', () => {
+            currentPlayer = "X"; options = ["", "", "", "", "", "", "", "", ""]; running = true;
             statusText.innerText = `Player X's Turn`;
-            cells.forEach(cell => { cell.innerText = ""; cell.classList.remove('x', 'o'); });
-            running = true;
-        }
+            cells.forEach(c => { c.innerText = ""; c.classList.remove('x', 'o'); });
+        });
     </script>
 </body>
 </html>
