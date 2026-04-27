@@ -20,18 +20,27 @@
         .back-btn { display: inline-block; background: rgba(0,0,0,0.5); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: bold; margin-bottom: 20px; border: 1px solid #f43f5e; transition: 0.3s; }
         .back-btn:hover { background: #f43f5e; }
 
-        /* NEW IDEAS BOARD STYLES */
+        /* PHASE 1: IDEAS BOARD STYLES */
         .ideas-section { background: rgba(0, 0, 0, 0.6); padding: 25px; border-radius: 15px; border: 1px solid #eab308; margin-top: 40px; text-align: left; }
         .form-group { margin-bottom: 15px; }
         .form-group input, .form-group textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; box-sizing: border-box; }
         .submit-idea-btn { background: #eab308; color: #1e1b4b; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
         .submit-idea-btn:hover { background: #facc15; }
-        
-        #ideas-display { margin-top: 30px; max-height: 400px; overflow-y: auto; padding-right: 10px; }
+        .data-display { margin-top: 30px; max-height: 350px; overflow-y: auto; padding-right: 10px; }
         .idea-post { background: rgba(255,255,255,0.05); border-left: 4px solid #eab308; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
         .idea-post h4 { margin: 0 0 5px 0; color: #eab308; }
-        .idea-post small { color: #94a3b8; font-size: 0.8rem; display: block; margin-bottom: 10px; }
-        .idea-post p { margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; }
+
+        /* PHASE 2: MARKETPLACE STYLES */
+        .market-section { background: rgba(0, 0, 0, 0.6); padding: 25px; border-radius: 15px; border: 1px solid #10b981; margin-top: 30px; text-align: left; }
+        .submit-market-btn { background: #10b981; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .submit-market-btn:hover { background: #059669; }
+        .market-post { background: rgba(255,255,255,0.05); border-left: 4px solid #10b981; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
+        .market-post .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .market-post h4 { margin: 0; color: #10b981; font-size: 1.1rem; }
+        .market-post .price { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.9rem;}
+        
+        .post-meta { color: #94a3b8; font-size: 0.8rem; display: block; margin-bottom: 10px; }
+        .post-body { margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; }
     </style>
     <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -46,35 +55,35 @@
         <p style="opacity: 0.9; font-size: 1.1rem;">The ultimate business and consultation network.</p>
 
         <div class="ideas-section">
-            <h2 style="color: #eab308; margin-top: 0;">💡 Live Business Ideas Board</h2>
-            <p style="color: #cbd5e1; font-size: 0.9rem;">Pitch a business concept, seek partners, or ask for market consultation. This board is live and public.</p>
-            
-            <div class="form-group">
-                <input type="text" id="pitcherName" placeholder="Your Name or Company" required>
-            </div>
-            <div class="form-group">
-                <input type="text" id="pitcherContact" placeholder="Contact Info (Email or Phone)" required>
-            </div>
-            <div class="form-group">
-                <textarea id="pitchIdea" rows="4" placeholder="Describe your business idea or consultation request..." required></textarea>
-            </div>
+            <h2 style="color: #eab308; margin-top: 0;">💡 Live Business Ideas</h2>
+            <div class="form-group"><input type="text" id="pitcherName" placeholder="Your Name or Company" required></div>
+            <div class="form-group"><input type="text" id="pitcherContact" placeholder="Contact Info (Email or Phone)" required></div>
+            <div class="form-group"><textarea id="pitchIdea" rows="3" placeholder="Describe your business idea..." required></textarea></div>
             <button id="submitIdeaBtn" class="submit-idea-btn">🚀 Broadcast Idea</button>
+            <div id="ideas-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading market data...</p></div>
+        </div>
 
-            <div id="ideas-display">
-                <p style="color: #94a3b8; text-align: center;">Loading market data...</p>
-            </div>
+        <div class="market-section">
+            <h2 style="color: #10b981; margin-top: 0;">🛒 The Marketplace</h2>
+            <p style="color: #cbd5e1; font-size: 0.9rem;">Buy, sell, and trade locally. Post your classified ads below.</p>
+            <div class="form-group"><input type="text" id="itemName" placeholder="Item or Service Name" required></div>
+            <div class="form-group"><input type="text" id="itemPrice" placeholder="Price (e.g., MWK 50,000 or Negotiable)" required></div>
+            <div class="form-group"><input type="text" id="sellerContact" placeholder="Your Contact Info (Phone/WhatsApp)" required></div>
+            <div class="form-group"><textarea id="itemDesc" rows="3" placeholder="Brief description of the item..." required></textarea></div>
+            <button id="submitMarketBtn" class="submit-market-btn">🏷️ Post to Marketplace</button>
+            <div id="market-display" class="data-display"><p style="color: #94a3b8; text-align: center;">Loading listings...</p></div>
         </div>
 
         <div class="module-grid">
             <div class="module-card">
-                <h3>🛒 The Marketplace</h3>
-                <p>Buy, sell, and trade. Integrated advertising and secure local commerce listings.</p>
-                <span class="status-tag">Locked - Phase 2</span>
-            </div>
-            <div class="module-card">
                 <h3>☁️ Media Vault</h3>
                 <p>Upload and download educational resources, books, music, and videos.</p>
                 <span class="status-tag">Locked - Phase 3</span>
+            </div>
+            <div class="module-card">
+                <h3>🎮 Entertainment</h3>
+                <p>Simple browser-based games to pass the time while connecting with others.</p>
+                <span class="status-tag">Locked - Phase 4</span>
             </div>
         </div>
     </div>
@@ -83,7 +92,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
         import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-        // Your exact Firebase Keys from the Gwazar project
         const firebaseConfig = {
             apiKey: "AIzaSyCP6hhb62phviKZGen1CZss24dJ9BerIJQ",
             authDomain: "gwazar-super-app.firebaseapp.com",
@@ -97,60 +105,74 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         
-        const submitBtn = document.getElementById('submitIdeaBtn');
-        const nameInput = document.getElementById('pitcherName');
-        const contactInput = document.getElementById('pitcherContact');
-        const ideaInput = document.getElementById('pitchIdea');
+        // --- IDEAS BOARD LOGIC ---
+        const submitIdeaBtn = document.getElementById('submitIdeaBtn');
         const displayBoard = document.getElementById('ideas-display');
 
-        // Function to push data to Firebase
-        submitBtn.addEventListener('click', () => {
-            const nameText = nameInput.value.trim();
-            const contactText = contactInput.value.trim();
-            const ideaText = ideaInput.value.trim();
+        submitIdeaBtn.addEventListener('click', () => {
+            const nameText = document.getElementById('pitcherName').value.trim();
+            const contactText = document.getElementById('pitcherContact').value.trim();
+            const ideaText = document.getElementById('pitchIdea').value.trim();
 
-            if(nameText !== "" && contactText !== "" && ideaText !== "") {
-                submitBtn.innerText = "Transmitting...";
-                // Pushing to a new folder called 'target_ideas_board'
-                push(ref(db, 'target_ideas_board'), { 
-                    name: nameText, 
-                    contact: contactText, 
-                    idea: ideaText, 
-                    timestamp: new Date().toLocaleString() 
-                }).then(() => {
-                    nameInput.value = ''; 
-                    contactInput.value = '';
-                    ideaInput.value = '';
-                    submitBtn.innerText = "🚀 Broadcast Idea";
+            if(nameText && contactText && ideaText) {
+                submitIdeaBtn.innerText = "Transmitting...";
+                push(ref(db, 'target_ideas_board'), { name: nameText, contact: contactText, idea: ideaText, timestamp: new Date().toLocaleString() })
+                .then(() => {
+                    document.getElementById('pitcherName').value = ''; 
+                    document.getElementById('pitcherContact').value = '';
+                    document.getElementById('pitchIdea').value = '';
+                    submitIdeaBtn.innerText = "🚀 Broadcast Idea";
                 });
-            } else {
-                alert("Please fill out all fields to post your idea!");
-            }
+            } else { alert("Please fill out all fields!"); }
         });
 
-        // Function to listen for live data and display it
         onValue(ref(db, 'target_ideas_board'), (snapshot) => {
-            displayBoard.innerHTML = ''; // Clear loading text
-            
-            if (!snapshot.exists()) { 
-                displayBoard.innerHTML = '<p style="color: #94a3b8; text-align: center;">No ideas posted yet. Be the first to pitch!</p>'; 
-                return; 
-            }
-            
-            // Collect ideas in an array so we can reverse them (newest at the top)
+            displayBoard.innerHTML = ''; 
+            if (!snapshot.exists()) { displayBoard.innerHTML = '<p style="color: #94a3b8; text-align: center;">No ideas posted yet.</p>'; return; }
             let ideasArray = [];
-            snapshot.forEach((child) => {
-                ideasArray.push(child.val());
+            snapshot.forEach((child) => { ideasArray.push(child.val()); });
+            ideasArray.reverse().forEach((data) => {
+                displayBoard.innerHTML += `<div class="idea-post"><h4>${data.name}</h4><small class="post-meta">📞 ${data.contact} | 🕒 ${data.timestamp}</small><p class="post-body">${data.idea}</p></div>`;
             });
-            ideasArray.reverse(); 
+        });
 
-            // Render each idea
-            ideasArray.forEach((data) => {
-                displayBoard.innerHTML += `
-                <div class="idea-post">
-                    <h4>${data.name}</h4>
-                    <small>📞 Contact: ${data.contact} | 🕒 ${data.timestamp}</small>
-                    <p>${data.idea}</p>
+        // --- MARKETPLACE LOGIC ---
+        const submitMarketBtn = document.getElementById('submitMarketBtn');
+        const marketDisplay = document.getElementById('market-display');
+
+        submitMarketBtn.addEventListener('click', () => {
+            const itemText = document.getElementById('itemName').value.trim();
+            const priceText = document.getElementById('itemPrice').value.trim();
+            const contactText = document.getElementById('sellerContact').value.trim();
+            const descText = document.getElementById('itemDesc').value.trim();
+
+            if(itemText && priceText && contactText && descText) {
+                submitMarketBtn.innerText = "Posting...";
+                push(ref(db, 'target_marketplace'), { item: itemText, price: priceText, contact: contactText, desc: descText, timestamp: new Date().toLocaleString() })
+                .then(() => {
+                    document.getElementById('itemName').value = ''; 
+                    document.getElementById('itemPrice').value = '';
+                    document.getElementById('sellerContact').value = '';
+                    document.getElementById('itemDesc').value = '';
+                    submitMarketBtn.innerText = "🏷️ Post to Marketplace";
+                });
+            } else { alert("Please fill out all fields to post an item!"); }
+        });
+
+        onValue(ref(db, 'target_marketplace'), (snapshot) => {
+            marketDisplay.innerHTML = ''; 
+            if (!snapshot.exists()) { marketDisplay.innerHTML = '<p style="color: #94a3b8; text-align: center;">No items for sale yet. Be the first to post!</p>'; return; }
+            let marketArray = [];
+            snapshot.forEach((child) => { marketArray.push(child.val()); });
+            marketArray.reverse().forEach((data) => {
+                marketDisplay.innerHTML += `
+                <div class="market-post">
+                    <div class="header">
+                        <h4>${data.item}</h4>
+                        <span class="price">${data.price}</span>
+                    </div>
+                    <small class="post-meta">📞 Contact: ${data.contact} | 🕒 ${data.timestamp}</small>
+                    <p class="post-body">${data.desc}</p>
                 </div>`;
             });
         });
