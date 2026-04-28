@@ -3,204 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Target Hub | Kawanula</title>
+    <title>Target Hub | Kawanula Boss</title>
     <style>
-        body { margin: 0; font-family: 'Inter', sans-serif; background: linear-gradient(-45deg, #1e1b4b, #4c1d95, #7c3aed, #2563eb); background-size: 400% 400%; animation: gradient 15s ease infinite; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px 0 80px 0; color: white; }
+        /* Styles remain consistent with previous design for brand identity */
+        body { margin: 0; font-family: 'Inter', sans-serif; background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #1e1b4b); background-size: 400% 400%; animation: gradient 15s ease infinite; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px 0 80px 0; color: white; }
         @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .glass-container { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 2rem; text-align: center; width: 90%; max-width: 800px; box-shadow: 0 8px 32px 0 rgba(0,0,0,0.5); }
+        h1 { font-size: 1.8rem; color: #f43f5e; margin-bottom: 15px; }
+        .header-section { margin-bottom: 15px; display: flex; justify-content: space-between; width: 90%; max-width: 800px; }
+        .top-btn { background: rgba(255,255,255,0.1); color: white; padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; font-size: 0.8rem; }
         
-        .glass-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 2rem; border-radius: 2rem; text-align: center; width: 85%; max-width: 800px; box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3); }
-        h1 { margin-top: 0; font-size: 2.2rem; color: #f43f5e; text-shadow: 0 2px 10px rgba(244, 63, 94, 0.5); margin-bottom: 5px; }
-        
-        .header-section { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 85%; max-width: 800px; }
-        .back-btn, .top-btn { display: inline-block; background: rgba(0,0,0,0.5); color: white; padding: 8px 15px; border-radius: 12px; text-decoration: none; font-weight: bold; border: 1px solid #f43f5e; transition: 0.3s; font-size: 0.9rem; cursor: pointer; }
-        .back-btn:hover, .top-btn:hover { background: #f43f5e; }
-
-        /* FORM & DATA STYLES */
-        .form-group { margin-bottom: 15px; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; box-sizing: border-box; }
-        .form-group input:disabled { background: rgba(255,255,255,0.5); color: #333; font-weight: bold; }
-        .data-display { margin-top: 25px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
-        .post-body { margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; }
-
-        /* APP VIEW TAB LOGIC */
-        .app-view { display: none; animation: fadeIn 0.4s ease; text-align: left; }
+        /* APP VIEW LOGIC */
+        .app-view { display: none; animation: fadeIn 0.3s ease; text-align: left; }
         .app-view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* SECTIONS */
-        .ideas-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #eab308; }
-        .submit-idea-btn { background: #eab308; color: #1e1b4b; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
-        .idea-post { background: rgba(255,255,255,0.05); border-left: 4px solid #eab308; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
-        .idea-post h4 { margin: 0 0 5px 0; color: #eab308; }
-        
-        .market-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #10b981; }
-        .file-upload { background: rgba(255,255,255,0.1); border: 2px dashed rgba(16, 185, 129, 0.5); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;}
-        .file-upload input[type="file"] { color: #cbd5e1; font-size: 0.9rem;}
-        .submit-market-btn { background: #10b981; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .market-post { background: rgba(255,255,255,0.05); border-radius: 15px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); }
-        .market-img-container { width: 100%; height: 200px; background: #0f172a; display: flex; align-items: center; justify-content: center; }
-        .market-img { max-width: 100%; max-height: 100%; object-fit: cover; }
-        .market-details { padding: 15px; border-left: 4px solid #10b981; }
-        .market-details .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .market-details h4 { margin: 0; color: #10b981; font-size: 1.1rem; }
-        .market-details .price { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.9rem;}
-        .dm-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; margin-top: 10px; width: 100%; transition: 0.2s; }
-        
-        .vault-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #3b82f6; }
-        .submit-vault-btn { background: #3b82f6; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .vault-post { background: rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
-        
-        /* CHAT & INBOX STYLES */
-        .chat-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #ec4899; }
-        .inbox-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #a855f7; }
-        .chat-display { height: 350px; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; margin-bottom: 15px; }
-        .chat-message-wrapper { margin-bottom: 12px; display: flex; flex-direction: column; }
-        .chat-message-wrapper.me { align-items: flex-end; }
-        .chat-message-wrapper.other { align-items: flex-start; }
-        .chat-sender { font-size: 0.75rem; color: #94a3b8; margin-bottom: 3px; }
-        .chat-bubble { padding: 10px 14px; border-radius: 15px; font-size: 0.95rem; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
-        .chat-message-wrapper.me .chat-bubble { background: #ec4899; color: white; border-bottom-right-radius: 2px; }
-        .inbox-section .chat-message-wrapper.me .chat-bubble { background: #a855f7; }
-        .chat-message-wrapper.other .chat-bubble { background: rgba(255,255,255,0.1); color: #f1f5f9; border-bottom-left-radius: 2px; }
-        .chat-input-area { display: flex; gap: 10px; }
-        .chat-input-area input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-family: inherit; }
-        .chat-input-area button { background: #ec4899; color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        /* ADMIN SPECIFIC STYLES */
+        .admin-section { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border: 2px solid #ef4444; }
+        .user-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid #94a3b8; }
+        .user-row.is-seller { border-left-color: #10b981; }
+        .approve-btn { background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.75rem; }
+        .revoke-btn { background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.75rem; }
 
-        .conversation-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border-left: 4px solid #a855f7; transition: 0.2s; }
-        .conversation-item h4 { margin: 0 0 5px 0; color: #d8b4fe; font-size: 1.1rem; }
-        .back-to-inbox-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid #a855f7; padding: 5px 10px; border-radius: 6px; cursor: pointer; margin-bottom: 15px; font-size: 0.8rem; }
+        /* FORM STYLES */
+        .form-group { margin-bottom: 10px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border-radius: 8px; border: none; background: #fff; box-sizing: border-box; }
+        .submit-btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
 
-        /* PROFILE STYLES */
-        .profile-section { background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 15px; border-top: 4px solid #f43f5e; }
-        .my-item-card { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
-        .delete-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.2s;}
-        .delete-btn:hover { background: #dc2626; }
-        .logout-full-btn { background: transparent; color: #f87171; border: 2px solid #ef4444; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
-        .logout-full-btn:hover { background: #ef4444; color: white; }
+        /* POST STYLES */
+        .data-display { margin-top: 15px; max-height: 400px; overflow-y: auto; }
+        .post-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 12px; position: relative; }
+        .vault-card { border-left: 4px solid #3b82f6; display: flex; justify-content: space-between; align-items: center; }
+        .market-card { border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; overflow: hidden; }
+        .market-img { width: 100%; height: 180px; object-fit: cover; background: #000; }
+        .nuke-btn { background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-top: 5px; }
 
         /* NAVIGATION */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 1000; }
-        .nav-item { background: none; border: none; color: #64748b; font-size: 0.7rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: inherit; padding: 0; }
-        .nav-item span { font-size: 1.2rem; transition: 0.3s; }
-        .nav-item.active { font-weight: bold; }
-        .nav-item.active span { transform: scale(1.2); }
-        .nav-item.active[data-target="view-ideas"] { color: #eab308; }
-        .nav-item.active[data-target="view-market"] { color: #10b981; }
-        .nav-item.active[data-target="view-vault"] { color: #3b82f6; }
-        .nav-item.active[data-target="view-chat"] { color: #ec4899; }
-        .nav-item.active[data-target="view-inbox"] { color: #a855f7; }
-
-        #login-screen { margin-top: 10vh; display: flex; flex-direction: column; align-items: center; }
-        .google-btn { background: white; color: #1e1b4b; border: none; padding: 15px 25px; border-radius: 25px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #0f172a; display: flex; justify-content: space-around; padding: 10px 0 20px 0; border-top: 1px solid #1e293b; }
+        .nav-item { background: none; border: none; color: #64748b; font-size: 0.7rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .nav-item.active { color: white; font-weight: bold; }
+        
+        .paywall-banner { background: #1e293b; border: 1px dashed #10b981; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen" class="glass-container">
-        <h1 style="font-size: 3.5rem; margin-bottom: 10px;">🔐</h1>
-        <h2 style="margin-top: 0;">Access Target Hub</h2>
-        <button id="loginBtn" class="google-btn"><img src="https://www.svgrepo.com/show/475656/google-color.svg" width="24" alt="Google"> Continue with Google</button>
+    <div id="login-screen" class="glass-container" style="margin-top: 15vh;">
+        <h1>🔐 Vault Access</h1>
+        <button id="loginBtn" class="submit-btn" style="background: white; color: black;">Sign in with Google</button>
     </div>
 
-    <div id="main-app" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
-        
+    <div id="main-app" style="display: none; width: 100%; flex-direction: column; align-items: center;">
         <div class="header-section">
-            <a href="index.html" class="back-btn">⬅️ Home</a>
-            <button id="headerProfileBtn" class="top-btn">👤 Profile</button>
+            <span style="font-weight: bold; color: #38bdf8;" id="userGreeting">User</span>
+            <button id="headerAdminBtn" class="top-btn" style="display:none; border-color: #ef4444; color: #ef4444;">🛡️ Admin Dashboard</button>
         </div>
 
         <div class="glass-container">
-            <h1>🎯 Target Hub</h1>
-            <p style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 20px;">Welcome, <span id="userGreeting" style="color: #38bdf8; font-weight: bold;">User</span>!</p>
+            <h1 id="view-title">🎯 Target Hub</h1>
 
-            <div id="view-ideas" class="ideas-section app-view active">
-                <h2 style="color: #eab308; margin-top: 0; text-align: center;">💡 Ideas Board</h2>
-                <div class="form-group"><input type="text" id="pitcherName" disabled></div>
-                <div class="form-group"><input type="text" id="pitcherContact" placeholder="Contact Info" required></div>
-                <div class="form-group"><textarea id="pitchIdea" rows="3" placeholder="Describe your idea..." required></textarea></div>
-                <button id="submitIdeaBtn" class="submit-idea-btn">🚀 Broadcast Idea</button>
+            <div id="view-ideas" class="app-view active">
+                <div class="form-group"><textarea id="pitchIdea" rows="2" placeholder="Got a business idea? Pitch it here..."></textarea></div>
+                <button id="submitIdeaBtn" class="submit-btn" style="background: #eab308; color: black;">Broadcast Idea</button>
                 <div id="ideas-display" class="data-display"></div>
             </div>
 
-            <div id="view-market" class="market-section app-view">
-                <h2 style="color: #10b981; margin-top: 0; text-align: center;">🛒 Marketplace</h2>
-                <div class="form-group"><input type="text" id="itemName" placeholder="Item Name" required></div>
-                <div class="form-group"><input type="text" id="itemPrice" placeholder="Price" required></div>
-                <div class="form-group"><input type="text" id="sellerContact" placeholder="Contact Info" required></div>
-                <div class="file-upload"><p style="color: #34d399; margin: 0 0 10px 0;">🖼️ Add Photo</p><input type="file" id="itemPhoto" accept="image/*"></div>
-                <div class="form-group"><textarea id="itemDesc" rows="3" placeholder="Description..." required></textarea></div>
-                <button id="submitMarketBtn" class="submit-market-btn">🏷️ Post to Marketplace</button>
+            <div id="view-market" class="app-view">
+                <div id="seller-gate" class="paywall-banner">
+                    <p style="margin:0 0 10px 0;">To sell items here, contact the Boss.</p>
+                    <a id="waLink" href="#" class="top-btn" style="background:#25D366; border:none; text-decoration:none; display:inline-block;">WhatsApp Boss</a>
+                </div>
+                <div id="market-upload-area" style="display:none;">
+                    <div class="form-group"><input type="text" id="itemName" placeholder="Item Name"></div>
+                    <div class="form-group"><input type="text" id="itemPrice" placeholder="Price (e.g. MWK 50,000)"></div>
+                    <div class="form-group" style="background:rgba(255,255,255,0.1); padding:10px; border-radius:8px;"><input type="file" id="itemPhoto"></div>
+                    <button id="submitMarketBtn" class="submit-btn" style="background: #10b981; color: white;">List Item</button>
+                </div>
                 <div id="market-display" class="data-display"></div>
             </div>
 
-            <div id="view-vault" class="vault-section app-view">
-                <h2 style="color: #3b82f6; margin-top: 0; text-align: center;">☁️ Media Vault</h2>
-                <div class="form-group"><select id="vaultCategory"><option>📚 Book / PDF</option><option>🎵 Music</option><option>🎬 Video</option><option>📦 Software</option></select></div>
-                <div class="form-group"><input type="text" id="vaultTitle" placeholder="Title" required></div>
-                <div class="form-group"><input type="url" id="vaultLink" placeholder="Link" required></div>
-                <div class="form-group"><input type="text" id="vaultUploader" disabled></div>
-                <button id="submitVaultBtn" class="submit-vault-btn">📤 Add to Vault</button>
+            <div id="view-vault" class="app-view">
+                <div id="boss-vault-upload" style="display:none; margin-bottom: 20px; padding:15px; border: 1px solid #3b82f6; border-radius:12px;">
+                    <h3 style="margin-top:0; color:#3b82f6;">Upload Direct Content</h3>
+                    <div class="form-group"><input type="text" id="vTitle" placeholder="File Title"></div>
+                    <div class="form-group"><select id="vCat"><option>📚 Book/PDF</option><option>🎵 Audio</option><option>🎬 Video</option></select></div>
+                    <div class="form-group"><input type="file" id="vFile"></div>
+                    <button id="submitVaultBtn" class="submit-btn" style="background:#3b82f6; color:white;">Upload to Vault</button>
+                    <p id="vStatus" style="font-size:0.7rem; margin-top:5px;"></p>
+                </div>
                 <div id="vault-display" class="data-display"></div>
             </div>
 
-            <div id="view-chat" class="chat-section app-view">
-                <h2 style="color: #ec4899; margin-top: 0; text-align: center;">💬 Global Chat</h2>
-                <div id="chat-display" class="chat-display"></div>
-                <div class="chat-input-area"><input type="text" id="chatInput" placeholder="Message everyone..."><button id="sendChatBtn">Send</button></div>
-            </div>
-
-            <div id="view-inbox" class="inbox-section app-view">
-                <h2 style="color: #a855f7; margin-top: 0; text-align: center;">📥 Inbox</h2>
-                <div id="inbox-list-container">
-                    <div id="inbox-display" class="data-display" style="margin-top: 10px;">
-                        <p style="color:#94a3b8; text-align:center;">Loading messages...</p>
-                    </div>
-                </div>
-                <div id="private-chat-container" style="display:none;">
-                    <button id="backToInboxBtn" class="back-to-inbox-btn">⬅️ Back to List</button>
-                    <h3 id="private-chat-header" style="color: #d8b4fe; margin: 0 0 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; font-size: 1rem;">Chatting with...</h3>
-                    <div id="private-chat-display" class="chat-display" style="height: 250px;"></div>
-                    <div class="chat-input-area">
-                        <input type="text" id="privateChatInput" placeholder="Send a secure message...">
-                        <button id="sendPrivateChatBtn" style="background:#a855f7;">Send</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="view-profile" class="profile-section app-view">
-                <h2 style="color: #f43f5e; margin-top: 0; text-align: center;">👤 Dashboard</h2>
-                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                    <p style="margin: 0 0 5px 0; color: #cbd5e1;">Logged in as:</p>
-                    <h3 id="profileNameDisplay" style="margin: 0; color: white;">User</h3>
-                    <p id="profileEmailDisplay" style="margin: 5px 0 0 0; color: #94a3b8; font-size: 0.85rem;">email@example.com</p>
-                </div>
-
-                <h3 style="color: #eab308; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">My Ideas</h3>
-                <div id="profile-ideas" style="margin-bottom: 15px;"></div>
-
-                <h3 style="color: #10b981; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">My Market Items</h3>
-                <div id="profile-market" style="margin-bottom: 15px;"></div>
-
-                <h3 style="color: #3b82f6; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">My Vault Uploads</h3>
-                <div id="profile-vault"></div>
-
-                <button id="logoutBtn" class="logout-full-btn">Logout 🚪</button>
+            <div id="view-admin" class="app-view admin-section">
+                <h2 style="color: #ef4444; margin-top: 0;">System Control</h2>
+                <h3 style="font-size: 0.9rem; color: #94a3b8; border-bottom: 1px solid #334155; padding-bottom: 5px;">Manage Sellers</h3>
+                <div id="admin-user-list"></div>
             </div>
         </div>
 
-        <nav id="bottom-nav" class="bottom-nav">
+        <nav class="bottom-nav">
             <button class="nav-item active" data-target="view-ideas"><span>💡</span>Ideas</button>
             <button class="nav-item" data-target="view-market"><span>🛒</span>Market</button>
             <button class="nav-item" data-target="view-vault"><span>☁️</span>Vault</button>
-            <button class="nav-item" data-target="view-chat"><span>💬</span>Global</button>
-            <button class="nav-item" data-target="view-inbox" id="inboxNavBtn"><span>📥</span>Inbox</button>
+            <button class="nav-item" data-target="view-admin" id="adminNavBtn" style="display:none;"><span>🛡️</span>Admin</button>
         </nav>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue, set, get, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { getDatabase, ref, push, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+
+        // 👑 YOUR CREDENTIALS HARDCODED HERE 👑
+        const BOSS_EMAIL = "kawanularedson@gmail.com"; 
+        const BOSS_WA = "265993965546";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCP6hhb62phviKZGen1CZss24dJ9BerIJQ",
@@ -213,266 +130,146 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const auth = getAuth(app);
+        const storage = getStorage(app);
         const provider = new GoogleAuthProvider();
 
-        let currentUserData = null;
-        let activePrivateChatId = null;
-        let activeChatPartnerName = null;
-        let privateChatUnsubscribe = null;
+        let user = null;
+        let isBoss = false;
+
+        // Auto-generate WhatsApp link
+        document.getElementById('waLink').href = `https://wa.me/${BOSS_WA}?text=Hello Boss, I would like to purchase a Seller License for Target Hub.`;
 
         // AUTH
         document.getElementById('loginBtn').addEventListener('click', () => signInWithPopup(auth, provider));
-        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth).then(() => window.location.reload()));
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
+        onAuthStateChanged(auth, (u) => {
+            if (u) {
+                user = u;
+                isBoss = (u.email === BOSS_EMAIL);
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'flex';
-                currentUserData = user;
-                document.getElementById('userGreeting').innerText = user.displayName.split(" ")[0];
-                document.getElementById('pitcherName').value = user.displayName;
-                document.getElementById('vaultUploader').value = user.displayName;
                 
-                // Profile specifics
-                document.getElementById('profileNameDisplay').innerText = user.displayName;
-                document.getElementById('profileEmailDisplay').innerText = user.email;
-
-                loadInboxList();
-                loadMyProfile(); // Load profile data
-            } else {
-                document.getElementById('login-screen').style.display = 'flex';
-                document.getElementById('main-app').style.display = 'none';
-                currentUserData = null;
-            }
-        });
-
-        // NAVIGATION LOGIC
-        const navItems = document.querySelectorAll('.nav-item');
-        const appViews = document.querySelectorAll('.app-view');
-        
-        function switchTab(targetId) {
-            navItems.forEach(nav => nav.classList.remove('active'));
-            appViews.forEach(view => view.classList.remove('active'));
-            
-            const activeNav = document.querySelector(`.nav-item[data-target="${targetId}"]`);
-            if(activeNav) activeNav.classList.add('active');
-            
-            document.getElementById(targetId).classList.add('active');
-            
-            if(targetId === 'view-inbox') {
-                document.getElementById('inbox-list-container').style.display = 'block';
-                document.getElementById('private-chat-container').style.display = 'none';
-            }
-        }
-
-        navItems.forEach(item => {
-            item.addEventListener('click', () => switchTab(item.getAttribute('data-target')));
-        });
-
-        // HEADER PROFILE BUTTON
-        document.getElementById('headerProfileBtn').addEventListener('click', () => {
-            switchTab('view-profile');
-        });
-
-        // ---------------- PROFILE DATA & DELETION ----------------
-        function loadMyProfile() {
-            if(!currentUserData) return;
-
-            // Load Ideas
-            onValue(ref(db, 'target_ideas_board'), (snap) => {
-                const box = document.getElementById('profile-ideas'); box.innerHTML = '';
-                let count = 0;
-                snap.forEach(c => {
-                    if(c.val().uid === currentUserData.uid) {
-                        count++;
-                        let preview = c.val().idea.length > 25 ? c.val().idea.substring(0,25) + "..." : c.val().idea;
-                        box.innerHTML += `<div class="my-item-card"><span>📝 ${preview}</span> <button class="delete-btn" data-path="target_ideas_board/${c.key}">Trash</button></div>`;
-                    }
-                });
-                if(count === 0) box.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No ideas pitched yet.</p>';
-            });
-
-            // Load Market
-            onValue(ref(db, 'target_marketplace_visual'), (snap) => {
-                const box = document.getElementById('profile-market'); box.innerHTML = '';
-                let count = 0;
-                snap.forEach(c => {
-                    if(c.val().uid === currentUserData.uid) {
-                        count++;
-                        box.innerHTML += `<div class="my-item-card"><span>🏷️ ${c.val().item}</span> <button class="delete-btn" data-path="target_marketplace_visual/${c.key}">Trash</button></div>`;
-                    }
-                });
-                if(count === 0) box.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No items for sale.</p>';
-            });
-
-            // Load Vault
-            onValue(ref(db, 'target_media_vault'), (snap) => {
-                const box = document.getElementById('profile-vault'); box.innerHTML = '';
-                let count = 0;
-                snap.forEach(c => {
-                    if(c.val().uid === currentUserData.uid) {
-                        count++;
-                        box.innerHTML += `<div class="my-item-card"><span>☁️ ${c.val().title}</span> <button class="delete-btn" data-path="target_media_vault/${c.key}">Trash</button></div>`;
-                    }
-                });
-                if(count === 0) box.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No files uploaded.</p>';
-            });
-        }
-
-        // Handle Delete Button Clicks globally inside the profile view
-        document.getElementById('view-profile').addEventListener('click', (e) => {
-            if(e.target.classList.contains('delete-btn')) {
-                const path = e.target.getAttribute('data-path');
-                if(path && confirm("Are you sure you want to permanently delete this?")) {
-                    remove(ref(db, path));
+                if(isBoss) {
+                    document.getElementById('userGreeting').innerText = `Boss ${u.displayName.split(' ')[0]}`;
+                    document.getElementById('headerAdminBtn').style.display = 'block';
+                    document.getElementById('adminNavBtn').style.display = 'flex';
+                    document.getElementById('boss-vault-upload').style.display = 'block';
+                    loadAdminData();
+                } else {
+                    document.getElementById('userGreeting').innerText = `${u.displayName.split(' ')[0]}`;
                 }
+                
+                // Record user in global list for Admin to see
+                set(ref(db, `target_users/${u.uid}`), { name: u.displayName, email: u.email });
+
+                checkSellerStatus();
             }
         });
 
-
-        // IDEAS
-        document.getElementById('submitIdeaBtn').addEventListener('click', () => {
-            if(currentUserData) {
-                push(ref(db, 'target_ideas_board'), { 
-                    name: currentUserData.displayName, contact: document.getElementById('pitcherContact').value, 
-                    idea: document.getElementById('pitchIdea').value, uid: currentUserData.uid, timestamp: new Date().toLocaleString() 
-                });
-            }
-        });
-        onValue(ref(db, 'target_ideas_board'), (snapshot) => {
-            const board = document.getElementById('ideas-display'); board.innerHTML = ''; 
-            let arr = []; snapshot.forEach(c => arr.push(c.val()));
-            arr.reverse().forEach(data => board.innerHTML += `<div class="idea-post"><h4>${data.name}</h4><p class="post-body">${data.idea}</p></div>`);
-        });
-
-        // MARKETPLACE 
-        const IMGBB_API_KEY = "b359610224e1fccc15464eeca3025526"; 
-        document.getElementById('submitMarketBtn').addEventListener('click', async () => {
-            const btn = document.getElementById('submitMarketBtn'); btn.innerText = "Posting..."; btn.disabled = true;
-            let imageUrl = ""; const file = document.getElementById('itemPhoto').files[0];
-            if(file) {
-                const fd = new FormData(); fd.append('image', file);
-                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: fd });
-                const json = await res.json(); if(json.success) imageUrl = json.data.url;
-            }
-            await push(ref(db, 'target_marketplace_visual'), { 
-                item: document.getElementById('itemName').value, price: document.getElementById('itemPrice').value, 
-                desc: document.getElementById('itemDesc').value, image: imageUrl, 
-                uploader: currentUserData.displayName, uid: currentUserData.uid, timestamp: new Date().toLocaleString() 
+        // TABS
+        document.querySelectorAll('.nav-item, #headerAdminBtn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.getAttribute('data-target') || 'view-admin';
+                document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.getElementById(target).classList.add('active');
+                if(btn.classList.contains('nav-item')) btn.classList.add('active');
             });
-            btn.innerText = "🏷️ Post to Marketplace"; btn.disabled = false;
         });
 
-        onValue(ref(db, 'target_marketplace_visual'), (snapshot) => {
-            const mDisplay = document.getElementById('market-display'); mDisplay.innerHTML = ''; 
-            let arr = []; snapshot.forEach(c => arr.push(c.val()));
-            arr.reverse().forEach(data => {
-                let img = data.image ? `<img src="${data.image}" class="market-img">` : ``;
-                let dmBtnHtml = '';
-                if(currentUserData && data.uid && data.uid !== currentUserData.uid) {
-                    dmBtnHtml = `<button class="dm-btn" data-selleruid="${data.uid}" data-sellername="${data.uploader}">💬 Message Seller</button>`;
+        // SELLER STATUS
+        function checkSellerStatus() {
+            if(isBoss) { document.getElementById('market-upload-area').style.display = 'block'; document.getElementById('seller-gate').style.display = 'none'; return; }
+            onValue(ref(db, `target_approved_sellers/${user.uid}`), s => {
+                if(s.exists()) {
+                    document.getElementById('market-upload-area').style.display = 'block';
+                    document.getElementById('seller-gate').style.display = 'none';
                 }
-                mDisplay.innerHTML += `<div class="market-post"><div class="market-img-container">${img}</div>
-                <div class="market-details"><h4>${data.item}</h4><span class="price">${data.price}</span><p class="post-body">${data.desc}</p>
-                ${dmBtnHtml}</div></div>`;
-            });
-        });
-
-        // INBOX LIST
-        function loadInboxList() {
-            if(!currentUserData) return;
-            onValue(ref(db, 'target_private_metadata'), (snapshot) => {
-                const inboxDisplay = document.getElementById('inbox-display');
-                inboxDisplay.innerHTML = ''; let hasChats = false;
-                snapshot.forEach(child => {
-                    const metadata = child.val(); const roomId = child.key;
-                    if(roomId.includes(currentUserData.uid)) {
-                        hasChats = true;
-                        const otherName = (metadata.user1Uid === currentUserData.uid) ? metadata.user2Name : metadata.user1Name;
-                        inboxDisplay.innerHTML += `<div class="conversation-item" data-room="${roomId}" data-partner="${otherName}"><h4>👤 ${otherName}</h4><p>Click to open chat...</p></div>`;
-                    }
-                });
-                if(!hasChats) inboxDisplay.innerHTML = '<p style="color:#94a3b8; text-align:center;">No messages yet. Check out the Market!</p>';
             });
         }
 
-        document.getElementById('market-display').addEventListener('click', (e) => {
-            if(e.target.classList.contains('dm-btn')) {
-                const sellerUid = e.target.getAttribute('data-selleruid');
-                const sellerName = e.target.getAttribute('data-sellername');
-                activePrivateChatId = [currentUserData.uid, sellerUid].sort().join('_');
-                activeChatPartnerName = sellerName;
-                set(ref(db, 'target_private_metadata/' + activePrivateChatId), { user1Uid: currentUserData.uid, user1Name: currentUserData.displayName, user2Uid: sellerUid, user2Name: sellerName });
-                openPrivateChatRoom();
-            }
-        });
-
-        document.getElementById('inbox-display').addEventListener('click', (e) => {
-            const item = e.target.closest('.conversation-item');
-            if(item) {
-                activePrivateChatId = item.getAttribute('data-room');
-                activeChatPartnerName = item.getAttribute('data-partner');
-                openPrivateChatRoom();
-            }
-        });
-
-        function openPrivateChatRoom() {
-            switchTab('view-inbox');
-            document.getElementById('inbox-list-container').style.display = 'none';
-            document.getElementById('private-chat-container').style.display = 'block';
-            document.getElementById('private-chat-header').innerText = `🔒 Chat with ${activeChatPartnerName}`;
-            if(privateChatUnsubscribe) privateChatUnsubscribe();
-            privateChatUnsubscribe = onValue(ref(db, 'target_private_messages/' + activePrivateChatId), (snap) => {
-                const pDisplay = document.getElementById('private-chat-display'); pDisplay.innerHTML = '';
-                if(!snap.exists()) { pDisplay.innerHTML = '<p style="color:#94a3b8; text-align:center;">Say hello!</p>'; return; }
+        // ADMIN LOGIC
+        function loadAdminData() {
+            onValue(ref(db, 'target_users'), (snap) => {
+                const list = document.getElementById('admin-user-list'); list.innerHTML = '';
                 snap.forEach(child => {
-                    const msg = child.val(); const isMe = msg.senderUid === currentUserData.uid;
-                    pDisplay.innerHTML += `<div class="chat-message-wrapper ${isMe ? 'me' : 'other'}"><span class="chat-sender">${msg.senderName}</span><div class="chat-bubble">${msg.text}</div></div>`;
+                    const uData = child.val(); const uUid = child.key;
+                    if(uData.email === BOSS_EMAIL) return; // Hide Boss from the list
+                    
+                    const row = document.createElement('div');
+                    row.className = 'user-row';
+                    row.innerHTML = `<div><strong>${uData.name}</strong><br><small>${uData.email}</small></div>
+                                    <div id="ctrl-${uUid}">Loading...</div>`;
+                    list.appendChild(row);
+
+                    onValue(ref(db, `target_approved_sellers/${uUid}`), s => {
+                        const ctrl = document.getElementById(`ctrl-${uUid}`);
+                        if(s.exists()) {
+                            row.classList.add('is-seller');
+                            ctrl.innerHTML = `<button class="revoke-btn" onclick="window.toggleSeller('${uUid}', false)">Revoke Access</button>`;
+                        } else {
+                            row.classList.remove('is-seller');
+                            ctrl.innerHTML = `<button class="approve-btn" onclick="window.toggleSeller('${uUid}', true)">Authorize Seller</button>`;
+                        }
+                    });
                 });
-                pDisplay.scrollTop = pDisplay.scrollHeight;
             });
         }
+        window.toggleSeller = (uid, status) => {
+            if(status) set(ref(db, `target_approved_sellers/${uid}`), true);
+            else remove(ref(db, `target_approved_sellers/${uid}`));
+        };
 
-        document.getElementById('backToInboxBtn').addEventListener('click', () => {
-            document.getElementById('inbox-list-container').style.display = 'block';
-            document.getElementById('private-chat-container').style.display = 'none';
-            if(privateChatUnsubscribe) privateChatUnsubscribe();
-        });
-
-        document.getElementById('sendPrivateChatBtn').addEventListener('click', () => {
-            const txt = document.getElementById('privateChatInput').value.trim();
-            if(txt && activePrivateChatId && currentUserData) {
-                push(ref(db, 'target_private_messages/' + activePrivateChatId), { senderName: currentUserData.displayName, senderUid: currentUserData.uid, text: txt, timestamp: Date.now() });
-                document.getElementById('privateChatInput').value = '';
-            }
-        });
-
-        // VAULT (UPDATED to include UID for profile deletion tracking)
+        // VAULT UPLOAD (BOSS ONLY)
         document.getElementById('submitVaultBtn').addEventListener('click', () => {
-            push(ref(db, 'target_media_vault'), { 
-                category: document.getElementById('vaultCategory').value, title: document.getElementById('vaultTitle').value, 
-                link: document.getElementById('vaultLink').value, uploader: currentUserData.displayName,
-                uid: currentUserData.uid // <-- Added this to track ownership for deletion
-            });
-        });
-        onValue(ref(db, 'target_media_vault'), (snap) => {
-            const vDisplay = document.getElementById('vault-display'); vDisplay.innerHTML = ''; 
-            snap.forEach(c => vDisplay.innerHTML = `<div class="vault-post"><h4>${c.val().title}</h4><a href="${c.val().link}" target="_blank" class="download-btn">⬇️ Download</a></div>` + vDisplay.innerHTML);
+            const file = document.getElementById('vFile').files[0];
+            const title = document.getElementById('vTitle').value;
+            if(!file || !isBoss) return;
+
+            const sReference = sRef(storage, `vault/${Date.now()}_${file.name}`);
+            const uploadTask = uploadBytesResumable(sReference, file);
+            uploadTask.on('state_changed', 
+                s => { document.getElementById('vStatus').innerText = `Uploading: ${Math.round((s.bytesTransferred/s.totalBytes)*100)}%`; },
+                e => { alert("Storage Error: " + e.message); },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then(url => {
+                        push(ref(db, 'target_media_vault'), { title, url, category: document.getElementById('vCat').value });
+                        document.getElementById('vStatus').innerText = "Uploaded! ✅";
+                    });
+                }
+            );
         });
 
-        // GLOBAL CHAT
-        document.getElementById('sendChatBtn').addEventListener('click', () => {
-            const txt = document.getElementById('chatInput').value.trim();
-            if(txt && currentUserData) { push(ref(db, 'target_global_chat'), { sender: currentUserData.displayName, text: txt }); document.getElementById('chatInput').value = ''; }
-        });
-        onValue(ref(db, 'target_global_chat'), (snap) => {
-            const cDisplay = document.getElementById('chat-display'); cDisplay.innerHTML = '';
-            snap.forEach(child => {
-                const d = child.val(); const isMe = currentUserData && d.sender === currentUserData.displayName;
-                cDisplay.innerHTML += `<div class="chat-message-wrapper ${isMe ? 'me' : 'other'}"><span class="chat-sender">${d.sender}</span><div class="chat-bubble">${d.text}</div></div>`;
+        // DISPLAY VAULT
+        onValue(ref(db, 'target_media_vault'), s => {
+            const d = document.getElementById('vault-display'); d.innerHTML = '';
+            s.forEach(c => {
+                const val = c.val();
+                d.innerHTML += `<div class="post-card vault-card">
+                    <div><strong>${val.title}</strong><br><small>${val.category}</small></div>
+                    <a href="${val.url}" target="_blank" style="color:#3b82f6; font-weight:bold; text-decoration:none;">DOWNLOAD</a>
+                    ${isBoss ? `<br><button class="nuke-btn" onclick="window.nuke('target_media_vault/${c.key}')">Delete</button>` : ''}
+                </div>`;
             });
-            cDisplay.scrollTop = cDisplay.scrollHeight;
         });
+
+        // MARKETPLACE DISPLAY
+        onValue(ref(db, 'target_marketplace_visual'), s => {
+            const d = document.getElementById('market-display'); d.innerHTML = '';
+            s.forEach(c => {
+                const val = c.val();
+                d.innerHTML += `<div class="market-card post-card">
+                    <img src="${val.image}" class="market-img">
+                    <div style="padding:10px;">
+                        <h4 style="margin:0;">${val.item}</h4>
+                        <p style="color:#10b981; font-weight:bold;">${val.price}</p>
+                        ${isBoss ? `<button class="nuke-btn" onclick="window.nuke('target_marketplace_visual/${c.key}')">Remove Item</button>` : ''}
+                    </div>
+                </div>`;
+            });
+        });
+
+        window.nuke = (path) => { if(confirm("Boss, are you sure?")) remove(ref(db, path)); };
+
     </script>
 </body>
 </html>
