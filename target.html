@@ -28,7 +28,6 @@
         /* BUTTONS & FORMS */
         .btn { padding: 8px 16px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dark); }
         .btn-danger { background: var(--danger); color: white; }
         .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; font-family: inherit; }
@@ -38,13 +37,14 @@
         .app-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* MARKETPLACE & VAULT (Same as before) */
+        /* MARKETPLACE & VAULT */
         .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s; }
+        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
         .product-img { width: 100%; height: 200px; object-fit: cover; background: #e5e7eb; }
         .product-info { padding: 15px; }
         .product-title { font-weight: 600; margin: 0 0 8px 0; font-size: 1rem; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .product-price { color: #f97316; font-weight: 700; font-size: 1.25rem; margin: 0 0 12px 0; }
+        
         .vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
         .media-card { background: #1f2937; color: white; border-radius: 8px; overflow: hidden; padding: 12px; }
         .download-btn { display: block; text-align: center; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; color: white; text-decoration: none; font-size: 0.8rem; margin-top: 10px; }
@@ -55,38 +55,55 @@
         .chat-tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; }
         .chat-tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: var(--surface); }
         .chat-body { padding: 20px; }
-        
         .feed-post { background: var(--bg-light); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
         .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 
-        /* PRIVATE INBOX STYLES */
+        /* PRIVATE INBOX */
         .inbox-user-row { display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
         .inbox-user-row:hover { background: var(--bg-light); }
-        
         .private-chat-history { height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 10px; background: var(--bg-light); border-radius: 8px; margin-bottom: 15px; }
         .chat-bubble { max-width: 75%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; }
         .bubble-me { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
         .bubble-them { background: #e5e7eb; color: var(--text-dark); align-self: flex-start; border-bottom-left-radius: 2px; }
 
-        /* UTILITIES */
-        .login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .login-box { background: var(--surface); padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; }
+        /* OVERLAYS & TERMINAL FONT */
+        .overlay-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; flex-direction: column; }
+        .modal-box { background: var(--surface); padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        
+        .hacker-font { font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 1.2rem; margin-top: 15px; text-shadow: 0 0 5px currentColor; letter-spacing: 2px; text-transform: uppercase; }
+        
         .admin-panel { background: #fee2e2; border: 1px solid #f87171; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
         .user-row { display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px; border-radius: 6px; margin-bottom: 8px; border: 1px solid #fca5a5; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen" class="login-overlay">
-        <div class="login-box">
+    <div id="login-screen" class="overlay-screen">
+        <div class="modal-box">
             <h1 style="color: var(--primary); margin-top: 0;">Target Hub</h1>
             <button id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 12px;">Sign in with Google</button>
         </div>
     </div>
 
+    <div id="admin-gateway" class="overlay-screen" style="display: none; background: #000;">
+        <div class="modal-box" style="background: #111; border: 1px solid #333;">
+            <h2 style="color: white; margin-top: 0; font-family: 'Courier New', Courier, monospace;">🛡️ BOSS OVERRIDE</h2>
+            <div id="setup-pass-view" style="display: none;">
+                <p style="color: var(--text-muted);">Initialize Master Password</p>
+                <input type="password" id="newAdminPass" class="form-control" placeholder="Create Password">
+                <button id="setPassBtn" class="btn btn-primary" style="width:100%;">Set Password</button>
+            </div>
+            <div id="enter-pass-view" style="display: none;">
+                <p style="color: var(--text-muted);">Enter Master Password</p>
+                <input type="password" id="adminPassInput" class="form-control" placeholder="Password">
+                <button id="verifyPassBtn" class="btn btn-outline" style="width:100%; color: white; border-color: white;">Authenticate</button>
+            </div>
+            <div id="gatewayStatus" class="hacker-font"></div>
+        </div>
+    </div>
+
     <div id="main-app" style="display: none; width: 100%;">
-        
         <nav class="navbar">
             <div class="nav-brand">🎯 Target Hub</div>
             <div class="nav-links">
@@ -111,7 +128,7 @@
             <div id="market-upload-area" style="display:none; background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px;">
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
                     <input type="text" id="itemName" class="form-control" placeholder="Product Title" style="margin: 0; flex: 1;">
-                    <input type="text" id="itemPrice" class="form-control" placeholder="Price (e.g. $500)" style="margin: 0; max-width: 150px;">
+                    <input type="text" id="itemPrice" class="form-control" placeholder="Price" style="margin: 0; max-width: 150px;">
                     <input type="file" id="itemPhoto" class="form-control" style="margin: 0; max-width: 250px;">
                     <button id="submitMarketBtn" class="btn btn-primary">List Product</button>
                 </div>
@@ -124,7 +141,7 @@
             <h2>Media Vault</h2>
             <div id="boss-vault-upload" style="display:none; background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px;">
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                    <input type="text" id="vTitle" class="form-control" placeholder="Movie/Song Title" style="margin: 0; flex: 1;">
+                    <input type="text" id="vTitle" class="form-control" placeholder="Media Title" style="margin: 0; flex: 1;">
                     <select id="vCat" class="form-control" style="margin: 0; max-width: 150px;"><option>🎥 Movie</option><option>🎵 Music</option><option>📚 Document</option></select>
                     <input type="file" id="vFile" class="form-control" style="margin: 0; max-width: 250px;">
                     <button id="submitVaultBtn" class="btn btn-primary">Upload</button>
@@ -140,7 +157,6 @@
                     <button class="chat-tab-btn active" onclick="switchChatTab('feed')">Global Feed</button>
                     <button class="chat-tab-btn" onclick="switchChatTab('inbox')">Private Inbox</button>
                 </div>
-
                 <div id="chat-sect-feed" class="chat-body">
                     <div style="background: var(--bg-light); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                         <textarea id="pitchIdea" class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
@@ -148,27 +164,19 @@
                     </div>
                     <div id="ideas-display"></div>
                 </div>
-
                 <div id="chat-sect-inbox" class="chat-body" style="display: none;">
-                    
-                    <div id="inbox-directory">
-                        <h3 style="margin-top: 0;">Start a Chat</h3>
-                        <div id="directory-list"></div>
-                    </div>
-
+                    <div id="inbox-directory"><h3 style="margin-top: 0;">Start a Chat</h3><div id="directory-list"></div></div>
                     <div id="inbox-active-chat" style="display: none;">
                         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
                             <button class="btn btn-outline" onclick="closePrivateChat()" style="padding: 4px 8px;">⬅ Back</button>
                             <h3 id="chattingWithName" style="margin: 0;">User Name</h3>
                         </div>
-                        <div id="private-messages-display" class="private-chat-history">
-                            </div>
+                        <div id="private-messages-display" class="private-chat-history"></div>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" id="pmInput" class="form-control" placeholder="Type a message..." style="margin: 0;">
                             <button id="sendPmBtn" class="btn btn-primary">Send</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </main>
@@ -179,12 +187,11 @@
                 <div id="admin-user-list"></div>
             </div>
         </main>
-
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue, set, get, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
         import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 
@@ -207,40 +214,105 @@
 
         let user = null;
         let isBoss = false;
-        let currentChatPartnerId = null; // Keeps track of who we are PM'ing
+        let currentChatPartnerId = null; 
 
         document.getElementById('waLink').href = `https://wa.me/${BOSS_WA}?text=Hello Boss, I would like to purchase a Seller License.`;
 
-        // === AUTHENTICATION ===
-        document.getElementById('loginBtn').addEventListener('click', () => signInWithPopup(auth, provider));
-        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+        // === CRYPTOGRAPHIC HASHING FUNCTION (SHA-256) ===
+        // This ensures the password isn't saved as plain text in your database.
+        async function hashPassword(password) {
+            const msgUint8 = new TextEncoder().encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
-        onAuthStateChanged(auth, (u) => {
+        // === AUTHENTICATION & BOSS GATEWAY ===
+        document.getElementById('loginBtn').addEventListener('click', () => signInWithPopup(auth, provider));
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth);
+            location.reload(); // Hard reset UI state on logout
+        });
+
+        onAuthStateChanged(auth, async (u) => {
             if (u) {
                 user = u;
                 isBoss = (u.email === BOSS_EMAIL);
                 document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
                 
                 if(isBoss) {
-                    document.getElementById('userGreeting').innerText = `Boss ${u.displayName.split(' ')[0]}`;
-                    document.getElementById('headerAdminBtn').style.display = 'block';
-                    document.getElementById('boss-vault-upload').style.display = 'block';
+                    // Stop! Open the Admin Gateway
+                    document.getElementById('admin-gateway').style.display = 'flex';
+                    
+                    // Check if a password hash already exists in DB
+                    const snapshot = await get(ref(db, 'target_sys_admin/hash'));
+                    if(snapshot.exists()) {
+                        document.getElementById('enter-pass-view').style.display = 'block';
+                    } else {
+                        document.getElementById('setup-pass-view').style.display = 'block';
+                    }
                 } else {
-                    document.getElementById('userGreeting').innerText = `${u.displayName}`;
-                    document.getElementById('headerAdminBtn').style.display = 'none';
-                    document.getElementById('boss-vault-upload').style.display = 'none';
+                    // Normal user bypasses the gate
+                    launchMainApp();
                 }
-                
-                // Save user data for BOTH admin panel AND inbox directory
-                set(ref(db, `target_users/${u.uid}`), { name: u.displayName, email: u.email, photoURL: u.photoURL });
-                checkSellerStatus();
-                loadUsersData(); // Loads directory & admin list
             } else {
                 document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('admin-gateway').style.display = 'none';
                 document.getElementById('main-app').style.display = 'none';
             }
         });
+
+        // Setup Master Password (First Time)
+        document.getElementById('setPassBtn').addEventListener('click', async () => {
+            const pass = document.getElementById('newAdminPass').value;
+            if(!pass) return;
+            const hashed = await hashPassword(pass);
+            await set(ref(db, 'target_sys_admin/hash'), hashed);
+            
+            const statusBox = document.getElementById('gatewayStatus');
+            statusBox.style.color = 'var(--success)';
+            statusBox.innerText = 'ENCRYPTION SET. ACCESS GRANTED.';
+            setTimeout(() => launchMainApp(), 1500);
+        });
+
+        // Verify Master Password
+        document.getElementById('verifyPassBtn').addEventListener('click', async () => {
+            const pass = document.getElementById('adminPassInput').value;
+            const statusBox = document.getElementById('gatewayStatus');
+            
+            const snapshot = await get(ref(db, 'target_sys_admin/hash'));
+            const storedHash = snapshot.val();
+            const inputHash = await hashPassword(pass);
+
+            if(inputHash === storedHash) {
+                statusBox.style.color = 'var(--success)';
+                statusBox.innerText = 'ACCESS GRANTED_';
+                setTimeout(() => launchMainApp(), 1000);
+            } else {
+                statusBox.style.color = 'var(--danger)';
+                statusBox.innerText = 'ACCESS DENIED_';
+                // Reset text after 2 seconds
+                setTimeout(() => { statusBox.innerText = ''; document.getElementById('adminPassInput').value = ''; }, 2000);
+            }
+        });
+
+        // Launch the App
+        function launchMainApp() {
+            document.getElementById('admin-gateway').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            
+            if(isBoss) {
+                document.getElementById('userGreeting').innerText = `Boss ${user.displayName.split(' ')[0]}`;
+                document.getElementById('headerAdminBtn').style.display = 'block';
+                document.getElementById('boss-vault-upload').style.display = 'block';
+            } else {
+                document.getElementById('userGreeting').innerText = `${user.displayName}`;
+            }
+            
+            set(ref(db, `target_users/${user.uid}`), { name: user.displayName, email: user.email, photoURL: user.photoURL });
+            checkSellerStatus();
+            loadUsersData(); 
+        }
 
         // === NAVIGATION ===
         document.querySelectorAll('.nav-item, #headerAdminBtn').forEach(btn => {
@@ -257,7 +329,6 @@
         window.switchChatTab = (tab) => {
             document.querySelectorAll('.chat-tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
-            
             if(tab === 'feed') {
                 document.getElementById('chat-sect-feed').style.display = 'block';
                 document.getElementById('chat-sect-inbox').style.display = 'none';
@@ -267,9 +338,7 @@
             }
         };
 
-        // === PRIVATE INBOX LOGIC ===
-        
-        // Load User Directory
+        // === PRIVATE INBOX & ADMIN DIRECTORY LOGIC ===
         function loadUsersData() {
             onValue(ref(db, 'target_users'), (snap) => {
                 const adminList = document.getElementById('admin-user-list'); adminList.innerHTML = '';
@@ -278,7 +347,6 @@
                 snap.forEach(child => {
                     const uData = child.val(); const uUid = child.key;
                     
-                    // Populate Admin List (Exclude Boss)
                     if(uData.email !== BOSS_EMAIL && isBoss) {
                         const row = document.createElement('div'); row.className = 'user-row';
                         row.innerHTML = `<div><strong>${uData.name}</strong><br><small>${uData.email}</small></div><div id="ctrl-${uUid}"></div>`;
@@ -290,7 +358,6 @@
                         });
                     }
 
-                    // Populate Inbox Directory (Exclude Self)
                     if(uUid !== user.uid) {
                         directory.innerHTML += `
                         <div class="inbox-user-row" onclick="window.openPrivateChat('${uUid}', '${uData.name}')">
@@ -302,12 +369,7 @@
             });
         }
 
-        // Generate a consistent Chat ID for two specific users
-        function getPrivateChatId(uid1, uid2) {
-            return uid1 < uid2 ? `${uid1}_${uid2}` : `${uid2}_${uid1}`;
-        }
-
-        let pmListener = null;
+        function getPrivateChatId(uid1, uid2) { return uid1 < uid2 ? `${uid1}_${uid2}` : `${uid2}_${uid1}`; }
 
         window.openPrivateChat = (partnerUid, partnerName) => {
             currentChatPartnerId = partnerUid;
@@ -316,17 +378,13 @@
             document.getElementById('chattingWithName').innerText = partnerName;
 
             const chatId = getPrivateChatId(user.uid, partnerUid);
-            
-            // Listen to this specific conversation
-            pmListener = onValue(ref(db, `target_private_chats/${chatId}/messages`), s => {
-                const display = document.getElementById('private-messages-display');
-                display.innerHTML = '';
+            onValue(ref(db, `target_private_chats/${chatId}/messages`), s => {
+                const display = document.getElementById('private-messages-display'); display.innerHTML = '';
                 s.forEach(m => {
-                    const msg = m.val();
-                    const isMe = msg.senderId === user.uid;
+                    const msg = m.val(); const isMe = msg.senderId === user.uid;
                     display.innerHTML += `<div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}">${msg.text}</div>`;
                 });
-                display.scrollTop = display.scrollHeight; // Auto-scroll to bottom
+                display.scrollTop = display.scrollHeight; 
             });
         };
 
@@ -337,22 +395,14 @@
         };
 
         document.getElementById('sendPmBtn').addEventListener('click', () => {
-            const input = document.getElementById('pmInput');
-            const text = input.value;
+            const input = document.getElementById('pmInput'); const text = input.value;
             if(!text || !currentChatPartnerId) return;
-
             const chatId = getPrivateChatId(user.uid, currentChatPartnerId);
-            push(ref(db, `target_private_chats/${chatId}/messages`), {
-                text: text,
-                senderId: user.uid,
-                timestamp: Date.now()
-            });
+            push(ref(db, `target_private_chats/${chatId}/messages`), { text: text, senderId: user.uid, timestamp: Date.now() });
             input.value = '';
         });
 
-
-        // === REST OF YOUR EXISTING LOGIC ===
-        
+        // === REST OF THE APP DATA ===
         function checkSellerStatus() {
             if(isBoss) { document.getElementById('market-upload-area').style.display = 'block'; document.getElementById('seller-gate').style.display = 'none'; return; }
             onValue(ref(db, `target_approved_sellers/${user.uid}`), s => {
@@ -364,8 +414,7 @@
         window.toggleSeller = (uid, status) => { status ? set(ref(db, `target_approved_sellers/${uid}`), true) : remove(ref(db, `target_approved_sellers/${uid}`)); };
 
         document.getElementById('submitIdeaBtn').addEventListener('click', () => {
-            const text = document.getElementById('pitchIdea').value;
-            if(!text) return;
+            const text = document.getElementById('pitchIdea').value; if(!text) return;
             push(ref(db, 'target_feed'), { text: text, author: user.displayName, avatar: user.photoURL || '', timestamp: Date.now() });
             document.getElementById('pitchIdea').value = '';
         });
@@ -374,37 +423,22 @@
             const d = document.getElementById('ideas-display'); d.innerHTML = '';
             const posts = []; s.forEach(c => { posts.push({id: c.key, ...c.val()}); });
             posts.reverse().forEach(post => {
-                d.innerHTML += `
-                <div class="feed-post">
-                    <div class="post-header">
-                        ${post.avatar ? `<img src="${post.avatar}" class="avatar">` : `<div class="avatar">${post.author.charAt(0)}</div>`}
-                        <div><strong>${post.author}</strong></div>
-                        ${isBoss ? `<button class="btn btn-danger" style="padding: 4px 8px; margin-left: auto;" onclick="window.nuke('target_feed/${post.id}')">X</button>` : ''}
-                    </div>
-                    <div>${post.text}</div>
-                </div>`;
+                d.innerHTML += `<div class="feed-post"><div class="post-header">${post.avatar ? `<img src="${post.avatar}" class="avatar">` : `<div class="avatar">${post.author.charAt(0)}</div>`}<div><strong>${post.author}</strong></div>${isBoss ? `<button class="btn btn-danger" style="padding: 4px 8px; margin-left: auto;" onclick="window.nuke('target_feed/${post.id}')">X</button>` : ''}</div><div>${post.text}</div></div>`;
             });
         });
 
-        // Market & Vault uploads left exactly as they were (removed from display block here for brevity, but exist in the full code block).
         document.getElementById('submitVaultBtn').addEventListener('click', () => {
             const file = document.getElementById('vFile').files[0]; const title = document.getElementById('vTitle').value;
             if(!file || !isBoss) return;
             const uploadTask = uploadBytesResumable(sRef(storage, `vault/${Date.now()}_${file.name}`), file);
             uploadTask.on('state_changed', s => { document.getElementById('vStatus').innerText = `Uploading: ${Math.round((s.bytesTransferred/s.totalBytes)*100)}%`; }, null, () => {
-                getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                    push(ref(db, 'target_media_vault'), { title, url, category: document.getElementById('vCat').value });
-                    document.getElementById('vStatus').innerText = "Uploaded! ✅"; document.getElementById('vFile').value = ''; document.getElementById('vTitle').value = '';
-                });
+                getDownloadURL(uploadTask.snapshot.ref).then(url => { push(ref(db, 'target_media_vault'), { title, url, category: document.getElementById('vCat').value }); document.getElementById('vStatus').innerText = "Uploaded! ✅"; document.getElementById('vFile').value = ''; document.getElementById('vTitle').value = ''; });
             });
         });
 
         onValue(ref(db, 'target_media_vault'), s => {
             const d = document.getElementById('vault-display'); d.innerHTML = '';
-            s.forEach(c => {
-                const val = c.val();
-                d.innerHTML += `<div class="media-card"><h4>${val.title}</h4><small>${val.category}</small><a href="${val.url}" target="_blank" class="download-btn">Download</a>${isBoss ? `<button class="btn btn-danger" style="width:100%; margin-top:5px;" onclick="window.nuke('target_media_vault/${c.key}')">Delete</button>` : ''}</div>`;
-            });
+            s.forEach(c => { const val = c.val(); d.innerHTML += `<div class="media-card"><h4>${val.title}</h4><small>${val.category}</small><a href="${val.url}" target="_blank" class="download-btn">Download</a>${isBoss ? `<button class="btn btn-danger" style="width:100%; margin-top:5px;" onclick="window.nuke('target_media_vault/${c.key}')">Delete</button>` : ''}</div>`; });
         });
 
         document.getElementById('submitMarketBtn').addEventListener('click', () => {
@@ -412,19 +446,13 @@
             if(!file || !item || !price) return;
             const uploadTask = uploadBytesResumable(sRef(storage, `market/${Date.now()}_${file.name}`), file);
             uploadTask.on('state_changed', s => { document.getElementById('mStatus').innerText = `Uploading...`; }, null, () => {
-                getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                    push(ref(db, 'target_marketplace_visual'), { item, price, image: url, seller: user.displayName });
-                    document.getElementById('mStatus').innerText = "Listed! ✅"; document.getElementById('itemPhoto').value = ''; document.getElementById('itemName').value = ''; document.getElementById('itemPrice').value = '';
-                });
+                getDownloadURL(uploadTask.snapshot.ref).then(url => { push(ref(db, 'target_marketplace_visual'), { item, price, image: url, seller: user.displayName }); document.getElementById('mStatus').innerText = "Listed! ✅"; document.getElementById('itemPhoto').value = ''; document.getElementById('itemName').value = ''; document.getElementById('itemPrice').value = ''; });
             });
         });
 
         onValue(ref(db, 'target_marketplace_visual'), s => {
             const d = document.getElementById('market-display'); d.innerHTML = '';
-            s.forEach(c => {
-                const val = c.val();
-                d.innerHTML += `<div class="product-card"><img src="${val.image}" class="product-img"><div class="product-info"><h4 class="product-title">${val.item}</h4><p class="product-price">${val.price}</p><small>Seller: ${val.seller}</small>${isBoss ? `<button class="btn btn-danger" style="width:100%; margin-top:10px;" onclick="window.nuke('target_marketplace_visual/${c.key}')">Remove</button>` : ''}</div></div>`;
-            });
+            s.forEach(c => { const val = c.val(); d.innerHTML += `<div class="product-card"><img src="${val.image}" class="product-img"><div class="product-info"><h4 class="product-title">${val.item}</h4><p class="product-price">${val.price}</p><small>Seller: ${val.seller}</small>${isBoss ? `<button class="btn btn-danger" style="width:100%; margin-top:10px;" onclick="window.nuke('target_marketplace_visual/${c.key}')">Remove</button>` : ''}</div></div>`; });
         });
 
         window.nuke = (path) => { if(confirm("Delete this?")) remove(ref(db, path)); };
