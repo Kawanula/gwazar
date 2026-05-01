@@ -31,6 +31,7 @@
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dark); }
         .btn-danger { background: var(--danger); color: white; }
         .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; font-family: inherit; }
+        .search-bar { width: 100%; max-width: 400px; margin-bottom: 20px; border-radius: 20px; padding: 10px 15px; border: 1px solid var(--border); }
         
         /* LAYOUT VIEWS */
         .app-view { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; width: 100%; animation: fadeIn 0.2s ease-in; }
@@ -39,9 +40,9 @@
 
         /* MARKETPLACE & VAULT */
         .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
         .product-img { width: 100%; height: 200px; object-fit: cover; background: #e5e7eb; }
-        .product-info { padding: 15px; }
+        .product-info { padding: 15px; display: flex; flex-direction: column; flex: 1; }
         .product-title { font-weight: 600; margin: 0 0 8px 0; font-size: 1rem; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .product-price { color: #f97316; font-weight: 700; font-size: 1.25rem; margin: 0 0 12px 0; }
         
@@ -57,7 +58,9 @@
         .chat-body { padding: 20px; }
         .feed-post { background: var(--bg-light); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
         .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; object-fit: cover;}
+        .author-name { font-weight: bold; cursor: pointer; color: var(--text-dark); transition: color 0.2s; }
+        .author-name:hover { color: var(--primary); text-decoration: underline; }
 
         /* PRIVATE INBOX */
         .inbox-user-row { display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
@@ -67,9 +70,10 @@
         .bubble-me { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
         .bubble-them { background: #e5e7eb; color: var(--text-dark); align-self: flex-start; border-bottom-left-radius: 2px; }
 
-        /* OVERLAYS & TERMINAL FONT */
+        /* OVERLAYS & MODALS */
         .overlay-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; flex-direction: column; }
-        .modal-box { background: var(--surface); padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .modal-box { background: var(--surface); padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; }
+        .close-modal-btn { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
         
         .hacker-font { font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 1.2rem; margin-top: 15px; text-shadow: 0 0 5px currentColor; letter-spacing: 2px; text-transform: uppercase; }
         
@@ -103,6 +107,16 @@
         </div>
     </div>
 
+    <div id="profile-modal" class="overlay-screen" style="display: none;">
+        <div class="modal-box">
+            <button class="close-modal-btn" onclick="document.getElementById('profile-modal').style.display='none'">&times;</button>
+            <div id="profile-avatar" style="width: 80px; height: 80px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 15px auto; font-weight: bold;"></div>
+            <h2 id="profile-name" style="margin: 0 0 5px 0;">Name</h2>
+            <p id="profile-email" style="color: var(--text-muted); margin-top: 0; font-size: 0.9rem;"></p>
+            <span id="profile-badge" style="background: var(--success); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; display: none;">Verified Seller</span>
+        </div>
+    </div>
+
     <div id="main-app" style="display: none; width: 100%;">
         <nav class="navbar">
             <div class="nav-brand">🎯 Target Hub</div>
@@ -125,6 +139,9 @@
                     <a id="waLink" href="#" class="btn btn-outline" style="text-decoration:none; color: var(--success); border-color: var(--success);">Become a Seller</a>
                 </div>
             </div>
+            
+            <input type="text" id="marketSearch" class="search-bar" placeholder="🔍 Search marketplace items...">
+
             <div id="market-upload-area" style="display:none; background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px;">
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
                     <input type="text" id="itemName" class="form-control" placeholder="Product Title" style="margin: 0; flex: 1;">
@@ -139,6 +156,9 @@
 
         <main id="view-vault" class="app-view">
             <h2>Media Vault</h2>
+            
+            <input type="text" id="vaultSearch" class="search-bar" placeholder="🔍 Search movies, music, docs...">
+
             <div id="boss-vault-upload" style="display:none; background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px;">
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
                     <input type="text" id="vTitle" class="form-control" placeholder="Media Title" style="margin: 0; flex: 1;">
@@ -167,9 +187,11 @@
                 <div id="chat-sect-inbox" class="chat-body" style="display: none;">
                     <div id="inbox-directory"><h3 style="margin-top: 0;">Start a Chat</h3><div id="directory-list"></div></div>
                     <div id="inbox-active-chat" style="display: none;">
-                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
-                            <button class="btn btn-outline" onclick="closePrivateChat()" style="padding: 4px 8px;">⬅ Back</button>
-                            <h3 id="chattingWithName" style="margin: 0;">User Name</h3>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <button class="btn btn-outline" onclick="closePrivateChat()" style="padding: 4px 8px;">⬅ Back</button>
+                                <h3 id="chattingWithName" style="margin: 0;">User Name</h3>
+                            </div>
                         </div>
                         <div id="private-messages-display" class="private-chat-history"></div>
                         <div style="display: flex; gap: 10px;">
@@ -218,8 +240,36 @@
 
         document.getElementById('waLink').href = `https://wa.me/${BOSS_WA}?text=Hello Boss, I would like to purchase a Seller License.`;
 
-        // === CRYPTOGRAPHIC HASHING FUNCTION (SHA-256) ===
-        // This ensures the password isn't saved as plain text in your database.
+        // === UTILITY: RELATIVE TIMESTAMPS ===
+        function timeAgo(timestamp) {
+            const seconds = Math.floor((new Date() - timestamp) / 1000);
+            let interval = seconds / 86400;
+            if (interval > 1) return Math.floor(interval) + " days ago";
+            interval = seconds / 3600;
+            if (interval > 1) return Math.floor(interval) + " hours ago";
+            interval = seconds / 60;
+            if (interval > 1) return Math.floor(interval) + " mins ago";
+            return "Just now";
+        }
+
+        // === UTILITY: SEARCH FILTERS ===
+        document.getElementById('marketSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.product-card').forEach(card => {
+                const title = card.querySelector('.product-title').innerText.toLowerCase();
+                card.style.display = title.includes(term) ? 'flex' : 'none';
+            });
+        });
+
+        document.getElementById('vaultSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.media-card').forEach(card => {
+                const title = card.innerText.toLowerCase();
+                card.style.display = title.includes(term) ? 'block' : 'none';
+            });
+        });
+
+        // === CRYPTOGRAPHIC HASHING ===
         async function hashPassword(password) {
             const msgUint8 = new TextEncoder().encode(password);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
@@ -229,30 +279,18 @@
 
         // === AUTHENTICATION & BOSS GATEWAY ===
         document.getElementById('loginBtn').addEventListener('click', () => signInWithPopup(auth, provider));
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            signOut(auth);
-            location.reload(); // Hard reset UI state on logout
-        });
+        document.getElementById('logoutBtn').addEventListener('click', () => { signOut(auth); location.reload(); });
 
         onAuthStateChanged(auth, async (u) => {
             if (u) {
-                user = u;
-                isBoss = (u.email === BOSS_EMAIL);
+                user = u; isBoss = (u.email === BOSS_EMAIL);
                 document.getElementById('login-screen').style.display = 'none';
-                
                 if(isBoss) {
-                    // Stop! Open the Admin Gateway
                     document.getElementById('admin-gateway').style.display = 'flex';
-                    
-                    // Check if a password hash already exists in DB
                     const snapshot = await get(ref(db, 'target_sys_admin/hash'));
-                    if(snapshot.exists()) {
-                        document.getElementById('enter-pass-view').style.display = 'block';
-                    } else {
-                        document.getElementById('setup-pass-view').style.display = 'block';
-                    }
+                    if(snapshot.exists()) { document.getElementById('enter-pass-view').style.display = 'block'; } 
+                    else { document.getElementById('setup-pass-view').style.display = 'block'; }
                 } else {
-                    // Normal user bypasses the gate
                     launchMainApp();
                 }
             } else {
@@ -262,56 +300,33 @@
             }
         });
 
-        // Setup Master Password (First Time)
         document.getElementById('setPassBtn').addEventListener('click', async () => {
-            const pass = document.getElementById('newAdminPass').value;
-            if(!pass) return;
-            const hashed = await hashPassword(pass);
-            await set(ref(db, 'target_sys_admin/hash'), hashed);
-            
-            const statusBox = document.getElementById('gatewayStatus');
-            statusBox.style.color = 'var(--success)';
-            statusBox.innerText = 'ENCRYPTION SET. ACCESS GRANTED.';
+            const pass = document.getElementById('newAdminPass').value; if(!pass) return;
+            const hashed = await hashPassword(pass); await set(ref(db, 'target_sys_admin/hash'), hashed);
+            const statusBox = document.getElementById('gatewayStatus'); statusBox.style.color = 'var(--success)'; statusBox.innerText = 'ENCRYPTION SET. ACCESS GRANTED.';
             setTimeout(() => launchMainApp(), 1500);
         });
 
-        // Verify Master Password
         document.getElementById('verifyPassBtn').addEventListener('click', async () => {
-            const pass = document.getElementById('adminPassInput').value;
-            const statusBox = document.getElementById('gatewayStatus');
-            
-            const snapshot = await get(ref(db, 'target_sys_admin/hash'));
-            const storedHash = snapshot.val();
-            const inputHash = await hashPassword(pass);
-
+            const pass = document.getElementById('adminPassInput').value; const statusBox = document.getElementById('gatewayStatus');
+            const snapshot = await get(ref(db, 'target_sys_admin/hash')); const storedHash = snapshot.val(); const inputHash = await hashPassword(pass);
             if(inputHash === storedHash) {
-                statusBox.style.color = 'var(--success)';
-                statusBox.innerText = 'ACCESS GRANTED_';
-                setTimeout(() => launchMainApp(), 1000);
+                statusBox.style.color = 'var(--success)'; statusBox.innerText = 'ACCESS GRANTED_'; setTimeout(() => launchMainApp(), 1000);
             } else {
-                statusBox.style.color = 'var(--danger)';
-                statusBox.innerText = 'ACCESS DENIED_';
-                // Reset text after 2 seconds
-                setTimeout(() => { statusBox.innerText = ''; document.getElementById('adminPassInput').value = ''; }, 2000);
+                statusBox.style.color = 'var(--danger)'; statusBox.innerText = 'ACCESS DENIED_'; setTimeout(() => { statusBox.innerText = ''; document.getElementById('adminPassInput').value = ''; }, 2000);
             }
         });
 
-        // Launch the App
         function launchMainApp() {
-            document.getElementById('admin-gateway').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            
+            document.getElementById('admin-gateway').style.display = 'none'; document.getElementById('main-app').style.display = 'block';
             if(isBoss) {
                 document.getElementById('userGreeting').innerText = `Boss ${user.displayName.split(' ')[0]}`;
-                document.getElementById('headerAdminBtn').style.display = 'block';
-                document.getElementById('boss-vault-upload').style.display = 'block';
+                document.getElementById('headerAdminBtn').style.display = 'block'; document.getElementById('boss-vault-upload').style.display = 'block';
             } else {
                 document.getElementById('userGreeting').innerText = `${user.displayName}`;
             }
-            
-            set(ref(db, `target_users/${user.uid}`), { name: user.displayName, email: user.email, photoURL: user.photoURL });
-            checkSellerStatus();
-            loadUsersData(); 
+            set(ref(db, `target_users/${user.uid}`), { name: user.displayName, email: user.email, photoURL: user.photoURL, uid: user.uid });
+            checkSellerStatus(); loadUsersData(); 
         }
 
         // === NAVIGATION ===
@@ -325,16 +340,35 @@
             });
         });
 
-        // === SUB-TAB LOGIC FOR CHAT ===
         window.switchChatTab = (tab) => {
             document.querySelectorAll('.chat-tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
             if(tab === 'feed') {
-                document.getElementById('chat-sect-feed').style.display = 'block';
-                document.getElementById('chat-sect-inbox').style.display = 'none';
+                document.getElementById('chat-sect-feed').style.display = 'block'; document.getElementById('chat-sect-inbox').style.display = 'none';
             } else {
-                document.getElementById('chat-sect-feed').style.display = 'none';
-                document.getElementById('chat-sect-inbox').style.display = 'block';
+                document.getElementById('chat-sect-feed').style.display = 'none'; document.getElementById('chat-sect-inbox').style.display = 'block';
+            }
+        };
+
+        // === SHOW USER PROFILE ===
+        window.showProfile = async (uid) => {
+            const snap = await get(ref(db, `target_users/${uid}`));
+            if(snap.exists()) {
+                const uData = snap.val();
+                const avatarBox = document.getElementById('profile-avatar');
+                if (uData.photoURL) {
+                    avatarBox.innerHTML = `<img src="${uData.photoURL}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+                } else {
+                    avatarBox.innerHTML = uData.name.charAt(0);
+                }
+                document.getElementById('profile-name').innerText = uData.name;
+                document.getElementById('profile-email').innerText = uData.email;
+                
+                // Check if seller
+                const sellerSnap = await get(ref(db, `target_approved_sellers/${uid}`));
+                document.getElementById('profile-badge').style.display = sellerSnap.exists() ? 'inline-block' : 'none';
+                
+                document.getElementById('profile-modal').style.display = 'flex';
             }
         };
 
@@ -343,27 +377,19 @@
             onValue(ref(db, 'target_users'), (snap) => {
                 const adminList = document.getElementById('admin-user-list'); adminList.innerHTML = '';
                 const directory = document.getElementById('directory-list'); directory.innerHTML = '';
-                
                 snap.forEach(child => {
                     const uData = child.val(); const uUid = child.key;
-                    
                     if(uData.email !== BOSS_EMAIL && isBoss) {
                         const row = document.createElement('div'); row.className = 'user-row';
                         row.innerHTML = `<div><strong>${uData.name}</strong><br><small>${uData.email}</small></div><div id="ctrl-${uUid}"></div>`;
                         adminList.appendChild(row);
                         onValue(ref(db, `target_approved_sellers/${uUid}`), s => {
-                            document.getElementById(`ctrl-${uUid}`).innerHTML = s.exists() 
-                                ? `<button class="btn btn-danger" onclick="window.toggleSeller('${uUid}', false)">Revoke</button>` 
-                                : `<button class="btn btn-primary" onclick="window.toggleSeller('${uUid}', true)">Authorize</button>`;
+                            document.getElementById(`ctrl-${uUid}`).innerHTML = s.exists() ? `<button class="btn btn-danger" onclick="window.toggleSeller('${uUid}', false)">Revoke</button>` : `<button class="btn btn-primary" onclick="window.toggleSeller('${uUid}', true)">Authorize</button>`;
                         });
                     }
-
                     if(uUid !== user.uid) {
-                        directory.innerHTML += `
-                        <div class="inbox-user-row" onclick="window.openPrivateChat('${uUid}', '${uData.name}')">
-                            <div class="avatar" style="width: 35px; height: 35px;">${uData.name.charAt(0)}</div>
-                            <div><strong>${uData.name}</strong></div>
-                        </div>`;
+                        const av = uData.photoURL ? `<img src="${uData.photoURL}" class="avatar" style="width:35px; height:35px;">` : `<div class="avatar" style="width: 35px; height: 35px;">${uData.name.charAt(0)}</div>`;
+                        directory.innerHTML += `<div class="inbox-user-row" onclick="window.openPrivateChat('${uUid}', '${uData.name}')">${av}<div><strong>${uData.name}</strong></div></div>`;
                     }
                 });
             });
@@ -373,26 +399,24 @@
 
         window.openPrivateChat = (partnerUid, partnerName) => {
             currentChatPartnerId = partnerUid;
-            document.getElementById('inbox-directory').style.display = 'none';
-            document.getElementById('inbox-active-chat').style.display = 'block';
-            document.getElementById('chattingWithName').innerText = partnerName;
-
+            document.getElementById('inbox-directory').style.display = 'none'; document.getElementById('inbox-active-chat').style.display = 'block'; document.getElementById('chattingWithName').innerText = partnerName;
             const chatId = getPrivateChatId(user.uid, partnerUid);
             onValue(ref(db, `target_private_chats/${chatId}/messages`), s => {
                 const display = document.getElementById('private-messages-display'); display.innerHTML = '';
                 s.forEach(m => {
                     const msg = m.val(); const isMe = msg.senderId === user.uid;
-                    display.innerHTML += `<div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}">${msg.text}</div>`;
+                    const time = timeAgo(msg.timestamp);
+                    display.innerHTML += `
+                        <div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}">
+                            <div>${msg.text}</div>
+                            <div style="font-size:0.7rem; margin-top:5px; opacity:0.7; text-align: ${isMe ? 'right' : 'left'};">${time}</div>
+                        </div>`;
                 });
                 display.scrollTop = display.scrollHeight; 
             });
         };
 
-        window.closePrivateChat = () => {
-            document.getElementById('inbox-directory').style.display = 'block';
-            document.getElementById('inbox-active-chat').style.display = 'none';
-            currentChatPartnerId = null;
-        };
+        window.closePrivateChat = () => { document.getElementById('inbox-directory').style.display = 'block'; document.getElementById('inbox-active-chat').style.display = 'none'; currentChatPartnerId = null; };
 
         document.getElementById('sendPmBtn').addEventListener('click', () => {
             const input = document.getElementById('pmInput'); const text = input.value;
@@ -402,20 +426,10 @@
             input.value = '';
         });
 
-        // === REST OF THE APP DATA ===
-        function checkSellerStatus() {
-            if(isBoss) { document.getElementById('market-upload-area').style.display = 'block'; document.getElementById('seller-gate').style.display = 'none'; return; }
-            onValue(ref(db, `target_approved_sellers/${user.uid}`), s => {
-                document.getElementById('market-upload-area').style.display = s.exists() ? 'block' : 'none';
-                document.getElementById('seller-gate').style.display = s.exists() ? 'none' : 'block';
-            });
-        }
-
-        window.toggleSeller = (uid, status) => { status ? set(ref(db, `target_approved_sellers/${uid}`), true) : remove(ref(db, `target_approved_sellers/${uid}`)); };
-
+        // === GLOBAL FEED ===
         document.getElementById('submitIdeaBtn').addEventListener('click', () => {
             const text = document.getElementById('pitchIdea').value; if(!text) return;
-            push(ref(db, 'target_feed'), { text: text, author: user.displayName, avatar: user.photoURL || '', timestamp: Date.now() });
+            push(ref(db, 'target_feed'), { text: text, author: user.displayName, avatar: user.photoURL || '', uid: user.uid, timestamp: Date.now() });
             document.getElementById('pitchIdea').value = '';
         });
 
@@ -423,10 +437,57 @@
             const d = document.getElementById('ideas-display'); d.innerHTML = '';
             const posts = []; s.forEach(c => { posts.push({id: c.key, ...c.val()}); });
             posts.reverse().forEach(post => {
-                d.innerHTML += `<div class="feed-post"><div class="post-header">${post.avatar ? `<img src="${post.avatar}" class="avatar">` : `<div class="avatar">${post.author.charAt(0)}</div>`}<div><strong>${post.author}</strong></div>${isBoss ? `<button class="btn btn-danger" style="padding: 4px 8px; margin-left: auto;" onclick="window.nuke('target_feed/${post.id}')">X</button>` : ''}</div><div>${post.text}</div></div>`;
+                const canDelete = isBoss || post.uid === user.uid;
+                const av = post.avatar ? `<img src="${post.avatar}" class="avatar" onclick="window.showProfile('${post.uid}')">` : `<div class="avatar" onclick="window.showProfile('${post.uid}')">${post.author.charAt(0)}</div>`;
+                d.innerHTML += `
+                <div class="feed-post">
+                    <div class="post-header">
+                        ${av}
+                        <div><span class="author-name" onclick="window.showProfile('${post.uid}')">${post.author}</span><br><small style="color:var(--text-muted);">${timeAgo(post.timestamp)}</small></div>
+                        ${canDelete ? `<button class="btn btn-outline" style="padding: 4px 8px; margin-left: auto; border-color:var(--danger); color:var(--danger);" onclick="window.nuke('target_feed/${post.id}')">Delete</button>` : ''}
+                    </div>
+                    <div>${post.text}</div>
+                </div>`;
             });
         });
 
+        // === MARKETPLACE ===
+        function checkSellerStatus() {
+            if(isBoss) { document.getElementById('market-upload-area').style.display = 'block'; document.getElementById('seller-gate').style.display = 'none'; return; }
+            onValue(ref(db, `target_approved_sellers/${user.uid}`), s => {
+                document.getElementById('market-upload-area').style.display = s.exists() ? 'block' : 'none'; document.getElementById('seller-gate').style.display = s.exists() ? 'none' : 'block';
+            });
+        }
+        window.toggleSeller = (uid, status) => { status ? set(ref(db, `target_approved_sellers/${uid}`), true) : remove(ref(db, `target_approved_sellers/${uid}`)); };
+
+        document.getElementById('submitMarketBtn').addEventListener('click', () => {
+            const file = document.getElementById('itemPhoto').files[0]; const item = document.getElementById('itemName').value; const price = document.getElementById('itemPrice').value;
+            if(!file || !item || !price) return;
+            const uploadTask = uploadBytesResumable(sRef(storage, `market/${Date.now()}_${file.name}`), file);
+            uploadTask.on('state_changed', s => { document.getElementById('mStatus').innerText = `Uploading...`; }, null, () => {
+                getDownloadURL(uploadTask.snapshot.ref).then(url => { push(ref(db, 'target_marketplace_visual'), { item, price, image: url, seller: user.displayName, uid: user.uid, timestamp: Date.now() }); document.getElementById('mStatus').innerText = "Listed! ✅"; document.getElementById('itemPhoto').value = ''; document.getElementById('itemName').value = ''; document.getElementById('itemPrice').value = ''; });
+            });
+        });
+
+        onValue(ref(db, 'target_marketplace_visual'), s => {
+            const d = document.getElementById('market-display'); d.innerHTML = '';
+            const items = []; s.forEach(c => { items.push({id: c.key, ...c.val()}); });
+            items.reverse().forEach(val => {
+                const canDelete = isBoss || val.uid === user.uid;
+                d.innerHTML += `
+                <div class="product-card">
+                    <img src="${val.image}" class="product-img">
+                    <div class="product-info">
+                        <h4 class="product-title">${val.item}</h4>
+                        <p class="product-price">${val.price}</p>
+                        <small style="margin-bottom:auto;">Seller: <span class="author-name" onclick="window.showProfile('${val.uid}')">${val.seller}</span></small>
+                        ${canDelete ? `<button class="btn btn-outline" style="width:100%; margin-top:15px; border-color:var(--danger); color:var(--danger);" onclick="window.nuke('target_marketplace_visual/${val.id}')">Remove Item</button>` : ''}
+                    </div>
+                </div>`;
+            });
+        });
+
+        // === MEDIA VAULT ===
         document.getElementById('submitVaultBtn').addEventListener('click', () => {
             const file = document.getElementById('vFile').files[0]; const title = document.getElementById('vTitle').value;
             if(!file || !isBoss) return;
@@ -439,20 +500,6 @@
         onValue(ref(db, 'target_media_vault'), s => {
             const d = document.getElementById('vault-display'); d.innerHTML = '';
             s.forEach(c => { const val = c.val(); d.innerHTML += `<div class="media-card"><h4>${val.title}</h4><small>${val.category}</small><a href="${val.url}" target="_blank" class="download-btn">Download</a>${isBoss ? `<button class="btn btn-danger" style="width:100%; margin-top:5px;" onclick="window.nuke('target_media_vault/${c.key}')">Delete</button>` : ''}</div>`; });
-        });
-
-        document.getElementById('submitMarketBtn').addEventListener('click', () => {
-            const file = document.getElementById('itemPhoto').files[0]; const item = document.getElementById('itemName').value; const price = document.getElementById('itemPrice').value;
-            if(!file || !item || !price) return;
-            const uploadTask = uploadBytesResumable(sRef(storage, `market/${Date.now()}_${file.name}`), file);
-            uploadTask.on('state_changed', s => { document.getElementById('mStatus').innerText = `Uploading...`; }, null, () => {
-                getDownloadURL(uploadTask.snapshot.ref).then(url => { push(ref(db, 'target_marketplace_visual'), { item, price, image: url, seller: user.displayName }); document.getElementById('mStatus').innerText = "Listed! ✅"; document.getElementById('itemPhoto').value = ''; document.getElementById('itemName').value = ''; document.getElementById('itemPrice').value = ''; });
-            });
-        });
-
-        onValue(ref(db, 'target_marketplace_visual'), s => {
-            const d = document.getElementById('market-display'); d.innerHTML = '';
-            s.forEach(c => { const val = c.val(); d.innerHTML += `<div class="product-card"><img src="${val.image}" class="product-img"><div class="product-info"><h4 class="product-title">${val.item}</h4><p class="product-price">${val.price}</p><small>Seller: ${val.seller}</small>${isBoss ? `<button class="btn btn-danger" style="width:100%; margin-top:10px;" onclick="window.nuke('target_marketplace_visual/${c.key}')">Remove</button>` : ''}</div></div>`; });
         });
 
         window.nuke = (path) => { if(confirm("Delete this?")) remove(ref(db, path)); };
