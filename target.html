@@ -30,6 +30,7 @@
 
         /* BUTTONS & FORMS */
         .btn { padding: 8px 16px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dark); }
         .btn-danger { background: var(--danger); color: white; }
@@ -165,14 +166,18 @@
             </div>
 
             <div id="market-upload-area" style="display:none; background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px;">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <input type="text" id="itemName" class="form-control" placeholder="Product Title" style="flex: 1; margin:0;">
+                <h4 style="margin-top: 0;">List a Product</h4>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                    <input type="text" id="itemName" class="form-control" placeholder="Product Title" style="flex: 1; margin:0; min-width: 150px;">
                     <select id="itemCat" class="form-control" style="max-width: 150px; margin:0;"><option>Electronics</option><option>Fashion</option><option>Services</option></select>
-                    <input type="text" id="itemPrice" class="form-control" placeholder="Price" style="max-width: 100px; margin:0;">
-                    <input type="text" id="itemPhotoUrl" class="form-control" placeholder="Image URL" style="flex: 1; margin:0;">
-                    <button id="submitMarketBtn" class="btn btn-primary">List</button>
+                    <input type="number" id="itemPrice" class="form-control" placeholder="Price" style="max-width: 120px; margin:0;">
+                    
+                    <input type="file" id="itemImageFile" class="form-control" accept="image/*" style="flex: 1; margin:0; padding: 7px; min-width: 200px;">
+                    
+                    <button id="submitMarketBtn" class="btn btn-primary">List Product</button>
                 </div>
             </div>
+
             <div id="market-display" class="market-grid"></div>
         </main>
 
@@ -181,8 +186,8 @@
             <div id="boss-vault-upload" style="display:none; margin-bottom: 20px;">
                 <div style="display: flex; gap: 10px;">
                     <input type="text" id="vTitle" class="form-control" placeholder="Title" style="margin:0;">
-                    <input type="text" id="vLink" class="form-control" placeholder="Drive URL" style="margin:0;">
-                    <button id="submitVaultBtn" class="btn btn-primary">Add</button>
+                    <input type="text" id="vLink" class="form-control" placeholder="Google Drive/YouTube URL" style="margin:0;">
+                    <button id="submitVaultBtn" class="btn btn-primary">Add to Vault</button>
                 </div>
             </div>
             <div id="vault-display" class="vault-grid"></div>
@@ -233,6 +238,11 @@
         import { getDatabase, ref, push, onValue, set, get, remove, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
+        // ==========================================
+        // IMGBB API KEY (Injected by Yaza Promax!)
+        // ==========================================
+        const IMGBB_API_KEY = "F42175e4035914aeff8d06650db28421"; 
+        
         const BOSS_EMAIL = "kawanularedson@gmail.com"; 
         const BOSS_WA = "265993965546";
 
@@ -245,12 +255,6 @@
         const db = getDatabase(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
         let user = null; let isBoss = false; let currentChatPartnerId = null; let currentCategoryFilter = "All";
-        let unreadCounts = {}; 
-
-        // REGISTER SERVICE WORKER (PWA)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
-        }
 
         // UTILITIES
         function timeAgo(t) { const s = Math.floor((new Date() - t)/1000); let i = s/86400; if(i>1) return Math.floor(i)+"d ago"; i = s/3600; if(i>1) return Math.floor(i)+"h ago"; i = s/60; if(i>1) return Math.floor(i)+"m ago"; return "Now"; }
@@ -286,7 +290,6 @@
             document.getElementById('admin-gateway').style.display = 'none'; document.getElementById('main-app').style.display = 'block';
             if(isBoss) { document.getElementById('headerAdminBtn').style.display = 'block'; document.getElementById('boss-vault-upload').style.display = 'block'; }
             
-            // Set User Data & Avatar
             update(ref(db, `target_users/${user.uid}`), { name: user.displayName, email: user.email, photoURL: user.photoURL });
             document.getElementById('myMiniAvatar').innerHTML = user.photoURL ? `<img src="${user.photoURL}" class="avatar" style="width:35px;height:35px;">` : `<div class="avatar" style="width:35px;height:35px;">${user.displayName.charAt(0)}</div>`;
             
@@ -321,14 +324,8 @@
                 const sellerSnap = await get(ref(db, `target_approved_sellers/${uid}`));
                 document.getElementById('profile-badge').style.display = sellerSnap.exists() ? 'inline-block' : 'none';
                 
-                if(uid === user.uid) {
-                    document.getElementById('showEditBtn').style.display = 'block';
-                    document.getElementById('editBio').value = uData.bio || "";
-                    document.getElementById('editPhone').value = uData.phone || "";
-                } else {
-                    document.getElementById('showEditBtn').style.display = 'none';
-                    document.getElementById('edit-profile-form').style.display = 'none';
-                }
+                if(uid === user.uid) { document.getElementById('showEditBtn').style.display = 'block'; document.getElementById('editBio').value = uData.bio || ""; document.getElementById('editPhone').value = uData.phone || ""; } 
+                else { document.getElementById('showEditBtn').style.display = 'none'; document.getElementById('edit-profile-form').style.display = 'none'; }
                 document.getElementById('profile-modal').style.display = 'flex';
             }
         };
@@ -343,37 +340,20 @@
         // NOTIFICATIONS & DIRECTORY
         function loadDirectoryAndNotifications() {
             onValue(ref(db, 'target_users'), (snap) => {
-                const dir = document.getElementById('directory-list'); dir.innerHTML = '';
-                let globalUnread = false;
-
+                const dir = document.getElementById('directory-list'); dir.innerHTML = ''; let globalUnread = false;
                 snap.forEach(child => {
                     const u = child.val(); const uid = child.key;
                     if(uid !== user.uid) {
                         const chatId = getChatId(user.uid, uid);
-                        
-                        // Check Notifications
                         onValue(ref(db, `target_private_chats/${chatId}/lastMessage`), msgSnap => {
-                            const lastMsg = msgSnap.val();
-                            const isUnread = lastMsg && lastMsg.senderId !== user.uid && !lastMsg.read;
-                            const unreadDotId = `unread-${uid}`;
-                            
-                            // Build Directory Row
+                            const lastMsg = msgSnap.val(); const isUnread = lastMsg && lastMsg.senderId !== user.uid && !lastMsg.read; const unreadDotId = `unread-${uid}`;
                             if(!document.getElementById(`row-${uid}`)) {
                                 const av = u.photoURL ? `<img src="${u.photoURL}" class="avatar" style="width:35px;height:35px;">` : `<div class="avatar" style="width:35px;height:35px;">${u.name.charAt(0)}</div>`;
-                                dir.innerHTML += `
-                                <div class="inbox-user-row" id="row-${uid}" onclick="window.openPrivateChat('${uid}', '${u.name.replace(/'/g, "\\'")}')">
-                                    <div style="display:flex; align-items:center; gap:10px;">${av} <strong>${u.name}</strong></div>
-                                    <div id="${unreadDotId}" class="unread-dot"></div>
-                                </div>`;
+                                dir.innerHTML += `<div class="inbox-user-row" id="row-${uid}" onclick="window.openPrivateChat('${uid}', '${u.name.replace(/'/g, "\\'")}')"><div style="display:flex; align-items:center; gap:10px;">${av} <strong>${u.name}</strong></div><div id="${unreadDotId}" class="unread-dot"></div></div>`;
                             }
-                            
-                            // Update Notification UI
-                            const dotEl = document.getElementById(unreadDotId);
-                            if(dotEl) dotEl.style.display = isUnread ? 'block' : 'none';
-                            
+                            const dotEl = document.getElementById(unreadDotId); if(dotEl) dotEl.style.display = isUnread ? 'block' : 'none';
                             if(isUnread) globalUnread = true;
-                            document.getElementById('navChatBadge').style.display = globalUnread ? 'inline-block' : 'none';
-                            document.getElementById('inboxTabBadge').style.display = globalUnread ? 'inline-block' : 'none';
+                            document.getElementById('navChatBadge').style.display = globalUnread ? 'inline-block' : 'none'; document.getElementById('inboxTabBadge').style.display = globalUnread ? 'inline-block' : 'none';
                         });
                     }
                 });
@@ -382,49 +362,78 @@
 
         // PRIVATE CHAT
         window.openPrivateChat = (partnerUid, partnerName) => {
-            currentChatPartnerId = partnerUid;
-            document.getElementById('inbox-directory').style.display = 'none'; document.getElementById('inbox-active-chat').style.display = 'block'; document.getElementById('chattingWithName').innerText = partnerName;
-            
+            currentChatPartnerId = partnerUid; document.getElementById('inbox-directory').style.display = 'none'; document.getElementById('inbox-active-chat').style.display = 'block'; document.getElementById('chattingWithName').innerText = partnerName;
             const chatId = getChatId(user.uid, partnerUid);
-            
-            // Mark as read
-            get(ref(db, `target_private_chats/${chatId}/lastMessage`)).then(s => {
-                if(s.exists() && s.val().senderId !== user.uid) update(ref(db, `target_private_chats/${chatId}/lastMessage`), { read: true });
-            });
-
+            get(ref(db, `target_private_chats/${chatId}/lastMessage`)).then(s => { if(s.exists() && s.val().senderId !== user.uid) update(ref(db, `target_private_chats/${chatId}/lastMessage`), { read: true }); });
             onValue(ref(db, `target_private_chats/${chatId}/messages`), s => {
                 const display = document.getElementById('private-messages-display'); display.innerHTML = '';
-                s.forEach(m => {
-                    const msg = m.val(); const isMe = msg.senderId === user.uid;
-                    display.innerHTML += `<div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}"><div>${msg.text}</div><div style="font-size:0.7rem; opacity:0.7; text-align:${isMe?'right':'left'};">${timeAgo(msg.timestamp)}</div></div>`;
-                });
+                s.forEach(m => { const msg = m.val(); const isMe = msg.senderId === user.uid; display.innerHTML += `<div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}"><div>${msg.text}</div><div style="font-size:0.7rem; opacity:0.7; text-align:${isMe?'right':'left'};">${timeAgo(msg.timestamp)}</div></div>`; });
                 display.scrollTop = display.scrollHeight; 
             });
         };
-
         window.closePrivateChat = () => { document.getElementById('inbox-directory').style.display = 'block'; document.getElementById('inbox-active-chat').style.display = 'none'; currentChatPartnerId = null; };
-
         document.getElementById('sendPmBtn').addEventListener('click', () => {
             const input = document.getElementById('pmInput'); const text = input.value; if(!text || !currentChatPartnerId) return;
-            const chatId = getChatId(user.uid, currentChatPartnerId);
-            const msgData = { text: text, senderId: user.uid, timestamp: Date.now() };
-            push(ref(db, `target_private_chats/${chatId}/messages`), msgData);
-            set(ref(db, `target_private_chats/${chatId}/lastMessage`), { ...msgData, read: false }); // for notifications
-            input.value = '';
+            const chatId = getChatId(user.uid, currentChatPartnerId); const msgData = { text: text, senderId: user.uid, timestamp: Date.now() };
+            push(ref(db, `target_private_chats/${chatId}/messages`), msgData); set(ref(db, `target_private_chats/${chatId}/lastMessage`), { ...msgData, read: false }); input.value = '';
         });
 
-        // MARKETPLACE (WITH FEATURED LOGIC)
+        // MARKETPLACE WITH IMGBB NATIVE UPLOAD
         function checkSellerStatus() {
             if(isBoss) { document.getElementById('market-upload-area').style.display = 'block'; return; }
-            onValue(ref(db, `target_approved_sellers/${user.uid}`), s => {
-                document.getElementById('market-upload-area').style.display = s.exists() ? 'block' : 'none'; document.getElementById('seller-gate').style.display = s.exists() ? 'none' : 'block';
-            });
+            onValue(ref(db, `target_approved_sellers/${user.uid}`), s => { document.getElementById('market-upload-area').style.display = s.exists() ? 'block' : 'none'; document.getElementById('seller-gate').style.display = s.exists() ? 'none' : 'block'; });
         }
 
-        document.getElementById('submitMarketBtn').addEventListener('click', () => {
-            const item = document.getElementById('itemName').value; const price = document.getElementById('itemPrice').value;
-            const category = document.getElementById('itemCat').value; const image = document.getElementById('itemPhotoUrl').value;
-            if(item && price && image) { push(ref(db, 'target_marketplace_visual'), { item, price, category, image, seller: user.displayName, uid: user.uid, timestamp: Date.now(), isFeatured: false }); }
+        document.getElementById('submitMarketBtn').addEventListener('click', async () => {
+            const item = document.getElementById('itemName').value; 
+            const price = document.getElementById('itemPrice').value;
+            const category = document.getElementById('itemCat').value; 
+            const fileInput = document.getElementById('itemImageFile');
+            const submitBtn = document.getElementById('submitMarketBtn');
+
+            if(!item || !price || fileInput.files.length === 0) {
+                alert("Please fill all fields and select an image.");
+                return;
+            }
+
+            submitBtn.innerText = "Uploading Image...";
+            submitBtn.disabled = true;
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("image", file);
+
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const imageUrl = data.data.url; 
+                    
+                    push(ref(db, 'target_marketplace_visual'), { 
+                        item, price, category, image: imageUrl, 
+                        seller: user.displayName, uid: user.uid, 
+                        timestamp: Date.now(), isFeatured: false 
+                    });
+
+                    document.getElementById('itemName').value = '';
+                    document.getElementById('itemPrice').value = '';
+                    fileInput.value = '';
+                    alert("Product Listed Successfully!");
+                } else {
+                    alert("Image upload failed. Check your ImgBB API Key.");
+                }
+            } catch (error) {
+                console.error("Upload error:", error);
+                alert("An error occurred while uploading the image.");
+            } finally {
+                submitBtn.innerText = "List Product";
+                submitBtn.disabled = false;
+            }
         });
 
         document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('click', e => { document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); e.target.classList.add('active'); currentCategoryFilter = e.target.getAttribute('data-cat'); renderMarket(); }));
@@ -432,40 +441,18 @@
 
         let marketItems = [];
         onValue(ref(db, 'target_marketplace_visual'), s => { marketItems = []; s.forEach(c => { marketItems.push({id: c.key, ...c.val()}); }); renderMarket(); });
-        
         window.toggleFeature = (id, currentStatus) => { update(ref(db, `target_marketplace_visual/${id}`), { isFeatured: !currentStatus }); };
 
         function renderMarket() {
-            const d = document.getElementById('market-display'); d.innerHTML = '';
-            const term = document.getElementById('marketSearch').value.toLowerCase();
-            
+            const d = document.getElementById('market-display'); d.innerHTML = ''; const term = document.getElementById('marketSearch').value.toLowerCase();
             let filtered = marketItems.filter(v => (currentCategoryFilter === "All" || v.category === currentCategoryFilter) && v.item.toLowerCase().includes(term));
-            
-            // Sort: Featured items first, then by timestamp (newest first)
-            filtered.sort((a, b) => {
-                if (a.isFeatured && !b.isFeatured) return -1;
-                if (!a.isFeatured && b.isFeatured) return 1;
-                return b.timestamp - a.timestamp;
-            });
-
+            filtered.sort((a, b) => { if (a.isFeatured && !b.isFeatured) return -1; if (!a.isFeatured && b.isFeatured) return 1; return b.timestamp - a.timestamp; });
             filtered.forEach(v => {
                 const canDelete = isBoss || v.uid === user.uid;
-                d.innerHTML += `
-                <div class="product-card ${v.isFeatured ? 'featured' : ''}">
+                d.innerHTML += `<div class="product-card ${v.isFeatured ? 'featured' : ''}">
                     ${v.isFeatured ? '<div class="featured-badge">⭐ Featured</div>' : ''}
                     <img src="${v.image}" class="product-img">
-                    <div class="product-info">
-                        <small style="color:var(--text-muted);">${v.category || 'Other'}</small>
-                        <h4 class="product-title">${v.item}</h4>
-                        <p class="product-price">${v.price}</p>
-                        <small style="margin-bottom:10px;">Seller: <span style="font-weight:bold; cursor:pointer;" onclick="window.showProfile('${v.uid}')">${v.seller}</span></small>
-                        <div style="display:flex; gap:5px; margin-top:auto;">
-                            <button class="btn btn-primary" style="flex:1; padding:6px;" onclick="window.openPrivateChat('${v.uid}', '${v.seller}')">Message</button>
-                            ${isBoss ? `<button class="btn btn-warning" style="padding:6px;" onclick="window.toggleFeature('${v.id}', ${v.isFeatured})">⭐</button>` : ''}
-                            ${canDelete ? `<button class="btn btn-outline" style="padding:6px; color:var(--danger);" onclick="remove(ref(db, 'target_marketplace_visual/${v.id}'))">🗑️</button>` : ''}
-                        </div>
-                    </div>
-                </div>`;
+                    <div class="product-info"><small style="color:var(--text-muted);">${v.category || 'Other'}</small><h4 class="product-title">${v.item}</h4><p class="product-price">MWK ${v.price}</p><small style="margin-bottom:10px;">Seller: <span style="font-weight:bold; cursor:pointer;" onclick="window.showProfile('${v.uid}')">${v.seller}</span></small><div style="display:flex; gap:5px; margin-top:auto;"><button class="btn btn-primary" style="flex:1; padding:6px;" onclick="window.openPrivateChat('${v.uid}', '${v.seller}')">Message</button>${isBoss ? `<button class="btn btn-warning" style="padding:6px;" onclick="window.toggleFeature('${v.id}', ${v.isFeatured})">⭐</button>` : ''}${canDelete ? `<button class="btn btn-outline" style="padding:6px; color:var(--danger);" onclick="remove(ref(db, 'target_marketplace_visual/${v.id}'))">🗑️</button>` : ''}</div></div></div>`;
             });
         }
 
