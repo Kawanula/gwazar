@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Target Hub | Enterprise</title>
+    <title>Target Hub | Titan Edition</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         /* CORE STYLES & LIGHT/DARK VARIABLES */
         :root {
@@ -21,21 +21,20 @@
             --border: #374151;
         }
 
-        body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; transition: 0.3s; }
         * { box-sizing: border-box; }
         
         /* NAVBAR */
-        .navbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 64px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background-color 0.3s, border-color 0.3s; }
-        .nav-brand { font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-        .nav-links { display: flex; gap: 15px; height: 100%; overflow-x: auto; scrollbar-width: none; }
-        .nav-links::-webkit-scrollbar { display: none; }
-        .nav-item { background: none; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-weight: 600; cursor: pointer; padding: 0 10px; font-size: 0.95rem; display: flex; align-items: center; gap: 5px; transition: 0.2s; white-space: nowrap; }
+        .navbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 64px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .nav-brand { font-size: 1.5rem; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
+        .nav-links { display: flex; gap: 15px; height: 100%; }
+        .nav-item { background: none; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-weight: 600; cursor: pointer; padding: 0 10px; font-size: 0.95rem; transition: 0.2s; }
         .nav-item:hover { color: var(--primary); }
         .nav-item.active { border-bottom-color: var(--primary); color: var(--primary); }
         .user-controls { display: flex; align-items: center; gap: 10px; }
-        .nav-badge { background: var(--danger); color: white; border-radius: 12px; padding: 2px 6px; font-size: 0.7rem; font-weight: bold; display: none; }
+        .nav-badge { background: var(--danger); color: white; border-radius: 12px; padding: 2px 8px; font-size: 0.75rem; font-weight: bold; display: none; }
         .theme-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-dark); transition: transform 0.2s; padding: 0; }
-        .theme-btn:hover { transform: scale(1.1); }
+        .wallet-pill { background: var(--warning); color: #000; font-weight: 700; font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
         /* BUTTONS & FORMS */
         .btn { padding: 8px 16px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
@@ -43,7 +42,7 @@
         .btn-primary { background: var(--primary); color: white; }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dark); }
         .btn-danger { background: var(--danger); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
+        .btn-warning { background: var(--warning); color: #000; }
         .btn-success { background: var(--success); color: white; }
         .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; font-family: inherit; background: var(--surface); color: var(--text-dark); }
         .search-bar { width: 100%; max-width: 400px; margin-bottom: 20px; border-radius: 20px; padding: 10px 15px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dark); }
@@ -58,32 +57,41 @@
         .filter-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dark); cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
         .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
         .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; position: relative; transition: background-color 0.3s; }
+        
+        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; position: relative; transition: 0.3s; }
         .product-card.featured { border: 2px solid gold; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); }
-        .featured-badge { position: absolute; top: 10px; right: 10px; background: gold; color: #000; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; z-index: 10; }
+        .product-card.sold-card { opacity: 0.7; filter: grayscale(40%); }
+        .sold-overlay { position: absolute; top: 30%; left: 0; right: 0; background: rgba(255,255,255,0.85); text-align: center; padding: 10px; font-size: 1.8rem; font-weight: 900; color: var(--danger); transform: rotate(-10deg); border-top: 3px solid var(--danger); border-bottom: 3px solid var(--danger); z-index: 15; pointer-events: none; }
+        body.dark-mode .sold-overlay { background: rgba(0,0,0,0.85); }
+        
+        .featured-badge { position: absolute; top: 10px; right: 10px; background: gold; color: #000; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 1rem; backdrop-filter: blur(4px); }
         .product-img { width: 100%; height: 200px; object-fit: cover; background: #e5e7eb; }
         .product-info { padding: 15px; display: flex; flex-direction: column; flex: 1; }
         .product-title { font-weight: 600; margin: 0 0 4px 0; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .product-price { color: #f97316; font-weight: 700; font-size: 1.25rem; margin: 0 0 12px 0; }
         
-        /* VAULT */
-        .vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
-        .media-card { background: #1f2937; color: white; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; }
-        .download-btn { text-align: center; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; color: white; text-decoration: none; font-size: 0.8rem; margin-top: auto; }
-
         /* CHAT & SOCIAL */
         .chat-container { max-width: 600px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
         .chat-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--bg-light); }
         .chat-tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; }
         .chat-tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: var(--surface); }
+        
+        /* STORIES */
+        .stories-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 15px; border-bottom: 1px solid var(--border); background: var(--surface); scrollbar-width: none; }
+        .stories-scroll::-webkit-scrollbar { display: none; }
+        .story-circle { width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0; cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; position: relative; border: 3px solid var(--primary); background: var(--bg-light); color: var(--text-muted); padding: 2px; }
+        .story-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .story-circle.add-story { border: 3px dashed var(--text-muted); color: var(--text-muted); background: var(--surface); }
+        .story-label { position: absolute; bottom: -20px; font-size: 0.7rem; text-align: center; width: 100%; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+
+        /* FEED POSTS */
         .feed-post { background: var(--surface); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border); }
         .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; object-fit: cover;}
         .feed-actions { display: flex; gap: 15px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
         .action-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 0.9rem; font-weight: 600; }
         .action-btn:hover, .action-btn.liked { color: var(--primary); }
         .comment-section { margin-top: 10px; background: var(--bg-light); padding: 10px; border-radius: 6px; display: none; }
-        .comment-row { display: flex; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; }
         
         /* INBOX */
         .inbox-user-row { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
@@ -93,21 +101,14 @@
         .chat-bubble { max-width: 75%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; word-wrap: break-word; }
         .bubble-me { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
         .bubble-them { background: #e5e7eb; color: #1f2937; align-self: flex-start; border-bottom-left-radius: 2px; }
-        .chat-img-upload-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0 12px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; color: var(--text-dark); }
 
-        /* ADMIN DASHBOARD */
-        .admin-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .stat-card { background: var(--surface); border: 1px solid var(--border); padding: 20px; border-radius: 8px; text-align: center; }
-        .stat-card h3 { margin: 0; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; }
-        .stat-card h2 { margin: 10px 0 0 0; color: var(--primary); font-size: 2rem; }
-
-        /* OVERLAYS, MODALS & TOASTS */
+        /* OVERLAYS & MODALS */
         .overlay-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; flex-direction: column; }
-        .modal-box { background: var(--surface); padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; text-align: center; max-height: 90vh; overflow-y: auto; }
+        .modal-box { background: var(--surface); padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; position: relative; text-align: center; }
         .close-modal-btn { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
         
         #toast-container { position: fixed; top: 70px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast-msg { background: var(--primary); color: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 0.9rem; font-weight: 600; animation: slideIn 0.3s forwards, fadeOut 0.3s forwards 4s; pointer-events: auto; cursor: pointer; }
+        .toast-msg { background: var(--primary); color: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 0.9rem; font-weight: 600; animation: slideIn 0.3s forwards, fadeOut 0.3s forwards 4s; pointer-events: auto; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
     </style>
@@ -118,58 +119,9 @@
 
     <div id="login-screen" class="overlay-screen">
         <div class="modal-box">
-            <h1 style="color: var(--primary); margin-top: 0;">Target Hub</h1>
+            <h1 style="color: var(--primary); margin-top: 0; font-weight: 900;">TARGET HUB</h1>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">The Titan Network.</p>
             <button id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 12px;">Sign in with Google</button>
-            <p id="banMessage" style="color: var(--danger); font-weight: bold; display: none; margin-top: 15px;">Your account is restricted.</p>
-        </div>
-    </div>
-
-    <div id="admin-gateway" class="overlay-screen" style="display: none; background: #000;">
-        <div class="modal-box" style="background: #111; border: 1px solid #333;">
-            <h2 style="color: white; font-family: monospace;">🛡️ BOSS OVERRIDE</h2>
-            <div id="setup-pass-view" style="display: none;">
-                <input type="password" id="newAdminPass" class="form-control" placeholder="Create Password" style="background: #222; color:white;">
-                <button id="setPassBtn" class="btn btn-primary" style="width:100%;">Set Password</button>
-            </div>
-            <div id="enter-pass-view" style="display: none;">
-                <input type="password" id="adminPassInput" class="form-control" placeholder="Password" style="background: #222; color:white;">
-                <button id="verifyPassBtn" class="btn btn-outline" style="width:100%; color: white;">Authenticate</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="profile-modal" class="overlay-screen" style="display: none;">
-        <div class="modal-box">
-            <button class="close-modal-btn" onclick="document.getElementById('profile-modal').style.display='none'">&times;</button>
-            <div id="profile-avatar" style="width: 80px; height: 80px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 15px auto;"></div>
-            <h2 id="profile-name" style="margin: 0 0 5px 0;">Name</h2>
-            <p id="profile-email" style="color: var(--text-muted); margin-top: 0; font-size: 0.9rem; margin-bottom: 5px;"></p>
-            <div id="profile-rating-display" style="color: var(--warning); font-weight: bold; font-size: 1.1rem; margin-bottom: 10px;">⭐ New Seller</div>
-            <span id="profile-badge" style="background: var(--success); color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; display: none;">Verified Seller</span>
-            
-            <div style="text-align: left; margin-top: 15px;">
-                <label style="font-size:0.8rem; font-weight:bold; color:var(--text-muted);">Bio</label>
-                <p id="profile-bio-text" style="margin: 0 0 10px 0; font-size: 0.95rem;">No bio provided.</p>
-                <label style="font-size:0.8rem; font-weight:bold; color:var(--text-muted);">Contact</label>
-                <p id="profile-phone-text" style="margin: 0 0 15px 0; font-size: 0.95rem;">No contact provided.</p>
-            </div>
-
-            <div id="rate-seller-form" style="display:none; background: var(--bg-light); padding: 15px; border-radius: 8px; margin-top: 15px;">
-                <label style="font-size:0.8rem; font-weight:bold; color:var(--text-dark);">Rate this Seller</label>
-                <div style="display: flex; gap: 10px; margin-top: 5px; margin-bottom: 10px;">
-                    <select id="ratingScore" class="form-control" style="margin:0; width: 80px;">
-                        <option value="5">5 ⭐</option><option value="4">4 ⭐</option><option value="3">3 ⭐</option><option value="2">2 ⭐</option><option value="1">1 ⭐</option>
-                    </select>
-                    <button id="submitRatingBtn" class="btn btn-warning" style="flex:1;">Submit Rating</button>
-                </div>
-            </div>
-
-            <div id="edit-profile-form" style="display: none; border-top: 1px solid var(--border); padding-top: 15px; text-align: left;">
-                <input type="text" id="editBio" class="form-control" placeholder="Write a short bio...">
-                <input type="text" id="editPhone" class="form-control" placeholder="Phone or WhatsApp Number">
-                <button id="saveProfileBtn" class="btn btn-primary" style="width:100%;">Save Profile</button>
-            </div>
-            <button id="showEditBtn" class="btn btn-outline" style="width:100%; display:none;">Edit Profile</button>
         </div>
     </div>
 
@@ -178,16 +130,12 @@
             <div class="nav-brand">🎯 Target Hub</div>
             <div class="nav-links">
                 <button class="nav-item active" data-target="view-market">Market</button>
-                <button class="nav-item" data-target="view-vault">Vault</button>
                 <button class="nav-item" data-target="view-chat">Social <span id="navChatBadge" class="nav-badge">!</span></button>
             </div>
             <div class="user-controls">
-                <button id="installAppBtn" class="btn btn-success" style="display: none; padding: 6px 10px; font-size: 0.8rem;">📱 Install</button>
-                
+                <div id="wallet-pill" class="wallet-pill">🪙 0</div>
                 <button id="themeToggleBtn" class="theme-btn">🌙</button>
-                <div id="myMiniAvatar" style="cursor: pointer;" onclick="window.showProfile(user.uid)"></div>
-                <button id="headerAdminBtn" class="btn btn-outline" data-target="view-admin" style="display:none; border-color: var(--danger); color: var(--danger);">Admin</button>
-                <button id="logoutBtn" class="btn btn-outline" style="padding: 6px 10px; font-size: 0.8rem;">Exit</button>
+                <div id="myMiniAvatar" style="cursor: pointer;"></div>
             </div>
         </nav>
 
@@ -195,17 +143,16 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <h2>Global Market</h2>
                 <div id="seller-gate">
-                    <a id="waLink" href="#" class="btn btn-outline" style="color: var(--success); border-color: var(--success); text-decoration:none;">Become a Seller</a>
+                    <a id="waLink" href="#" class="btn btn-outline" style="color: var(--success); border-color: var(--success); text-decoration:none;">Apply to Sell</a>
                 </div>
             </div>
             
             <input type="text" id="marketSearch" class="search-bar" placeholder="🔍 Search items...">
             <div class="market-filters" id="marketFilters">
-                <button class="filter-btn active" data-cat="All">All Categories</button>
-                <button class="filter-btn" data-cat="Favorites">❤️ My Favorites</button>
+                <button class="filter-btn active" data-cat="All">All Items</button>
+                <button class="filter-btn" data-cat="Favorites">❤️ Favorites</button>
                 <button class="filter-btn" data-cat="Electronics">📱 Electronics</button>
                 <button class="filter-btn" data-cat="Fashion">👕 Fashion</button>
-                <button class="filter-btn" data-cat="Services">💼 Services</button>
             </div>
 
             <div id="market-upload-area" style="display:none; background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px;">
@@ -215,42 +162,35 @@
                     <select id="itemCat" class="form-control" style="max-width: 150px; margin:0;"><option>Electronics</option><option>Fashion</option><option>Services</option></select>
                     <input type="number" id="itemPrice" class="form-control" placeholder="Price" style="max-width: 120px; margin:0;">
                     <input type="file" id="itemImageFile" class="form-control" accept="image/*" style="flex: 1; margin:0; padding: 7px; min-width: 200px;">
-                    <button id="submitMarketBtn" class="btn btn-primary">List Product</button>
+                    <button id="submitMarketBtn" class="btn btn-primary">Publish</button>
                 </div>
             </div>
 
             <div id="market-display" class="market-grid"></div>
         </main>
 
-        <main id="view-vault" class="app-view">
-            <h2>Media Vault</h2>
-            <div id="boss-vault-upload" style="display:none; margin-bottom: 20px;">
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="vTitle" class="form-control" placeholder="Title" style="margin:0;">
-                    <input type="text" id="vLink" class="form-control" placeholder="Google Drive/YouTube URL" style="margin:0;">
-                    <button id="submitVaultBtn" class="btn btn-primary">Add to Vault</button>
-                </div>
-            </div>
-            <div id="vault-display" class="vault-grid"></div>
-        </main>
-
         <main id="view-chat" class="app-view">
             <div class="chat-container">
                 <div class="chat-tabs">
-                    <button class="chat-tab-btn active" onclick="switchChatTab('feed')">Feed</button>
-                    <button class="chat-tab-btn" onclick="switchChatTab('inbox')">Inbox <span id="inboxTabBadge" class="nav-badge">!</span></button>
+                    <button class="chat-tab-btn active" onclick="switchChatTab('feed')">Community</button>
+                    <button class="chat-tab-btn" onclick="switchChatTab('inbox')">Chats <span id="inboxTabBadge" class="nav-badge">!</span></button>
                 </div>
                 
-                <div id="chat-sect-feed" class="chat-body" style="padding: 20px; background: var(--bg-light);">
-                    <div style="background: var(--surface); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border);">
-                        <textarea id="pitchIdea" class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
-                        <div style="text-align: right;"><button id="submitIdeaBtn" class="btn btn-primary">Post</button></div>
+                <div id="chat-sect-feed" class="chat-body" style="background: var(--bg-light);">
+                    <div class="stories-scroll" id="stories-display">
+                        </div>
+
+                    <div style="padding: 20px;">
+                        <div style="background: var(--surface); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border);">
+                            <textarea id="pitchIdea" class="form-control" rows="2" placeholder="What's on your mind?"></textarea>
+                            <div style="text-align: right;"><button id="submitIdeaBtn" class="btn btn-primary">Post Update</button></div>
+                        </div>
+                        <div id="ideas-display"></div>
                     </div>
-                    <div id="ideas-display"></div>
                 </div>
                 
                 <div id="chat-sect-inbox" class="chat-body" style="display: none; padding: 20px; background: var(--surface);">
-                    <div id="inbox-directory"><h3 style="margin-top: 0;">Messages</h3><div id="directory-list"></div></div>
+                    <div id="inbox-directory"><h3 style="margin-top: 0;">Direct Messages</h3><div id="directory-list"></div></div>
                     <div id="inbox-active-chat" style="display: none;">
                         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                             <button class="btn btn-outline" onclick="closePrivateChat()" style="padding: 4px 8px;">⬅ Back</button>
@@ -258,22 +198,11 @@
                         </div>
                         <div id="private-messages-display" class="private-chat-history"></div>
                         <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="file" id="chatImageFile" accept="image/*" style="display: none;">
-                            <button class="chat-img-upload-btn" onclick="document.getElementById('chatImageFile').click()">📷</button>
                             <input type="text" id="pmInput" class="form-control" placeholder="Type a message..." style="margin: 0; flex:1;">
                             <button id="sendPmBtn" class="btn btn-primary">Send</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
-
-        <main id="view-admin" class="app-view">
-            <h2 style="color: var(--danger); margin-top: 0;">God Mode Dashboard</h2>
-            <div class="admin-stats-grid">
-                <div class="stat-card"><h3>Total Users</h3><h2 id="admin-stat-users">0</h2></div>
-                <div class="stat-card"><h3>Active Items</h3><h2 id="admin-stat-items">0</h2></div>
-                <div class="stat-card"><h3>Market Value</h3><h2 id="admin-stat-value">MWK 0</h2></div>
             </div>
         </main>
     </div>
@@ -294,92 +223,49 @@
         });
         const db = getDatabase(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
-        let user = null; let isBoss = false; let currentChatPartnerId = null; let currentCategoryFilter = "All";
+        let user = null; let isBoss = false; let currentCategoryFilter = "All"; let userCoins = 0;
         let marketItems = []; let userFavorites = {}; 
-        const APP_START_TIME = Date.now(); // Used for Toasts
 
-        // UTILITIES
-        function timeAgo(t) { const s = Math.floor((new Date() - t)/1000); let i = s/86400; if(i>1) return Math.floor(i)+"d ago"; i = s/3600; if(i>1) return Math.floor(i)+"h ago"; i = s/60; if(i>1) return Math.floor(i)+"m ago"; return "Now"; }
-        async function hashPassword(p) { const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p)); return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
-        function getChatId(u1, u2) { return u1 < u2 ? `${u1}_${u2}` : `${u2}_${u1}`; }
-        function showToast(msg, partnerUid, partnerName) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast-msg';
-            toast.innerText = `💬 ${partnerName}: ${msg}`;
-            toast.onclick = () => { 
-                document.querySelector('.nav-item[data-target="view-chat"]').click(); 
-                switchChatTab('inbox'); 
-                window.openPrivateChat(partnerUid, partnerName); 
-            };
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4500);
-        }
-
-        // PWA INSTALL BUTTON
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); deferredPrompt = e;
-            const installBtn = document.getElementById('installAppBtn');
-            installBtn.style.display = 'block';
-            installBtn.addEventListener('click', async () => {
-                installBtn.style.display = 'none'; deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                deferredPrompt = null;
-            });
-        });
-
-        // DARK MODE LOGIC
+        // THEME LOGIC
         const themeBtn = document.getElementById('themeToggleBtn');
         if(localStorage.getItem('targetHubTheme') === 'dark') { document.body.classList.add('dark-mode'); themeBtn.innerText = '☀️'; }
-        themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if(document.body.classList.contains('dark-mode')) { localStorage.setItem('targetHubTheme', 'dark'); themeBtn.innerText = '☀️'; } 
-            else { localStorage.setItem('targetHubTheme', 'light'); themeBtn.innerText = '🌙'; }
-        });
+        themeBtn.addEventListener('click', () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('targetHubTheme', document.body.classList.contains('dark-mode') ? 'dark' : 'light'); themeBtn.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙'; });
 
         // AUTH & INIT
         document.getElementById('loginBtn').addEventListener('click', () => signInWithPopup(auth, provider));
-        document.getElementById('logoutBtn').addEventListener('click', () => { signOut(auth); location.reload(); });
-
+        
         onAuthStateChanged(auth, async (u) => {
             if (u) {
-                const banSnap = await get(ref(db, `target_banned_users/${u.uid}`));
-                if(banSnap.exists()) { signOut(auth); document.getElementById('login-screen').style.display = 'flex'; document.getElementById('banMessage').style.display = 'block'; return; }
                 user = u; isBoss = (u.email === BOSS_EMAIL);
                 document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
                 
-                if(isBoss) {
-                    document.getElementById('admin-gateway').style.display = 'flex';
-                    const snap = await get(ref(db, 'target_sys_admin/hash'));
-                    if(snap.exists()) document.getElementById('enter-pass-view').style.display = 'block'; else document.getElementById('setup-pass-view').style.display = 'block';
-                } else launchMainApp();
-            } else { document.getElementById('login-screen').style.display = 'flex'; document.getElementById('main-app').style.display = 'none'; }
+                // Set Up Mini Avatar
+                document.getElementById('myMiniAvatar').innerHTML = user.photoURL ? `<img src="${user.photoURL}" class="avatar" style="width:35px;height:35px;">` : `<div class="avatar" style="width:35px;height:35px;">${user.displayName.charAt(0)}</div>`;
+                
+                // Initialize Wallet (Give 100 coins to new users)
+                onValue(ref(db, `target_users/${user.uid}/coins`), s => {
+                    let coins = s.val();
+                    if (coins === null) { coins = 100; set(ref(db, `target_users/${user.uid}/coins`), 100); }
+                    userCoins = coins;
+                    document.getElementById('wallet-pill').innerText = `🪙 ${coins}`;
+                });
+
+                // Load Data
+                onValue(ref(db, `target_users/${user.uid}/favorites`), s => { userFavorites = s.val() || {}; renderMarket(); });
+                if(isBoss) document.getElementById('market-upload-area').style.display = 'block';
+                else { onValue(ref(db, `target_approved_sellers/${user.uid}`), s => { document.getElementById('market-upload-area').style.display = s.exists() ? 'block' : 'none'; document.getElementById('seller-gate').style.display = s.exists() ? 'none' : 'block'; }); }
+            } else { 
+                document.getElementById('login-screen').style.display = 'flex'; document.getElementById('main-app').style.display = 'none'; 
+            }
         });
 
-        document.getElementById('setPassBtn').addEventListener('click', async () => { const pass = document.getElementById('newAdminPass').value; if(pass) { await set(ref(db, 'target_sys_admin/hash'), await hashPassword(pass)); launchMainApp(); }});
-        document.getElementById('verifyPassBtn').addEventListener('click', async () => {
-            const pass = document.getElementById('adminPassInput').value; const sHash = (await get(ref(db, 'target_sys_admin/hash'))).val(); const iHash = await hashPassword(pass);
-            if(iHash === sHash) launchMainApp(); else alert("Access Denied");
-        });
-
-        function launchMainApp() {
-            document.getElementById('admin-gateway').style.display = 'none'; document.getElementById('main-app').style.display = 'block';
-            if(isBoss) { document.getElementById('headerAdminBtn').style.display = 'block'; document.getElementById('boss-vault-upload').style.display = 'block'; initAdminDashboard(); }
-            
-            update(ref(db, `target_users/${user.uid}`), { name: user.displayName, email: user.email, photoURL: user.photoURL });
-            document.getElementById('myMiniAvatar').innerHTML = user.photoURL ? `<img src="${user.photoURL}" class="avatar" style="width:35px;height:35px;">` : `<div class="avatar" style="width:35px;height:35px;">${user.displayName.charAt(0)}</div>`;
-            
-            onValue(ref(db, `target_users/${user.uid}/favorites`), s => { userFavorites = s.val() || {}; renderMarket(); });
-            checkSellerStatus(); loadDirectoryAndNotifications(); 
-        }
-
-        // NAV
-        document.querySelectorAll('.nav-item, #headerAdminBtn').forEach(btn => {
+        // NAVIGATION
+        document.querySelectorAll('.nav-item').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.app-view, .nav-item').forEach(el => el.classList.remove('active'));
                 document.getElementById(btn.getAttribute('data-target')).classList.add('active');
-                if(btn.classList.contains('nav-item')) btn.classList.add('active');
+                btn.classList.add('active');
             });
         });
         window.switchChatTab = (tab) => {
@@ -388,246 +274,121 @@
             document.getElementById('chat-sect-inbox').style.display = tab === 'inbox' ? 'block' : 'none';
         };
 
-        // PROFILE & RATINGS
-        let viewingProfileUid = null;
-        window.showProfile = async (uid) => {
-            viewingProfileUid = uid;
-            const snap = await get(ref(db, `target_users/${uid}`));
-            if(snap.exists()) {
-                const uData = snap.val();
-                document.getElementById('profile-avatar').innerHTML = uData.photoURL ? `<img src="${uData.photoURL}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : uData.name.charAt(0);
-                document.getElementById('profile-name').innerText = uData.name;
-                document.getElementById('profile-email').innerText = uData.email;
-                document.getElementById('profile-bio-text').innerText = uData.bio || "No bio provided.";
-                document.getElementById('profile-phone-text').innerText = uData.phone || "No contact provided.";
-                
-                // Calculate average rating
-                const ratingSnap = await get(ref(db, `target_user_ratings/${uid}`));
-                if(ratingSnap.exists()) {
-                    let total = 0; let count = 0;
-                    ratingSnap.forEach(r => { total += r.val().score; count++; });
-                    const avg = (total / count).toFixed(1);
-                    document.getElementById('profile-rating-display').innerText = `⭐ ${avg} / 5.0 (${count} reviews)`;
-                } else { document.getElementById('profile-rating-display').innerText = `⭐ New Seller`; }
-
-                const sellerSnap = await get(ref(db, `target_approved_sellers/${uid}`));
-                document.getElementById('profile-badge').style.display = sellerSnap.exists() ? 'inline-block' : 'none';
-                
-                if(uid === user.uid) { 
-                    document.getElementById('showEditBtn').style.display = 'block'; document.getElementById('editBio').value = uData.bio || ""; document.getElementById('editPhone').value = uData.phone || ""; 
-                    document.getElementById('rate-seller-form').style.display = 'none';
-                } else { 
-                    document.getElementById('showEditBtn').style.display = 'none'; document.getElementById('edit-profile-form').style.display = 'none'; 
-                    document.getElementById('rate-seller-form').style.display = 'block';
-                }
-                document.getElementById('profile-modal').style.display = 'flex';
-            }
-        };
-
-        document.getElementById('submitRatingBtn').addEventListener('click', async () => {
-            if(!viewingProfileUid || viewingProfileUid === user.uid) return;
-            const score = parseInt(document.getElementById('ratingScore').value);
-            await set(ref(db, `target_user_ratings/${viewingProfileUid}/${user.uid}`), { score: score, timestamp: Date.now() });
-            alert("Rating submitted successfully!");
-            window.showProfile(viewingProfileUid); // Refresh rating display
-        });
-
-        document.getElementById('showEditBtn').addEventListener('click', () => { document.getElementById('edit-profile-form').style.display = 'block'; document.getElementById('showEditBtn').style.display = 'none'; });
-        document.getElementById('saveProfileBtn').addEventListener('click', () => {
-            update(ref(db, `target_users/${user.uid}`), { bio: document.getElementById('editBio').value, phone: document.getElementById('editPhone').value });
-            document.getElementById('profile-bio-text').innerText = document.getElementById('editBio').value; document.getElementById('profile-phone-text').innerText = document.getElementById('editPhone').value;
-            document.getElementById('edit-profile-form').style.display = 'none'; document.getElementById('showEditBtn').style.display = 'block';
-        });
-
-        // NOTIFICATIONS, TOASTS & DIRECTORY
-        function loadDirectoryAndNotifications() {
-            onValue(ref(db, 'target_users'), (snap) => {
-                const dir = document.getElementById('directory-list'); dir.innerHTML = ''; let globalUnread = false;
-                snap.forEach(child => {
-                    const u = child.val(); const uid = child.key;
-                    if(uid !== user.uid) {
-                        const chatId = getChatId(user.uid, uid);
-                        onValue(ref(db, `target_private_chats/${chatId}/lastMessage`), msgSnap => {
-                            const lastMsg = msgSnap.val(); const isUnread = lastMsg && lastMsg.senderId !== user.uid && !lastMsg.read; const unreadDotId = `unread-${uid}`;
-                            
-                            // TOAST LOGIC
-                            if(isUnread && lastMsg.timestamp > APP_START_TIME && currentChatPartnerId !== uid) {
-                                showToast(lastMsg.isImage ? "Sent an image" : lastMsg.text, uid, u.name);
-                                update(ref(db, `target_private_chats/${chatId}/lastMessage`), { timestamp: Date.now() - 10 }); // Prevent double toast
-                            }
-
-                            if(!document.getElementById(`row-${uid}`)) {
-                                const av = u.photoURL ? `<img src="${u.photoURL}" class="avatar" style="width:35px;height:35px;">` : `<div class="avatar" style="width:35px;height:35px;">${u.name.charAt(0)}</div>`;
-                                dir.innerHTML += `<div class="inbox-user-row" id="row-${uid}" onclick="window.openPrivateChat('${uid}', '${u.name.replace(/'/g, "\\'")}')"><div style="display:flex; align-items:center; gap:10px;">${av} <strong>${u.name}</strong></div><div id="${unreadDotId}" class="unread-dot"></div></div>`;
-                            }
-                            const dotEl = document.getElementById(unreadDotId); if(dotEl) dotEl.style.display = isUnread ? 'block' : 'none';
-                            if(isUnread) globalUnread = true;
-                            document.getElementById('navChatBadge').style.display = globalUnread ? 'inline-block' : 'none'; document.getElementById('inboxTabBadge').style.display = globalUnread ? 'inline-block' : 'none';
-                        });
-                    }
-                });
-            });
-        }
-
-        // PRIVATE CHAT
-        window.openPrivateChat = (partnerUid, partnerName) => {
-            currentChatPartnerId = partnerUid; document.getElementById('inbox-directory').style.display = 'none'; document.getElementById('inbox-active-chat').style.display = 'block'; document.getElementById('chattingWithName').innerText = partnerName;
-            const chatId = getChatId(user.uid, partnerUid);
-            get(ref(db, `target_private_chats/${chatId}/lastMessage`)).then(s => { if(s.exists() && s.val().senderId !== user.uid) update(ref(db, `target_private_chats/${chatId}/lastMessage`), { read: true }); });
-            
-            onValue(ref(db, `target_private_chats/${chatId}/messages`), s => {
-                const display = document.getElementById('private-messages-display'); display.innerHTML = '';
-                s.forEach(m => { 
-                    const msg = m.val(); const isMe = msg.senderId === user.uid; 
-                    let contentHTML = msg.isImage ? `<img src="${msg.text}" style="max-width: 100%; border-radius: 8px; margin-bottom: 5px;">` : `<div>${msg.text}</div>`;
-                    display.innerHTML += `<div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}">${contentHTML}<div style="font-size:0.7rem; opacity:0.7; text-align:${isMe?'right':'left'};">${timeAgo(msg.timestamp)}</div></div>`; 
-                });
-                display.scrollTop = display.scrollHeight; 
-            });
-        };
-        window.closePrivateChat = () => { document.getElementById('inbox-directory').style.display = 'block'; document.getElementById('inbox-active-chat').style.display = 'none'; currentChatPartnerId = null; };
-        
-        document.getElementById('sendPmBtn').addEventListener('click', () => {
-            const input = document.getElementById('pmInput'); const text = input.value; if(!text || !currentChatPartnerId) return;
-            const chatId = getChatId(user.uid, currentChatPartnerId); const msgData = { text: text, isImage: false, senderId: user.uid, timestamp: Date.now() };
-            push(ref(db, `target_private_chats/${chatId}/messages`), msgData); set(ref(db, `target_private_chats/${chatId}/lastMessage`), { ...msgData, read: false }); input.value = '';
-        });
-
-        document.getElementById('chatImageFile').addEventListener('change', async (e) => {
-            const file = e.target.files[0]; if(!file || !currentChatPartnerId) return;
-            const chatId = getChatId(user.uid, currentChatPartnerId);
-            const btn = document.querySelector('.chat-img-upload-btn'); btn.innerText = "⏳"; btn.disabled = true;
-            const formData = new FormData(); formData.append("image", file);
-            try {
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-                const data = await response.json();
-                if (data.success) {
-                    const msgData = { text: data.data.url, isImage: true, senderId: user.uid, timestamp: Date.now() };
-                    push(ref(db, `target_private_chats/${chatId}/messages`), msgData); set(ref(db, `target_private_chats/${chatId}/lastMessage`), { ...msgData, read: false });
-                }
-            } catch(e) {} btn.innerText = "📷"; btn.disabled = false; e.target.value = '';
-        });
-
-        // MARKETPLACE
-        function checkSellerStatus() {
-            if(isBoss) { document.getElementById('market-upload-area').style.display = 'block'; return; }
-            onValue(ref(db, `target_approved_sellers/${user.uid}`), s => { document.getElementById('market-upload-area').style.display = s.exists() ? 'block' : 'none'; document.getElementById('seller-gate').style.display = s.exists() ? 'none' : 'block'; });
-        }
-
+        // MARKETPLACE LOGIC
         document.getElementById('submitMarketBtn').addEventListener('click', async () => {
             const item = document.getElementById('itemName').value; const price = document.getElementById('itemPrice').value;
             const category = document.getElementById('itemCat').value; const fileInput = document.getElementById('itemImageFile');
             const submitBtn = document.getElementById('submitMarketBtn');
-            if(!item || !price || fileInput.files.length === 0) { alert("Please fill all fields and select an image."); return; }
-
+            if(!item || !price || fileInput.files.length === 0) { alert("Please fill all fields."); return; }
             submitBtn.innerText = "Uploading..."; submitBtn.disabled = true;
             const formData = new FormData(); formData.append("image", fileInput.files[0]);
-
             try {
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-                const data = await response.json();
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+                const data = await res.json();
                 if (data.success) {
-                    push(ref(db, 'target_marketplace_visual'), { item, price: parseFloat(price), category, image: data.data.url, seller: user.displayName, uid: user.uid, timestamp: Date.now(), isFeatured: false });
+                    push(ref(db, 'target_marketplace_visual'), { item, price: parseFloat(price), category, image: data.data.url, seller: user.displayName, uid: user.uid, timestamp: Date.now(), isFeatured: false, isSold: false });
                     document.getElementById('itemName').value = ''; document.getElementById('itemPrice').value = ''; fileInput.value = ''; alert("Product Listed!");
-                } else alert("Image upload failed.");
-            } catch (error) { alert("Error uploading."); } finally { submitBtn.innerText = "List Product"; submitBtn.disabled = false; }
+                }
+            } catch (error) { alert("Error uploading."); } finally { submitBtn.innerText = "Publish"; submitBtn.disabled = false; }
         });
-
-        document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('click', e => { document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); e.target.classList.add('active'); currentCategoryFilter = e.target.getAttribute('data-cat'); renderMarket(); }));
-        document.getElementById('marketSearch').addEventListener('input', renderMarket);
 
         onValue(ref(db, 'target_marketplace_visual'), s => { marketItems = []; s.forEach(c => { marketItems.push({id: c.key, ...c.val()}); }); renderMarket(); });
         
-        window.toggleFeature = (id, currentStatus) => { update(ref(db, `target_marketplace_visual/${id}`), { isFeatured: !currentStatus }); };
-        window.toggleFavorite = (id) => { 
-            const isFav = userFavorites[id]; 
-            if(isFav) remove(ref(db, `target_users/${user.uid}/favorites/${id}`)); 
-            else set(ref(db, `target_users/${user.uid}/favorites/${id}`), true); 
+        // TITAN FEATURES: Boosting & Sold Out
+        window.boostItem = (id) => {
+            if(userCoins >= 50) {
+                set(ref(db, `target_users/${user.uid}/coins`), userCoins - 50);
+                update(ref(db, `target_marketplace_visual/${id}`), { isFeatured: true, boostTime: Date.now() });
+                alert("Item Boosted to the top! 🚀");
+            } else { alert("Not enough coins! You need 50 🪙 to boost."); }
         };
 
+        window.markSold = (id) => {
+            if(confirm("Mark this item as sold? It cannot be undone easily.")) {
+                update(ref(db, `target_marketplace_visual/${id}`), { isSold: true });
+            }
+        };
+
+        window.toggleFavorite = (id) => { if(userFavorites[id]) remove(ref(db, `target_users/${user.uid}/favorites/${id}`)); else set(ref(db, `target_users/${user.uid}/favorites/${id}`), true); };
+        document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('click', e => { document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); e.target.classList.add('active'); currentCategoryFilter = e.target.getAttribute('data-cat'); renderMarket(); }));
+
         function renderMarket() {
-            const d = document.getElementById('market-display'); d.innerHTML = ''; const term = document.getElementById('marketSearch').value.toLowerCase();
+            const d = document.getElementById('market-display'); d.innerHTML = ''; 
+            const term = document.getElementById('marketSearch').value.toLowerCase();
             let filtered = marketItems.filter(v => {
                 if(currentCategoryFilter === "Favorites" && !userFavorites[v.id]) return false;
                 if(currentCategoryFilter !== "All" && currentCategoryFilter !== "Favorites" && v.category !== currentCategoryFilter) return false;
                 return v.item.toLowerCase().includes(term);
             });
-            filtered.sort((a, b) => { if (a.isFeatured && !b.isFeatured) return -1; if (!a.isFeatured && b.isFeatured) return 1; return b.timestamp - a.timestamp; });
+            
+            // Sort: Featured on top, Sold at the bottom
+            filtered.sort((a, b) => { 
+                if (a.isSold && !b.isSold) return 1;
+                if (!a.isSold && b.isSold) return -1;
+                if (a.isFeatured && !b.isFeatured) return -1; 
+                if (!a.isFeatured && b.isFeatured) return 1; 
+                return b.timestamp - a.timestamp; 
+            });
             
             filtered.forEach(v => {
-                const canDelete = isBoss || v.uid === user.uid; const favHeart = userFavorites[v.id] ? '❤️' : '🤍';
-                d.innerHTML += `<div class="product-card ${v.isFeatured ? 'featured' : ''}">
-                    ${v.isFeatured ? '<div class="featured-badge">⭐ Featured</div>' : ''}
+                const isMyItem = v.uid === user.uid; const favHeart = userFavorites[v.id] ? '❤️' : '🤍';
+                const boostBtn = (!v.isFeatured && !v.isSold && isMyItem) ? `<button class="btn btn-warning" style="padding:6px; font-size:0.8rem; flex:1;" onclick="window.boostItem('${v.id}')">🚀 Boost (50🪙)</button>` : '';
+                const soldBtn = (!v.isSold && isMyItem) ? `<button class="btn btn-outline" style="padding:6px; font-size:0.8rem; flex:1;" onclick="window.markSold('${v.id}')">🤝 Mark Sold</button>` : '';
+                const delBtn = (isBoss || isMyItem) ? `<button class="btn btn-outline" style="padding:6px; color:var(--danger);" onclick="remove(ref(db, 'target_marketplace_visual/${v.id}'))">🗑️</button>` : '';
+
+                d.innerHTML += `<div class="product-card ${v.isFeatured ? 'featured' : ''} ${v.isSold ? 'sold-card' : ''}">
+                    ${v.isSold ? '<div class="sold-overlay">SOLD OUT</div>' : ''}
+                    ${v.isFeatured && !v.isSold ? '<div class="featured-badge">⭐ Featured</div>' : ''}
                     <button class="fav-btn" onclick="window.toggleFavorite('${v.id}')">${favHeart}</button>
                     <img src="${v.image}" class="product-img">
-                    <div class="product-info"><small style="color:var(--text-muted);">${v.category || 'Other'}</small><h4 class="product-title">${v.item}</h4><p class="product-price">MWK ${v.price.toLocaleString()}</p><small style="margin-bottom:10px;">Seller: <span style="font-weight:bold; cursor:pointer;" onclick="window.showProfile('${v.uid}')">${v.seller}</span></small><div style="display:flex; gap:5px; margin-top:auto;"><button class="btn btn-primary" style="flex:1; padding:6px;" onclick="window.openPrivateChat('${v.uid}', '${v.seller}')">Message</button>${isBoss ? `<button class="btn btn-warning" style="padding:6px;" onclick="window.toggleFeature('${v.id}', ${v.isFeatured})">⭐</button>` : ''}${canDelete ? `<button class="btn btn-outline" style="padding:6px; color:var(--danger);" onclick="remove(ref(db, 'target_marketplace_visual/${v.id}'))">🗑️</button>` : ''}</div></div></div>`;
+                    <div class="product-info">
+                        <small style="color:var(--text-muted);">${v.category}</small>
+                        <h4 class="product-title">${v.item}</h4>
+                        <p class="product-price">MWK ${v.price.toLocaleString()}</p>
+                        <small style="margin-bottom:10px;">Seller: <strong>${v.seller}</strong></small>
+                        <div style="display:flex; gap:5px; margin-top:auto; flex-wrap:wrap;">
+                            ${!v.isSold && !isMyItem ? `<button class="btn btn-primary" style="flex:1; padding:6px;">Message</button>` : ''}
+                            ${boostBtn} ${soldBtn} ${delBtn}
+                        </div>
+                    </div></div>`;
             });
-            updateAdminStats();
         }
+        document.getElementById('marketSearch').addEventListener('input', renderMarket);
 
-        // SOCIAL FEED 2.0 (Likes & Comments)
-        document.getElementById('submitIdeaBtn').addEventListener('click', () => { const t = document.getElementById('pitchIdea').value; if(t) { push(ref(db, 'target_feed'), { text: t, author: user.displayName, avatar: user.photoURL||'', uid: user.uid, timestamp: Date.now() }); document.getElementById('pitchIdea').value=''; } });
-        
-        window.toggleLike = (postId) => {
-            get(ref(db, `target_feed/${postId}/likes/${user.uid}`)).then(s => {
-                if(s.exists()) remove(ref(db, `target_feed/${postId}/likes/${user.uid}`));
-                else set(ref(db, `target_feed/${postId}/likes/${user.uid}`), true);
+        // FLASH STORIES (24H)
+        window.addStory = () => {
+            const text = prompt("Post a quick 24h status update:");
+            if(text) push(ref(db, 'target_stories'), { text, uid: user.uid, author: user.displayName, avatar: user.photoURL||'', timestamp: Date.now() });
+        };
+
+        onValue(ref(db, 'target_stories'), s => {
+            const d = document.getElementById('stories-display');
+            d.innerHTML = `<div style="display:flex; flex-direction:column; align-items:center; position:relative;">
+                <div class="story-circle add-story" onclick="window.addStory()">+</div><span style="font-size:0.7rem; margin-top:5px; color:var(--text-muted);">Add Story</span></div>`;
+            const now = Date.now();
+            s.forEach(c => {
+                const st = c.val();
+                if(now - st.timestamp < 86400000) { // 24 hours
+                    const av = st.avatar ? `<img src="${st.avatar}">` : st.author.charAt(0);
+                    d.innerHTML += `<div style="display:flex; flex-direction:column; align-items:center;">
+                        <div class="story-circle" onclick="alert('${st.author}: ${st.text}')">
+                        <div style="width:100%; height:100%; padding:2px; background:var(--surface); border-radius:50%; display:flex; align-items:center; justify-content:center;">${av}</div>
+                        </div><span style="font-size:0.7rem; margin-top:5px; width:60px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${st.author.split(' ')[0]}</span></div>`;
+                } else { remove(ref(db, `target_stories/${c.key}`)); }
             });
-        };
+        });
 
-        window.toggleComments = (postId) => {
-            const sec = document.getElementById(`comments-${postId}`);
-            sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
-        };
-
-        window.postComment = (postId) => {
-            const input = document.getElementById(`comment-input-${postId}`); const text = input.value;
-            if(text) { push(ref(db, `target_feed/${postId}/comments`), { author: user.displayName, text: text, timestamp: Date.now() }); input.value = ''; }
-        };
-
+        // FEED POSTS
+        document.getElementById('submitIdeaBtn').addEventListener('click', () => { const t = document.getElementById('pitchIdea').value; if(t) { push(ref(db, 'target_feed'), { text: t, author: user.displayName, avatar: user.photoURL||'', uid: user.uid, timestamp: Date.now() }); document.getElementById('pitchIdea').value=''; } });
         onValue(ref(db, 'target_feed'), s => { 
             const d = document.getElementById('ideas-display'); d.innerHTML = ''; const p = []; s.forEach(c => p.push({id: c.key, ...c.val()})); 
             p.reverse().forEach(post => { 
-                const likes = post.likes ? Object.keys(post.likes).length : 0;
-                const iLiked = post.likes && post.likes[user.uid];
-                const comments = post.comments ? Object.values(post.comments) : [];
-                
-                let commentsHTML = '';
-                comments.forEach(c => { commentsHTML += `<div class="comment-row"><strong>${c.author}:</strong> <span>${c.text}</span></div>`; });
-
                 const av = post.avatar ? `<img src="${post.avatar}" class="avatar">` : `<div class="avatar">${post.author.charAt(0)}</div>`;
-                
-                d.innerHTML += `
-                    <div class="feed-post">
-                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;" onclick="window.showProfile('${post.uid}')">${av} <strong>${post.author}</strong></div>
-                        <p style="margin:0 0 10px 0;">${post.text}</p>
-                        <div class="feed-actions">
-                            <button class="action-btn ${iLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">👍 ${likes} Likes</button>
-                            <button class="action-btn" onclick="window.toggleComments('${post.id}')">💬 ${comments.length} Comments</button>
-                            ${(isBoss || post.uid === user.uid) ? `<button class="action-btn" style="color:var(--danger); margin-left:auto;" onclick="remove(ref(db, 'target_feed/${post.id}'))">🗑️</button>` : ''}
-                        </div>
-                        <div id="comments-${post.id}" class="comment-section">
-                            ${commentsHTML}
-                            <div style="display:flex; gap:5px; margin-top:10px;">
-                                <input type="text" id="comment-input-${post.id}" class="form-control" placeholder="Write a comment..." style="margin:0; padding:6px; font-size:0.85rem;">
-                                <button class="btn btn-primary" style="padding:6px 12px; font-size:0.85rem;" onclick="window.postComment('${post.id}')">Send</button>
-                            </div>
-                        </div>
-                    </div>`; 
+                d.innerHTML += `<div class="feed-post"><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">${av} <strong>${post.author}</strong></div><p style="margin:0 0 10px 0;">${post.text}</p>
+                        ${(isBoss || post.uid === user.uid) ? `<button class="action-btn" style="color:var(--danger); margin-left:auto; display:inline-block;" onclick="remove(ref(db, 'target_feed/${post.id}'))">🗑️ Delete</button>` : ''}</div>`; 
             }); 
         });
 
-        // VAULT
-        document.getElementById('submitVaultBtn').addEventListener('click', () => { const t = document.getElementById('vTitle').value; const l = document.getElementById('vLink').value; if(t&&l) push(ref(db, 'target_media_vault'), {title:t, url:l}); });
-        onValue(ref(db, 'target_media_vault'), s => { const d = document.getElementById('vault-display'); d.innerHTML = ''; s.forEach(c => { const v = c.val(); d.innerHTML += `<div class="media-card"><h4>${v.title}</h4><a href="${v.url}" target="_blank" class="download-btn">Access</a></div>`; }); });
-
-        // ADMIN DASHBOARD
-        function initAdminDashboard() { onValue(ref(db, 'target_users'), snap => { document.getElementById('admin-stat-users').innerText = snap.size; }); }
-        function updateAdminStats() {
-            if(!isBoss) return; document.getElementById('admin-stat-items').innerText = marketItems.length;
-            const totalValue = marketItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
-            document.getElementById('admin-stat-value').innerText = `MWK ${totalValue.toLocaleString()}`;
-        }
     </script>
 </body>
 </html>
