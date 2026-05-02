@@ -8,18 +8,24 @@
     <meta name="theme-color" content="#2563eb">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CORE STYLES */
+        /* CORE STYLES & LIGHT/DARK VARIABLES */
         :root {
             --primary: #2563eb; --primary-hover: #1d4ed8;
             --bg-light: #f3f4f6; --surface: #ffffff;
             --text-dark: #1f2937; --text-muted: #6b7280;
             --success: #10b981; --danger: #ef4444; --border: #e5e7eb; --warning: #f59e0b;
         }
-        body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
+        body.dark-mode {
+            --bg-light: #111827; --surface: #1f2937;
+            --text-dark: #f9fafb; --text-muted: #9ca3af;
+            --border: #374151;
+        }
+
+        body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
         * { box-sizing: border-box; }
         
         /* NAVBAR */
-        .navbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 64px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .navbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 64px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background-color 0.3s, border-color 0.3s; }
         .nav-brand { font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
         .nav-links { display: flex; gap: 20px; height: 100%; }
         .nav-item { background: none; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); font-weight: 600; cursor: pointer; padding: 0 15px; font-size: 0.95rem; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
@@ -27,6 +33,8 @@
         .nav-item.active { border-bottom-color: var(--primary); color: var(--primary); }
         .user-controls { display: flex; align-items: center; gap: 15px; }
         .nav-badge { background: var(--danger); color: white; border-radius: 12px; padding: 2px 6px; font-size: 0.7rem; font-weight: bold; display: none; }
+        .theme-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-dark); transition: transform 0.2s; }
+        .theme-btn:hover { transform: scale(1.1); }
 
         /* BUTTONS & FORMS */
         .btn { padding: 8px 16px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
@@ -35,8 +43,8 @@
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dark); }
         .btn-danger { background: var(--danger); color: white; }
         .btn-warning { background: var(--warning); color: white; }
-        .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; font-family: inherit; }
-        .search-bar { width: 100%; max-width: 400px; margin-bottom: 20px; border-radius: 20px; padding: 10px 15px; border: 1px solid var(--border); }
+        .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; font-family: inherit; background: var(--surface); color: var(--text-dark); }
+        .search-bar { width: 100%; max-width: 400px; margin-bottom: 20px; border-radius: 20px; padding: 10px 15px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dark); }
         
         /* LAYOUT VIEWS */
         .app-view { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; width: 100%; animation: fadeIn 0.2s ease-in; }
@@ -45,12 +53,13 @@
 
         /* MARKETPLACE */
         .market-filters { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 10px; }
-        .filter-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+        .filter-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--text-dark); cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
         .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
         .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
-        .product-card.featured { border: 2px solid gold; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); }
+        .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; position: relative; transition: background-color 0.3s; }
+        .product-card.featured { border: 2px solid gold; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); }
         .featured-badge { position: absolute; top: 10px; right: 10px; background: gold; color: #000; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; z-index: 10; }
+        .fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 1rem; backdrop-filter: blur(4px); }
         .product-img { width: 100%; height: 200px; object-fit: cover; background: #e5e7eb; }
         .product-info { padding: 15px; display: flex; flex-direction: column; flex: 1; }
         .product-title { font-weight: 600; margin: 0 0 4px 0; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -63,7 +72,7 @@
 
         /* CHAT & SOCIAL */
         .chat-container { max-width: 600px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-        .chat-tabs { display: flex; border-bottom: 1px solid var(--border); background: #f9fafb; }
+        .chat-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--bg-light); }
         .chat-tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; }
         .chat-tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: var(--surface); }
         .feed-post { background: var(--bg-light); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border); }
@@ -74,9 +83,16 @@
         .inbox-user-row:hover { background: var(--bg-light); }
         .unread-dot { width: 10px; height: 10px; background: var(--danger); border-radius: 50%; display: none; }
         .private-chat-history { height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 10px; background: var(--bg-light); border-radius: 8px; margin-bottom: 15px; }
-        .chat-bubble { max-width: 75%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; }
+        .chat-bubble { max-width: 75%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; word-wrap: break-word; }
         .bubble-me { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .bubble-them { background: #e5e7eb; color: var(--text-dark); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .bubble-them { background: #e5e7eb; color: #1f2937; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .chat-img-upload-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0 12px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; color: var(--text-dark); }
+
+        /* ADMIN DASHBOARD */
+        .admin-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: var(--surface); border: 1px solid var(--border); padding: 20px; border-radius: 8px; text-align: center; }
+        .stat-card h3 { margin: 0; color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; }
+        .stat-card h2 { margin: 10px 0 0 0; color: var(--primary); font-size: 2rem; }
 
         /* OVERLAYS & MODALS */
         .overlay-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; flex-direction: column; }
@@ -98,14 +114,13 @@
         <div class="modal-box" style="background: #111; border: 1px solid #333;">
             <h2 style="color: white; font-family: monospace;">🛡️ BOSS OVERRIDE</h2>
             <div id="setup-pass-view" style="display: none;">
-                <input type="password" id="newAdminPass" class="form-control" placeholder="Create Password">
+                <input type="password" id="newAdminPass" class="form-control" placeholder="Create Password" style="background: #222; color:white;">
                 <button id="setPassBtn" class="btn btn-primary" style="width:100%;">Set Password</button>
             </div>
             <div id="enter-pass-view" style="display: none;">
-                <input type="password" id="adminPassInput" class="form-control" placeholder="Password">
+                <input type="password" id="adminPassInput" class="form-control" placeholder="Password" style="background: #222; color:white;">
                 <button id="verifyPassBtn" class="btn btn-outline" style="width:100%; color: white;">Authenticate</button>
             </div>
-            <div id="gatewayStatus" style="font-family: monospace; color: white; margin-top: 10px;"></div>
         </div>
     </div>
 
@@ -120,7 +135,6 @@
             <div style="text-align: left; margin-top: 15px;">
                 <label style="font-size:0.8rem; font-weight:bold; color:var(--text-muted);">Bio</label>
                 <p id="profile-bio-text" style="margin: 0 0 10px 0; font-size: 0.95rem;">No bio provided.</p>
-                
                 <label style="font-size:0.8rem; font-weight:bold; color:var(--text-muted);">Contact</label>
                 <p id="profile-phone-text" style="margin: 0 0 15px 0; font-size: 0.95rem;">No contact provided.</p>
             </div>
@@ -143,6 +157,7 @@
                 <button class="nav-item" data-target="view-chat">Social <span id="navChatBadge" class="nav-badge">!</span></button>
             </div>
             <div class="user-controls">
+                <button id="themeToggleBtn" class="theme-btn">🌙</button>
                 <div id="myMiniAvatar" style="cursor: pointer;" onclick="window.showProfile(user.uid)"></div>
                 <button id="headerAdminBtn" class="btn btn-outline" data-target="view-admin" style="display:none; border-color: var(--danger); color: var(--danger);">Admin</button>
                 <button id="logoutBtn" class="btn btn-outline">Log Out</button>
@@ -160,6 +175,7 @@
             <input type="text" id="marketSearch" class="search-bar" placeholder="🔍 Search items...">
             <div class="market-filters" id="marketFilters">
                 <button class="filter-btn active" data-cat="All">All Categories</button>
+                <button class="filter-btn" data-cat="Favorites">❤️ My Favorites</button>
                 <button class="filter-btn" data-cat="Electronics">📱 Electronics</button>
                 <button class="filter-btn" data-cat="Fashion">👕 Fashion</button>
                 <button class="filter-btn" data-cat="Services">💼 Services</button>
@@ -171,9 +187,7 @@
                     <input type="text" id="itemName" class="form-control" placeholder="Product Title" style="flex: 1; margin:0; min-width: 150px;">
                     <select id="itemCat" class="form-control" style="max-width: 150px; margin:0;"><option>Electronics</option><option>Fashion</option><option>Services</option></select>
                     <input type="number" id="itemPrice" class="form-control" placeholder="Price" style="max-width: 120px; margin:0;">
-                    
                     <input type="file" id="itemImageFile" class="form-control" accept="image/*" style="flex: 1; margin:0; padding: 7px; min-width: 200px;">
-                    
                     <button id="submitMarketBtn" class="btn btn-primary">List Product</button>
                 </div>
             </div>
@@ -201,7 +215,7 @@
                 </div>
                 
                 <div id="chat-sect-feed" class="chat-body" style="padding: 20px;">
-                    <div style="background: var(--bg-light); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="background: var(--bg-light); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border);">
                         <textarea id="pitchIdea" class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
                         <div style="text-align: right;"><button id="submitIdeaBtn" class="btn btn-primary">Post</button></div>
                     </div>
@@ -216,8 +230,11 @@
                             <h3 id="chattingWithName" style="margin: 0;">User Name</h3>
                         </div>
                         <div id="private-messages-display" class="private-chat-history"></div>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="pmInput" class="form-control" placeholder="Type..." style="margin: 0;">
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="file" id="chatImageFile" accept="image/*" style="display: none;">
+                            <button class="chat-img-upload-btn" onclick="document.getElementById('chatImageFile').click()">📷</button>
+                            
+                            <input type="text" id="pmInput" class="form-control" placeholder="Type a message..." style="margin: 0; flex:1;">
                             <button id="sendPmBtn" class="btn btn-primary">Send</button>
                         </div>
                     </div>
@@ -226,8 +243,25 @@
         </main>
 
         <main id="view-admin" class="app-view">
-            <div style="background: #fee2e2; padding: 20px; border-radius: 8px;">
-                <h2 style="color: var(--danger); margin-top: 0;">God Mode</h2>
+            <h2 style="color: var(--danger); margin-top: 0;">God Mode Dashboard</h2>
+            
+            <div class="admin-stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <h2 id="admin-stat-users">0</h2>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Items</h3>
+                    <h2 id="admin-stat-items">0</h2>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Market Value</h3>
+                    <h2 id="admin-stat-value">MWK 0</h2>
+                </div>
+            </div>
+            
+            <div style="background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border);">
+                <h3>User Management</h3>
                 <div id="admin-user-list"></div>
             </div>
         </main>
@@ -238,13 +272,8 @@
         import { getDatabase, ref, push, onValue, set, get, remove, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-        // ==========================================
-        // IMGBB API KEY (Injected by Yaza Promax!)
-        // ==========================================
         const IMGBB_API_KEY = "F42175e4035914aeff8d06650db28421"; 
-        
         const BOSS_EMAIL = "kawanularedson@gmail.com"; 
-        const BOSS_WA = "265993965546";
 
         const app = initializeApp({
             apiKey: "AIzaSyCP6hhb62phviKZGen1CZss24dJ9BerIJQ",
@@ -255,11 +284,21 @@
         const db = getDatabase(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
         let user = null; let isBoss = false; let currentChatPartnerId = null; let currentCategoryFilter = "All";
+        let marketItems = []; let userFavorites = {};
 
         // UTILITIES
         function timeAgo(t) { const s = Math.floor((new Date() - t)/1000); let i = s/86400; if(i>1) return Math.floor(i)+"d ago"; i = s/3600; if(i>1) return Math.floor(i)+"h ago"; i = s/60; if(i>1) return Math.floor(i)+"m ago"; return "Now"; }
         async function hashPassword(p) { const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p)); return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
         function getChatId(u1, u2) { return u1 < u2 ? `${u1}_${u2}` : `${u2}_${u1}`; }
+
+        // DARK MODE LOGIC
+        const themeBtn = document.getElementById('themeToggleBtn');
+        if(localStorage.getItem('targetHubTheme') === 'dark') { document.body.classList.add('dark-mode'); themeBtn.innerText = '☀️'; }
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if(document.body.classList.contains('dark-mode')) { localStorage.setItem('targetHubTheme', 'dark'); themeBtn.innerText = '☀️'; } 
+            else { localStorage.setItem('targetHubTheme', 'light'); themeBtn.innerText = '🌙'; }
+        });
 
         // AUTH & INIT
         document.getElementById('loginBtn').addEventListener('click', () => signInWithPopup(auth, provider));
@@ -288,10 +327,13 @@
 
         function launchMainApp() {
             document.getElementById('admin-gateway').style.display = 'none'; document.getElementById('main-app').style.display = 'block';
-            if(isBoss) { document.getElementById('headerAdminBtn').style.display = 'block'; document.getElementById('boss-vault-upload').style.display = 'block'; }
+            if(isBoss) { document.getElementById('headerAdminBtn').style.display = 'block'; document.getElementById('boss-vault-upload').style.display = 'block'; initAdminDashboard(); }
             
             update(ref(db, `target_users/${user.uid}`), { name: user.displayName, email: user.email, photoURL: user.photoURL });
             document.getElementById('myMiniAvatar').innerHTML = user.photoURL ? `<img src="${user.photoURL}" class="avatar" style="width:35px;height:35px;">` : `<div class="avatar" style="width:35px;height:35px;">${user.displayName.charAt(0)}</div>`;
+            
+            // Load User Favorites
+            onValue(ref(db, `target_users/${user.uid}/favorites`), s => { userFavorites = s.val() || {}; renderMarket(); });
             
             checkSellerStatus(); loadDirectoryAndNotifications(); 
         }
@@ -360,100 +402,113 @@
             });
         }
 
-        // PRIVATE CHAT
+        // PRIVATE CHAT (WITH IMAGE SUPPORT)
         window.openPrivateChat = (partnerUid, partnerName) => {
             currentChatPartnerId = partnerUid; document.getElementById('inbox-directory').style.display = 'none'; document.getElementById('inbox-active-chat').style.display = 'block'; document.getElementById('chattingWithName').innerText = partnerName;
             const chatId = getChatId(user.uid, partnerUid);
             get(ref(db, `target_private_chats/${chatId}/lastMessage`)).then(s => { if(s.exists() && s.val().senderId !== user.uid) update(ref(db, `target_private_chats/${chatId}/lastMessage`), { read: true }); });
+            
             onValue(ref(db, `target_private_chats/${chatId}/messages`), s => {
                 const display = document.getElementById('private-messages-display'); display.innerHTML = '';
-                s.forEach(m => { const msg = m.val(); const isMe = msg.senderId === user.uid; display.innerHTML += `<div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}"><div>${msg.text}</div><div style="font-size:0.7rem; opacity:0.7; text-align:${isMe?'right':'left'};">${timeAgo(msg.timestamp)}</div></div>`; });
+                s.forEach(m => { 
+                    const msg = m.val(); const isMe = msg.senderId === user.uid; 
+                    // Handle image messages
+                    let contentHTML = msg.isImage ? `<img src="${msg.text}" style="max-width: 100%; border-radius: 8px; margin-bottom: 5px;">` : `<div>${msg.text}</div>`;
+                    display.innerHTML += `<div class="chat-bubble ${isMe ? 'bubble-me' : 'bubble-them'}">${contentHTML}<div style="font-size:0.7rem; opacity:0.7; text-align:${isMe?'right':'left'};">${timeAgo(msg.timestamp)}</div></div>`; 
+                });
                 display.scrollTop = display.scrollHeight; 
             });
         };
         window.closePrivateChat = () => { document.getElementById('inbox-directory').style.display = 'block'; document.getElementById('inbox-active-chat').style.display = 'none'; currentChatPartnerId = null; };
+        
+        // Send Text Message
         document.getElementById('sendPmBtn').addEventListener('click', () => {
             const input = document.getElementById('pmInput'); const text = input.value; if(!text || !currentChatPartnerId) return;
-            const chatId = getChatId(user.uid, currentChatPartnerId); const msgData = { text: text, senderId: user.uid, timestamp: Date.now() };
+            const chatId = getChatId(user.uid, currentChatPartnerId); const msgData = { text: text, isImage: false, senderId: user.uid, timestamp: Date.now() };
             push(ref(db, `target_private_chats/${chatId}/messages`), msgData); set(ref(db, `target_private_chats/${chatId}/lastMessage`), { ...msgData, read: false }); input.value = '';
         });
 
-        // MARKETPLACE WITH IMGBB NATIVE UPLOAD
+        // Send Image Message
+        document.getElementById('chatImageFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0]; if(!file || !currentChatPartnerId) return;
+            const chatId = getChatId(user.uid, currentChatPartnerId);
+            
+            // Temporary loading bubble
+            const btn = document.querySelector('.chat-img-upload-btn'); btn.innerText = "⏳"; btn.disabled = true;
+
+            const formData = new FormData(); formData.append("image", file);
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+                const data = await response.json();
+                if (data.success) {
+                    const msgData = { text: data.data.url, isImage: true, senderId: user.uid, timestamp: Date.now() };
+                    push(ref(db, `target_private_chats/${chatId}/messages`), msgData); set(ref(db, `target_private_chats/${chatId}/lastMessage`), { ...msgData, read: false });
+                }
+            } catch(e) { alert("Failed to send image."); }
+            
+            btn.innerText = "📷"; btn.disabled = false; e.target.value = '';
+        });
+
+        // MARKETPLACE WITH IMGBB NATIVE UPLOAD & WISHLIST
         function checkSellerStatus() {
             if(isBoss) { document.getElementById('market-upload-area').style.display = 'block'; return; }
             onValue(ref(db, `target_approved_sellers/${user.uid}`), s => { document.getElementById('market-upload-area').style.display = s.exists() ? 'block' : 'none'; document.getElementById('seller-gate').style.display = s.exists() ? 'none' : 'block'; });
         }
 
         document.getElementById('submitMarketBtn').addEventListener('click', async () => {
-            const item = document.getElementById('itemName').value; 
-            const price = document.getElementById('itemPrice').value;
-            const category = document.getElementById('itemCat').value; 
-            const fileInput = document.getElementById('itemImageFile');
+            const item = document.getElementById('itemName').value; const price = document.getElementById('itemPrice').value;
+            const category = document.getElementById('itemCat').value; const fileInput = document.getElementById('itemImageFile');
             const submitBtn = document.getElementById('submitMarketBtn');
 
-            if(!item || !price || fileInput.files.length === 0) {
-                alert("Please fill all fields and select an image.");
-                return;
-            }
+            if(!item || !price || fileInput.files.length === 0) { alert("Please fill all fields and select an image."); return; }
 
-            submitBtn.innerText = "Uploading Image...";
-            submitBtn.disabled = true;
-
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append("image", file);
+            submitBtn.innerText = "Uploading Image..."; submitBtn.disabled = true;
+            const formData = new FormData(); formData.append("image", fileInput.files[0]);
 
             try {
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                    method: 'POST',
-                    body: formData
-                });
-                
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
                 const data = await response.json();
-                
                 if (data.success) {
-                    const imageUrl = data.data.url; 
-                    
-                    push(ref(db, 'target_marketplace_visual'), { 
-                        item, price, category, image: imageUrl, 
-                        seller: user.displayName, uid: user.uid, 
-                        timestamp: Date.now(), isFeatured: false 
-                    });
-
-                    document.getElementById('itemName').value = '';
-                    document.getElementById('itemPrice').value = '';
-                    fileInput.value = '';
-                    alert("Product Listed Successfully!");
-                } else {
-                    alert("Image upload failed. Check your ImgBB API Key.");
-                }
-            } catch (error) {
-                console.error("Upload error:", error);
-                alert("An error occurred while uploading the image.");
-            } finally {
-                submitBtn.innerText = "List Product";
-                submitBtn.disabled = false;
-            }
+                    push(ref(db, 'target_marketplace_visual'), { item, price: parseFloat(price), category, image: data.data.url, seller: user.displayName, uid: user.uid, timestamp: Date.now(), isFeatured: false });
+                    document.getElementById('itemName').value = ''; document.getElementById('itemPrice').value = ''; fileInput.value = ''; alert("Product Listed Successfully!");
+                } else alert("Image upload failed.");
+            } catch (error) { alert("An error occurred while uploading the image."); } 
+            finally { submitBtn.innerText = "List Product"; submitBtn.disabled = false; }
         });
 
         document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('click', e => { document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); e.target.classList.add('active'); currentCategoryFilter = e.target.getAttribute('data-cat'); renderMarket(); }));
         document.getElementById('marketSearch').addEventListener('input', renderMarket);
 
-        let marketItems = [];
         onValue(ref(db, 'target_marketplace_visual'), s => { marketItems = []; s.forEach(c => { marketItems.push({id: c.key, ...c.val()}); }); renderMarket(); });
+        
         window.toggleFeature = (id, currentStatus) => { update(ref(db, `target_marketplace_visual/${id}`), { isFeatured: !currentStatus }); };
+        window.toggleFavorite = (id) => { 
+            const isFav = userFavorites[id]; 
+            if(isFav) remove(ref(db, `target_users/${user.uid}/favorites/${id}`)); 
+            else set(ref(db, `target_users/${user.uid}/favorites/${id}`), true); 
+        };
 
         function renderMarket() {
             const d = document.getElementById('market-display'); d.innerHTML = ''; const term = document.getElementById('marketSearch').value.toLowerCase();
-            let filtered = marketItems.filter(v => (currentCategoryFilter === "All" || v.category === currentCategoryFilter) && v.item.toLowerCase().includes(term));
+            let filtered = marketItems.filter(v => {
+                if(currentCategoryFilter === "Favorites" && !userFavorites[v.id]) return false;
+                if(currentCategoryFilter !== "All" && currentCategoryFilter !== "Favorites" && v.category !== currentCategoryFilter) return false;
+                return v.item.toLowerCase().includes(term);
+            });
+            
             filtered.sort((a, b) => { if (a.isFeatured && !b.isFeatured) return -1; if (!a.isFeatured && b.isFeatured) return 1; return b.timestamp - a.timestamp; });
+            
             filtered.forEach(v => {
                 const canDelete = isBoss || v.uid === user.uid;
+                const favHeart = userFavorites[v.id] ? '❤️' : '🤍';
+                
                 d.innerHTML += `<div class="product-card ${v.isFeatured ? 'featured' : ''}">
                     ${v.isFeatured ? '<div class="featured-badge">⭐ Featured</div>' : ''}
+                    <button class="fav-btn" onclick="window.toggleFavorite('${v.id}')">${favHeart}</button>
                     <img src="${v.image}" class="product-img">
-                    <div class="product-info"><small style="color:var(--text-muted);">${v.category || 'Other'}</small><h4 class="product-title">${v.item}</h4><p class="product-price">MWK ${v.price}</p><small style="margin-bottom:10px;">Seller: <span style="font-weight:bold; cursor:pointer;" onclick="window.showProfile('${v.uid}')">${v.seller}</span></small><div style="display:flex; gap:5px; margin-top:auto;"><button class="btn btn-primary" style="flex:1; padding:6px;" onclick="window.openPrivateChat('${v.uid}', '${v.seller}')">Message</button>${isBoss ? `<button class="btn btn-warning" style="padding:6px;" onclick="window.toggleFeature('${v.id}', ${v.isFeatured})">⭐</button>` : ''}${canDelete ? `<button class="btn btn-outline" style="padding:6px; color:var(--danger);" onclick="remove(ref(db, 'target_marketplace_visual/${v.id}'))">🗑️</button>` : ''}</div></div></div>`;
+                    <div class="product-info"><small style="color:var(--text-muted);">${v.category || 'Other'}</small><h4 class="product-title">${v.item}</h4><p class="product-price">MWK ${v.price.toLocaleString()}</p><small style="margin-bottom:10px;">Seller: <span style="font-weight:bold; cursor:pointer;" onclick="window.showProfile('${v.uid}')">${v.seller}</span></small><div style="display:flex; gap:5px; margin-top:auto;"><button class="btn btn-primary" style="flex:1; padding:6px;" onclick="window.openPrivateChat('${v.uid}', '${v.seller}')">Message</button>${isBoss ? `<button class="btn btn-warning" style="padding:6px;" onclick="window.toggleFeature('${v.id}', ${v.isFeatured})">⭐</button>` : ''}${canDelete ? `<button class="btn btn-outline" style="padding:6px; color:var(--danger);" onclick="remove(ref(db, 'target_marketplace_visual/${v.id}'))">🗑️</button>` : ''}</div></div></div>`;
             });
+            updateAdminStats();
         }
 
         // SOCIAL FEED & VAULT
@@ -463,6 +518,19 @@
         document.getElementById('submitVaultBtn').addEventListener('click', () => { const t = document.getElementById('vTitle').value; const l = document.getElementById('vLink').value; if(t&&l) push(ref(db, 'target_media_vault'), {title:t, url:l}); });
         onValue(ref(db, 'target_media_vault'), s => { const d = document.getElementById('vault-display'); d.innerHTML = ''; s.forEach(c => { const v = c.val(); d.innerHTML += `<div class="media-card"><h4>${v.title}</h4><a href="${v.url}" target="_blank" class="download-btn">Access</a></div>`; }); });
 
+        // ADMIN DASHBOARD LOGIC
+        function initAdminDashboard() {
+            onValue(ref(db, 'target_users'), snap => { 
+                document.getElementById('admin-stat-users').innerText = snap.size; 
+                // Render user list here if needed
+            });
+        }
+        function updateAdminStats() {
+            if(!isBoss) return;
+            document.getElementById('admin-stat-items').innerText = marketItems.length;
+            const totalValue = marketItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+            document.getElementById('admin-stat-value').innerText = `MWK ${totalValue.toLocaleString()}`;
+        }
     </script>
 </body>
 </html>
